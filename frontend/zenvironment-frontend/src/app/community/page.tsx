@@ -1,3 +1,9 @@
+import { Page } from "@/components/Page";
+
 export default function Community() {
-  return <span>community</span>
+  return (
+    <Page title="Community">
+      <span>community</span>
+    </Page>
+  );
 }
