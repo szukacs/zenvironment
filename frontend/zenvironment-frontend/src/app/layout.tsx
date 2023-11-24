@@ -7,6 +7,7 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import { Navigation } from "@/components/Navigation";
 import { CssBaseline } from "@mui/material";
+import { ThemeRegistry } from "@/lib/theme";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,13 +23,15 @@ export default function RootLayout({
 }) {
   return (
     <>
-      <CssBaseline />
-      <html lang="en">
-        <body className={inter.className}>
-          {children}
-          <Navigation />
-        </body>
-      </html>
+      <ThemeRegistry>
+        <CssBaseline />
+        <html lang="en">
+          <body className={inter.className}>
+            {children}
+            <Navigation />
+          </body>
+        </html>
+      </ThemeRegistry>
     </>
   );
 }
