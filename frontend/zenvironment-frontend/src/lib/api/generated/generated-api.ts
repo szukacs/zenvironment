@@ -14,7 +14,18 @@ export interface GardenDto {
   /** @format uuid */
   id?: string;
   name?: string;
+  /** @format double */
+  estimatedProducedOxygenInKilograms?: number;
+  /** @format double */
+  estimatedFixatedCO2InKilograms?: number;
+  community?: MinimalCommunity;
   plants?: PlantDto[];
+}
+
+export interface MinimalCommunity {
+  /** @format uuid */
+  id?: string;
+  name?: string;
 }
 
 export interface PlantDto {
@@ -23,10 +34,21 @@ export interface PlantDto {
   plantType?: PlantTypeDto;
   /** @format uuid */
   gardenId?: string;
+  /** @format double */
+  estimatedProducedOxygenInKilograms?: number;
+  /** @format double */
+  estimatedFixatedCO2InKilograms?: number;
   /** @format date */
   plantedAt?: string;
   /** @format date */
   uprootedAt?: string;
+}
+
+export interface CommunityDto {
+  /** @format uuid */
+  id?: string;
+  name?: string;
+  gardens?: GardenDto[];
 }
 
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse, HeadersDefaults, ResponseType } from "axios";
@@ -192,6 +214,21 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     getMyGarden: (params: RequestParams = {}) =>
       this.request<GardenDto, any>({
         path: `/my-garden`,
+        method: "GET",
+        ...params,
+      }),
+  };
+  myCommunity = {
+    /**
+     * No description
+     *
+     * @tags zen-controller
+     * @name GetMyCommunity
+     * @request GET:/my-community
+     */
+    getMyCommunity: (params: RequestParams = {}) =>
+      this.request<CommunityDto, any>({
+        path: `/my-community`,
         method: "GET",
         ...params,
       }),
