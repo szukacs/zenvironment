@@ -16,6 +16,8 @@ public class PlantDto {
     private UUID gardenId;
     private double estimatedProducedOxygenInKilograms;
     private double estimatedFixatedCO2InKilograms;
+    private double getWaterConsumption;
+    private int getDaysTillHarvest;
     private LocalDate plantedAt;
     private LocalDate uprootedAt;
 }

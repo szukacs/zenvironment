@@ -27,6 +27,8 @@ public interface MainMapper {
 
     @Mapping(target = "estimatedProducedOxygenInKilograms", source = "garden.plants", qualifiedByName = "summarizeOxygenProduction")
     @Mapping(target = "estimatedFixatedCO2InKilograms", source = "garden.plants", qualifiedByName = "summarizeCO2Fixation")
+    @Mapping(target = "getWaterConsumption", source = "garden.plants", qualifiedByName = "summarizeWaterConsumption")
+    @Mapping(target = "getDaysTillHarvest", source = "garden.plants", qualifiedByName = "daysTillHarvest")
     GardenDto toDto(Garden garden);
 
     @Named("summarizeOxygenProduction")
