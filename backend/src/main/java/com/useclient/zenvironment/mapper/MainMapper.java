@@ -25,5 +25,17 @@ public interface MainMapper {
 
     CommunityDto toDto(Community community);
 
+    @Mapping(target = "estimatedProducedOxygenInKilograms", source = "garden.plants", qualifiedByName = "summarizeOxygenProduction")
+    @Mapping(target = "estimatedFixatedCO2InKilograms", source = "garden.plants", qualifiedByName = "summarizeCO2Fixation")
     GardenDto toDto(Garden garden);
+
+    @Named("summarizeOxygenProduction")
+    default double summarizeOxygenProduction(List<Plant> plants) {
+        return plants.stream().map(Plant::getEstimatedProducedOxygenInKilograms).reduce(0.0, Double::sum);
+    }
+
+    @Named("summarizeCO2Fixation")
+    default double summarizeCO2Fixation(List<Plant> plants) {
+        return plants.stream().map(Plant::getEstimatedFixatedCO2InKilograms).reduce(0.0, Double::sum);
+    }
 }

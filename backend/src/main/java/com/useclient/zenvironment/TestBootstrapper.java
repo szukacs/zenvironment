@@ -28,7 +28,14 @@ public class TestBootstrapper {
         gardenRepository.deleteAll();
         plantTypeRepository.deleteAll();
 
-        var tomato = new PlantType(null, "Tomato", "https://images.unsplash.com/photo-1592841200221-a6898f307baa", 0.15, 0.1, "kg");
+        var tomatoOxygenProductionPerDay = 0.15;
+        var tomatoCO2FixationPerDay = 0.1;
+        var tomato = new PlantType(
+                null,
+                "Tomato",
+                "https://images.unsplash.com/photo-1592841200221-a6898f307baa",
+                tomatoOxygenProductionPerDay,
+                tomatoCO2FixationPerDay, "kg");
         tomato = plantTypeRepository.save(tomato);
 
         var community = new Community(MY_COMMUNITY_NAME);
@@ -37,10 +44,10 @@ public class TestBootstrapper {
         var garden = new Garden(MY_GARDEN_NAME, community);
         garden = gardenRepository.save(garden);
 
-        var tomatoPlant1 = new Plant(null, tomato, garden, LocalDate.now().minusMonths(2), null);
+        var tomatoPlant1 = new Plant(null, tomato, garden, 60 * tomatoOxygenProductionPerDay, 60 * tomatoCO2FixationPerDay, LocalDate.now().minusDays(60), null);
         tomatoPlant1 = plantRepository.save(tomatoPlant1);
 
-        var tomatoPlant2 = new Plant(null, tomato, garden, LocalDate.now().minusMonths(4), null);
+        var tomatoPlant2 = new Plant(null, tomato, garden, 120 * tomatoOxygenProductionPerDay, 120 * tomatoCO2FixationPerDay, LocalDate.now().minusDays(120), null);
         tomatoPlant2 = plantRepository.save(tomatoPlant2);
 
         harvestRepository.save(new Harvest(null, tomatoPlant1, 1, LocalDate.now().minusDays(5)));
