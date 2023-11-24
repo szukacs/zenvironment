@@ -31,11 +31,22 @@ public interface MainMapper {
 
     @Named("summarizeOxygenProduction")
     default double summarizeOxygenProduction(List<Plant> plants) {
-        return plants.stream().map(Plant::getEstimatedProducedOxygenInKilograms).reduce(0.0, Double::sum);
+        return plants.stream().map(Plant::getAllProducedOxygenInKilograms).reduce(0.0, Double::sum);
     }
 
     @Named("summarizeCO2Fixation")
     default double summarizeCO2Fixation(List<Plant> plants) {
-        return plants.stream().map(Plant::getEstimatedFixatedCO2InKilograms).reduce(0.0, Double::sum);
+        return plants.stream().map(Plant::getAllFixatedCO2InKilograms).reduce(0.0, Double::sum);
+    }
+
+    @Named("summarizeWaterConsumption")
+    default double summarizeWaterConsumption(List<Plant> plants) {
+        return plants.stream().map(Plant::getAllWaterConsumptionInLiters).reduce(0.0, Double::sum);
+    }
+
+    @Named("daysTillHarvest")
+    default int getDaysTillHarvest(List<Plant> plants) {
+        return plants.stream().map(Plant::getDaysTillHarvest).reduce(0, Integer::sum);
     }
 }
+
