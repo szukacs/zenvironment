@@ -1,6 +1,7 @@
 package com.useclient.zenvironment.controller;
 
 import com.useclient.zenvironment.mapper.MainMapper;
+import com.useclient.zenvironment.model.dto.ChallengeDto;
 import com.useclient.zenvironment.model.dto.CommunityDto;
 import com.useclient.zenvironment.model.dto.GardenDto;
 import com.useclient.zenvironment.model.dto.PlantTypeDto;
@@ -44,6 +45,15 @@ public class ZenController {
     public ResponseEntity<CommunityDto> getMyCommunity() {
         var myCommunity = zenService.getCommunityByName(MY_COMMUNITY_NAME);
         var responseBody = mapper.toDto(myCommunity);
+        return ResponseEntity.ok(responseBody);
+    }
+
+    @Transactional(readOnly = true)
+    @GetMapping("/my-community/challenges")
+    public ResponseEntity<List<ChallengeDto>> getMyCommunityChallenges() {
+        var myCommunity = zenService.getCommunityByName(MY_COMMUNITY_NAME);
+        var challenges = zenService.getChallengesByCommunity(myCommunity);
+        var responseBody = mapper.toChallengeDtoList(challenges);
         return ResponseEntity.ok(responseBody);
     }
 }

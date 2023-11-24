@@ -4,6 +4,7 @@ import com.useclient.zenvironment.model.dao.Community;
 import com.useclient.zenvironment.model.dao.Garden;
 import com.useclient.zenvironment.model.dao.Plant;
 import com.useclient.zenvironment.model.dao.PlantType;
+import com.useclient.zenvironment.model.dao.challenge.Challenge;
 import com.useclient.zenvironment.model.dto.*;
 import org.mapstruct.*;
 
@@ -24,6 +25,15 @@ public interface MainMapper {
     MinimalCommunity toMinDto(Community community);
 
     CommunityDto toDto(Community community);
+
+    @Mapping(target = "challengeName", source = "challengeType.name")
+    @Mapping(target = "challengeDescription", source = "challengeType.description")
+    @Mapping(target = "previousTarget", expression = "java(challenge.getChallengeType().getLevelTargetFunction().apply(challenge.getLevel()-1))")
+    @Mapping(target = "nextTarget", expression = "java(challenge.getChallengeType().getLevelTargetFunction().apply(challenge.getLevel()))")
+    @Mapping(target = "currentProgress", expression = "java(challenge.getChallengeType().getProgressFunction().apply(challenge.getCommunity()))")
+    ChallengeDto toDto(Challenge challenge);
+
+    List<ChallengeDto> toChallengeDtoList(List<Challenge> challenges);
 
     @Mapping(target = "allProducedOxygenInKilograms", source = "plants", qualifiedByName = "summarizeOxygenProduction")
     @Mapping(target = "allFixatedCO2InKilograms", source = "plants", qualifiedByName = "summarizeCO2Fixation")
