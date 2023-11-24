@@ -1,11 +1,10 @@
 package com.useclient.zenvironment.mapper;
 
+import com.useclient.zenvironment.model.dao.Community;
 import com.useclient.zenvironment.model.dao.Garden;
 import com.useclient.zenvironment.model.dao.Plant;
 import com.useclient.zenvironment.model.dao.PlantType;
-import com.useclient.zenvironment.model.dto.GardenDto;
-import com.useclient.zenvironment.model.dto.PlantDto;
-import com.useclient.zenvironment.model.dto.PlantTypeDto;
+import com.useclient.zenvironment.model.dto.*;
 import org.mapstruct.*;
 
 import java.util.List;
@@ -20,5 +19,23 @@ public interface MainMapper {
     @Mapping(target = "gardenId", source = "garden.id")
     PlantDto toDto(Plant plant);
 
-    GardenDto toDto(Garden garden, List<PlantDto> plants);
+    List<PlantDto> toPlantDtoList(List<Plant> plants);
+
+    MinimalCommunity toMinDto(Community community);
+
+    CommunityDto toDto(Community community);
+
+    @Mapping(target = "estimatedProducedOxygenInKilograms", source = "garden.plants", qualifiedByName = "summarizeOxygenProduction")
+    @Mapping(target = "estimatedFixatedCO2InKilograms", source = "garden.plants", qualifiedByName = "summarizeCO2Fixation")
+    GardenDto toDto(Garden garden);
+
+    @Named("summarizeOxygenProduction")
+    default double summarizeOxygenProduction(List<Plant> plants) {
+        return plants.stream().map(Plant::getEstimatedProducedOxygenInKilograms).reduce(0.0, Double::sum);
+    }
+
+    @Named("summarizeCO2Fixation")
+    default double summarizeCO2Fixation(List<Plant> plants) {
+        return plants.stream().map(Plant::getEstimatedFixatedCO2InKilograms).reduce(0.0, Double::sum);
+    }
 }
