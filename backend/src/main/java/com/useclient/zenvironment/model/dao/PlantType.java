@@ -1,10 +1,7 @@
 package com.useclient.zenvironment.model.dao;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.UUID;
 
@@ -13,6 +10,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class PlantType {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -22,6 +20,11 @@ public class PlantType {
     private String imageUrl;
     private double averageOxygenProductionInKilogramsPerDay;
     private double averageCO2FixationInKilogramsPerDay;
+    private double averageCropPerCycle;
+    private double averageMonthsUntilHarvest;
+    private double waterInLiterPerWeek;
     private String harvestUnit;
+
+
 
 }
