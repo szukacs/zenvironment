@@ -22,7 +22,7 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 
 ## API generator
 
-The api is [generated](/useful/api-generation.md) with `swagger-typescript-api`
+The api is [generated](./useful/api-generation.md) with `swagger-typescript-api`
 
 ## Learn More
 
