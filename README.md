@@ -4,7 +4,7 @@
 
 ### [Frontend](./frontend/zenvironment-frontend/README.md)
 * Created by [Next.js](https://nextjs.org/)
-* [Hosted](https://junctionx-2022.vercel.app/web/charts) on [Vercel](https://vercel.com/)
+* [Hosted]() on [Vercel](https://vercel.com/)
 
 ### [Backend](./backend/README.md)
 * Created by [Spring Boot](https://spring.io/projects/spring-boot)
