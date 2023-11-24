@@ -14,14 +14,9 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Plant {
+public class Garden {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    @ManyToOne(optional = false)
-    private PlantType plantType;
-    @ManyToOne
-    private Garden garden;
-    private LocalDate plantedAt;
-    private LocalDate uprootedAt;
+    private String name;
 }
