@@ -1,6 +1,7 @@
+"use client"
+
 import { Page } from "@/components/Page";
 import {DisplayTab, SimpleTab} from "@/components/SimpleTab";
-import {Typography} from "@mui/material";
 
 export default function Community() {
   const tabs: DisplayTab[] = [{
@@ -14,7 +15,6 @@ export default function Community() {
 
   return (
     <Page title="Community">
-      <Typography>My Comunity</Typography>
       <SimpleTab tabs={tabs}/>
     </Page>
   );
