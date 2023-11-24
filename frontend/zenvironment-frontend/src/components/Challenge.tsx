@@ -22,10 +22,15 @@ export const Challenge = ({
   progressColor,
 }: ChallenegParams) => {
   return (
-    <Card sx={(theme) => ({ padding: theme.spacing(1) })}>
+    <Card
+      sx={(theme) => ({ padding: theme.spacing(1), margin: theme.spacing(1) })}
+    >
       <CardContent>
-        <Typography sx={(theme) => ({ padding: theme.spacing(1) })}>
-          Level {level}
+        <Typography
+          variant="h5"
+          sx={(theme) => ({ padding: theme.spacing(1) })}
+        >
+          {title}
         </Typography>
         <Box
           sx={(theme) => ({
@@ -35,10 +40,10 @@ export const Challenge = ({
           })}
         >
           <Box>
-            <Typography>{title}</Typography>
+            <Typography variant="subtitle1">Level {level}</Typography>
           </Box>
           <Box>
-            <Typography>
+            <Typography variant="subtitle1">
               {currentPoint}/{maxPoint}
             </Typography>
           </Box>
@@ -48,9 +53,9 @@ export const Challenge = ({
             variant="determinate"
             value={(currentPoint * 100) / maxPoint}
             sx={(theme) => ({
-              height: 50,
+              height: 30,
               borderRadius: 3,
-              backgroundColor: theme.palette.primary.light,
+              backgroundColor: "#e9e9e9",
               "& .MuiLinearProgress-bar": {
                 backgroundColor: progressColor,
                 borderRadius: 3,

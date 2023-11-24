@@ -1,4 +1,4 @@
-import { Card } from "@mui/material";
+import { Stack } from "@mui/material";
 import { Challenge } from "./Challenge";
 
 const challengeList = [
@@ -7,20 +7,20 @@ const challengeList = [
     title: "Oxigen",
     currentPoint: 25,
     maxPoint: 50,
-    progressColor: "yellow",
+    progressColor: "#557085",
   },
   {
     level: 2,
     title: "Tomato",
     currentPoint: 3,
     maxPoint: 10,
-    progressColor: "red",
+    progressColor: "#ee607a",
   },
 ];
 
 export const Challenges = () => {
   return (
-    <Card>
+    <Stack>
       {challengeList.map((ch, key) => (
         <Challenge
           key={key}
@@ -31,6 +31,6 @@ export const Challenges = () => {
           title={ch.title}
         />
       ))}
-    </Card>
+    </Stack>
   );
 };
