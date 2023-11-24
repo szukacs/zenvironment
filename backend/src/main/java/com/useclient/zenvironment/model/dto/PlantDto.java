@@ -14,10 +14,11 @@ public class PlantDto {
     private UUID id;
     private PlantTypeDto plantType;
     private UUID gardenId;
-    private double estimatedProducedOxygenInKilograms;
-    private double estimatedFixatedCO2InKilograms;
-    private double getWaterConsumption;
-    private int getDaysTillHarvest;
+    private double allProducedOxygenInKilograms;
+    private double allFixatedCO2InKilograms;
+    private double allWaterConsumptionInLiters;
+    private int daysTillHarvest;
     private LocalDate plantedAt;
     private LocalDate uprootedAt;
+
 }

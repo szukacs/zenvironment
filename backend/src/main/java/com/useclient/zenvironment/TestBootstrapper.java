@@ -233,6 +233,23 @@ public class TestBootstrapper {
             .plantedAt(LocalDate.now().minusDays(15))
             .build();
 
+        plantRepository.save(tomatoPlant1);
+        plantRepository.save(tomatoPlant2);
+        plantRepository.save(cucumberPlant);
+        plantRepository.save(cucumberPlant2);
+        plantRepository.save(sunFlowerPlant2);
+        plantRepository.save(sunFlowerPlant);
+        plantRepository.save(wheatPlant);
+        plantRepository.save(wheatPlant2);
+        plantRepository.save(spinachPlant);
+        plantRepository.save(spinachPlant2);
+        plantRepository.save(lettucePlant);
+        plantRepository.save(lettucePlant2);
+        plantRepository.save(paprikaPlant);
+        plantRepository.save(paprikaPlant2);
+        plantRepository.save(onionPlant1);
+        plantRepository.save(onionPlant2);
+
         harvestRepository.save(new Harvest(null, tomatoPlant1, 1, LocalDate.now().minusDays(5)));
         harvestRepository.save(new Harvest(null, tomatoPlant2, 2, LocalDate.now().minusDays(15)));
         harvestRepository.save(new Harvest(null, tomatoPlant2, 2.5, LocalDate.now().minusDays(3)));

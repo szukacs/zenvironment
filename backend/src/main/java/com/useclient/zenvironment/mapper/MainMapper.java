@@ -25,10 +25,9 @@ public interface MainMapper {
 
     CommunityDto toDto(Community community);
 
-    @Mapping(target = "estimatedProducedOxygenInKilograms", source = "garden.plants", qualifiedByName = "summarizeOxygenProduction")
-    @Mapping(target = "estimatedFixatedCO2InKilograms", source = "garden.plants", qualifiedByName = "summarizeCO2Fixation")
-    @Mapping(target = "getWaterConsumption", source = "garden.plants", qualifiedByName = "summarizeWaterConsumption")
-    @Mapping(target = "getDaysTillHarvest", source = "garden.plants", qualifiedByName = "daysTillHarvest")
+    @Mapping(target = "allProducedOxygenInKilograms", source = "plants", qualifiedByName = "summarizeOxygenProduction")
+    @Mapping(target = "allFixatedCO2InKilograms", source = "plants", qualifiedByName = "summarizeCO2Fixation")
+    @Mapping(target = "allWaterConsumptionInLiters", source = "plants", qualifiedByName = "summarizeWaterConsumption")
     GardenDto toDto(Garden garden);
 
     @Named("summarizeOxygenProduction")
@@ -41,14 +40,10 @@ public interface MainMapper {
         return plants.stream().map(Plant::getAllFixatedCO2InKilograms).reduce(0.0, Double::sum);
     }
 
+
     @Named("summarizeWaterConsumption")
     default double summarizeWaterConsumption(List<Plant> plants) {
         return plants.stream().map(Plant::getAllWaterConsumptionInLiters).reduce(0.0, Double::sum);
-    }
-
-    @Named("daysTillHarvest")
-    default int getDaysTillHarvest(List<Plant> plants) {
-        return plants.stream().map(Plant::getDaysTillHarvest).reduce(0, Integer::sum);
     }
 }
 

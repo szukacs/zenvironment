@@ -26,4 +26,5 @@ public class Garden {
         this.name = name;
         this.community = community;
     }
+
 }
