@@ -1,5 +1,3 @@
-import { Button } from "@mui/material";
-
-export default function Home() {
-  return <Button>Hello</Button>;
+export default function MyGarden() {
+  return <span>my garden</span>;
 }
