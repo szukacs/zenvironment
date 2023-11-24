@@ -1,31 +1,32 @@
-"use client"
+"use client";
 
-import {Page} from "@/components/Page";
-import {DisplayTab, SimpleTab} from "@/components/SimpleTab";
+import { Challenges } from "@/components/Challenges";
+import { Page } from "@/components/Page";
+import { DisplayTab, SimpleTab } from "@/components/SimpleTab";
 
 export default function Community() {
   const tabs: DisplayTab[] = [
     {
-    label: "Timeline",
-    content: <>Example tab 1</>
+      label: "Timeline",
+      content: <>Example tab 1</>,
     },
     {
       label: "Gardens",
-      content: <>Example tab 2</>
+      content: <>Example tab 2</>,
     },
     {
       label: "Challenges",
-      content: <>Example tab 3</>
+      content: <Challenges />,
     },
     {
       label: "Market",
-      content: <>Example tab 4</>
-    }
-  ]
+      content: <>Example tab 4</>,
+    },
+  ];
 
   return (
     <Page title="Community">
-      <SimpleTab tabs={tabs}/>
+      <SimpleTab tabs={tabs} />
     </Page>
   );
 }

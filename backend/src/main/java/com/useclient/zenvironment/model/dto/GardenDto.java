@@ -11,5 +11,8 @@ import java.util.UUID;
 public class GardenDto {
     private UUID id;
     private String name;
+    private double estimatedProducedOxygenInKilograms;
+    private double estimatedFixatedCO2InKilograms;
+    private MinimalCommunity community;
     private List<PlantDto> plants;
 }

@@ -22,6 +22,8 @@ public class Plant {
     private PlantType plantType;
     @ManyToOne
     private Garden garden;
+    private double estimatedProducedOxygenInKilograms;
+    private double estimatedFixatedCO2InKilograms;
     private LocalDate plantedAt;
     private LocalDate uprootedAt;
 }
