@@ -28,9 +28,6 @@ public interface MainMapper {
 
     @Mapping(target = "challengeName", source = "challengeType.name")
     @Mapping(target = "challengeDescription", source = "challengeType.description")
-    @Mapping(target = "previousTarget", expression = "java(challenge.getChallengeType().getLevelTargetFunction().apply(challenge.getLevel()-1))")
-    @Mapping(target = "nextTarget", expression = "java(challenge.getChallengeType().getLevelTargetFunction().apply(challenge.getLevel()))")
-    @Mapping(target = "currentProgress", expression = "java(challenge.getChallengeType().getProgressFunction().apply(challenge.getCommunity()))")
     ChallengeDto toDto(Challenge challenge);
 
     List<ChallengeDto> toChallengeDtoList(List<Challenge> challenges);

@@ -3,6 +3,7 @@ package com.useclient.zenvironment.util;
 import com.useclient.zenvironment.model.dao.Community;
 import com.useclient.zenvironment.model.dao.Garden;
 import com.useclient.zenvironment.model.dao.Plant;
+import com.useclient.zenvironment.model.dao.PlantType;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -27,5 +28,24 @@ public class ChallengeUtils {
                 .reduce(0.0, Double::sum);
     }
 
+    public static double countPlantsOfType(Community community, String countedPlantName) {
+        return community.getGardens().stream()
+                .map(Garden::getPlants)
+                .flatMap(List::stream)
+                .map(Plant::getPlantType)
+                .map(PlantType::getName)
+                .filter(plantName -> plantName.toLowerCase().contains(countedPlantName))
+                .count();
+    }
 
+    public static double getCommunitySize(Community community) {
+        return community.getGardens().size();
+    }
+
+    public static double countAllPlants(Community community) {
+        return community.getGardens().stream()
+                .map(Garden::getPlants)
+                .mapToLong(List::size)
+                .sum();
+    }
 }
