@@ -1,7 +1,5 @@
-package com.useclient.zenvironment.model.dao;
+package com.useclient.zenvironment.model.dto;
 
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,19 +7,13 @@ import lombok.Setter;
 import java.time.LocalDate;
 import java.util.UUID;
 
-@Entity
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
-public class Plant {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+public class PlantDto {
     private UUID id;
-    @ManyToOne(optional = false)
-    private PlantType plantType;
-    @ManyToOne
-    private Garden garden;
+    private PlantTypeDto plantType;
+    private UUID gardenId;
     private double estimatedProducedOxygenInKilograms;
     private double estimatedFixatedCO2InKilograms;
     private LocalDate plantedAt;

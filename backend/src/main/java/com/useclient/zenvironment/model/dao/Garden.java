@@ -1,28 +1,29 @@
 package com.useclient.zenvironment.model.dao;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
-public class Harvest {
+public class Garden {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-
+    private String name;
     @ManyToOne
-    private Plant plant;
+    private Community community;
+    @OneToMany(mappedBy = "garden")
+    private List<Plant> plants;
 
-    private double amount;
-
-    private LocalDate harvestDate;
+    public Garden(String name, Community community) {
+        this.name = name;
+        this.community = community;
+    }
 }
