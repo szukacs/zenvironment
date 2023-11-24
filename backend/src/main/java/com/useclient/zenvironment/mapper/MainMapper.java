@@ -1,11 +1,10 @@
 package com.useclient.zenvironment.mapper;
 
+import com.useclient.zenvironment.model.dao.Community;
 import com.useclient.zenvironment.model.dao.Garden;
 import com.useclient.zenvironment.model.dao.Plant;
 import com.useclient.zenvironment.model.dao.PlantType;
-import com.useclient.zenvironment.model.dto.GardenDto;
-import com.useclient.zenvironment.model.dto.PlantDto;
-import com.useclient.zenvironment.model.dto.PlantTypeDto;
+import com.useclient.zenvironment.model.dto.*;
 import org.mapstruct.*;
 
 import java.util.List;
@@ -20,5 +19,11 @@ public interface MainMapper {
     @Mapping(target = "gardenId", source = "garden.id")
     PlantDto toDto(Plant plant);
 
-    GardenDto toDto(Garden garden, List<PlantDto> plants);
+    List<PlantDto> toPlantDtoList(List<Plant> plants);
+
+    MinimalCommunity toMinDto(Community community);
+
+    CommunityDto toDto(Community community);
+
+    GardenDto toDto(Garden garden);
 }

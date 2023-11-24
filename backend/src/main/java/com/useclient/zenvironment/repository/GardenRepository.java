@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.UUID;
 
 public interface GardenRepository extends JpaRepository<Garden, UUID> {
-    Garden findByName(String name);
+    Garden getByName(String name);
 }
