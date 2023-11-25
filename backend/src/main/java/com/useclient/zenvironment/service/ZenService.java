@@ -3,6 +3,7 @@ package com.useclient.zenvironment.service;
 import com.useclient.zenvironment.mapper.MainMapper;
 import com.useclient.zenvironment.model.dao.*;
 import com.useclient.zenvironment.model.dao.challenge.Challenge;
+import com.useclient.zenvironment.model.dto.HarvestSummary;
 import com.useclient.zenvironment.model.dto.NewHarvestDto;
 import com.useclient.zenvironment.model.dto.NewPlantDto;
 import com.useclient.zenvironment.repository.*;
@@ -51,5 +52,9 @@ public class ZenService {
     public Harvest harvestPlant(Plant harvestedPlant, NewHarvestDto newHarvestDto) {
         var newHarvest = new Harvest(null, harvestedPlant, newHarvestDto.getAmount(), newHarvestDto.getHarvestDate());
         return harvestRepository.save(newHarvest);
+    }
+
+    public List<HarvestSummary> getHarvestSummaryByGarden(Garden myGarden) {
+        return harvestRepository.getHarvestSummaryByGarden(myGarden);
     }
 }
