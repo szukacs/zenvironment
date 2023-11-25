@@ -6,21 +6,25 @@ import {
   Typography,
 } from "@mui/material";
 
-interface ChallenegParams {
+interface ChallengeParams {
   level: number;
-  title: string;
-  currentPoint: number;
-  maxPoint: number;
-  progressColor: string;
+  name: string;
+  description: string;
+  prevLevelTarget: number;
+  nextLevelTarget: number;
+  currentProgress: number;
+  progressColor?: string;
 }
 
 export const Challenge = ({
   level,
-  title,
-  currentPoint,
-  maxPoint,
+  name,
+  description,
+  prevLevelTarget,
+  nextLevelTarget,
+  currentProgress,
   progressColor,
-}: ChallenegParams) => {
+}: ChallengeParams) => {
   return (
     <Card
       sx={(theme) => ({ padding: theme.spacing(1), margin: theme.spacing(1) })}
@@ -30,7 +34,13 @@ export const Challenge = ({
           variant="h5"
           sx={(theme) => ({ padding: theme.spacing(1) })}
         >
-          {title}
+          {name}
+        </Typography>
+        <Typography
+          variant="h6"
+          sx={(theme) => ({ padding: theme.spacing(1) })}
+        >
+          {description}
         </Typography>
         <Box
           sx={(theme) => ({
@@ -44,14 +54,16 @@ export const Challenge = ({
           </Box>
           <Box>
             <Typography variant="subtitle1">
-              {currentPoint}/{maxPoint}
+              {currentProgress - prevLevelTarget}/{nextLevelTarget}
             </Typography>
           </Box>
         </Box>
         <Box>
           <LinearProgress
             variant="determinate"
-            value={(currentPoint * 100) / maxPoint}
+            value={
+              ((currentProgress - prevLevelTarget) * 100) / nextLevelTarget
+            }
             sx={(theme) => ({
               height: 30,
               borderRadius: 3,

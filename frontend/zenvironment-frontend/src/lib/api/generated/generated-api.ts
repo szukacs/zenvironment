@@ -1,3 +1,30 @@
+export interface NewPlantDto {
+  /** @format uuid */
+  plantTypeId?: string;
+  /** @format date */
+  plantedAt?: string;
+}
+
+export interface PlantDto {
+  /** @format uuid */
+  id?: string;
+  plantType?: PlantTypeDto;
+  /** @format uuid */
+  gardenId?: string;
+  /** @format double */
+  allProducedOxygenInKilograms?: number;
+  /** @format double */
+  allFixatedCO2InKilograms?: number;
+  /** @format double */
+  allWaterConsumptionInLiters?: number;
+  /** @format int32 */
+  daysTillHarvest?: number;
+  /** @format date */
+  plantedAt?: string;
+  /** @format date */
+  uprootedAt?: string;
+}
+
 export interface PlantTypeDto {
   /** @format uuid */
   id?: string;
@@ -10,14 +37,33 @@ export interface PlantTypeDto {
   harvestUnit?: string;
 }
 
+export interface NewHarvestDto {
+  /** @format double */
+  amount?: number;
+  /** @format date */
+  harvestDate?: string;
+}
+
+export interface HarvestDto {
+  /** @format uuid */
+  id?: string;
+  /** @format double */
+  amount?: number;
+  harvestUnit?: string;
+  /** @format date */
+  harvestDate?: string;
+}
+
 export interface GardenDto {
   /** @format uuid */
   id?: string;
   name?: string;
   /** @format double */
-  estimatedProducedOxygenInKilograms?: number;
+  allProducedOxygenInKilograms?: number;
   /** @format double */
-  estimatedFixatedCO2InKilograms?: number;
+  allFixatedCO2InKilograms?: number;
+  /** @format double */
+  allWaterConsumptionInLiters?: number;
   community?: MinimalCommunity;
   plants?: PlantDto[];
 }
@@ -28,27 +74,27 @@ export interface MinimalCommunity {
   name?: string;
 }
 
-export interface PlantDto {
-  /** @format uuid */
-  id?: string;
-  plantType?: PlantTypeDto;
-  /** @format uuid */
-  gardenId?: string;
-  /** @format double */
-  estimatedProducedOxygenInKilograms?: number;
-  /** @format double */
-  estimatedFixatedCO2InKilograms?: number;
-  /** @format date */
-  plantedAt?: string;
-  /** @format date */
-  uprootedAt?: string;
-}
-
 export interface CommunityDto {
   /** @format uuid */
   id?: string;
   name?: string;
   gardens?: GardenDto[];
+}
+
+export interface ChallengeDto {
+  /** @format uuid */
+  id?: string;
+  community?: MinimalCommunity;
+  /** @format int32 */
+  level?: number;
+  challengeName?: string;
+  challengeDescription?: string;
+  /** @format double */
+  previousLevelTarget?: number;
+  /** @format double */
+  nextLevelTarget?: number;
+  /** @format double */
+  currentProgress?: number;
 }
 
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse, HeadersDefaults, ResponseType } from "axios";
@@ -188,6 +234,53 @@ export class HttpClient<SecurityDataType = unknown> {
  * @baseUrl http://localhost:8080
  */
 export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDataType> {
+  myGarden = {
+    /**
+     * No description
+     *
+     * @tags zen-controller
+     * @name AddPlant
+     * @request POST:/my-garden/plants
+     */
+    addPlant: (data: NewPlantDto, params: RequestParams = {}) =>
+      this.request<PlantDto, any>({
+        path: `/my-garden/plants`,
+        method: "POST",
+        body: data,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags zen-controller
+     * @name HarvestPlant
+     * @request POST:/my-garden/plants/{plantId}/harvest
+     */
+    harvestPlant: (plantId: string, data: NewHarvestDto, params: RequestParams = {}) =>
+      this.request<HarvestDto, any>({
+        path: `/my-garden/plants/${plantId}/harvest`,
+        method: "POST",
+        body: data,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags zen-controller
+     * @name GetMyGarden
+     * @request GET:/my-garden
+     */
+    getMyGarden: (params: RequestParams = {}) =>
+      this.request<GardenDto, any>({
+        path: `/my-garden`,
+        method: "GET",
+        ...params,
+      }),
+  };
   plantTypes = {
     /**
      * No description
@@ -203,21 +296,6 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         ...params,
       }),
   };
-  myGarden = {
-    /**
-     * No description
-     *
-     * @tags zen-controller
-     * @name GetMyGarden
-     * @request GET:/my-garden
-     */
-    getMyGarden: (params: RequestParams = {}) =>
-      this.request<GardenDto, any>({
-        path: `/my-garden`,
-        method: "GET",
-        ...params,
-      }),
-  };
   myCommunity = {
     /**
      * No description
@@ -229,6 +307,20 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     getMyCommunity: (params: RequestParams = {}) =>
       this.request<CommunityDto, any>({
         path: `/my-community`,
+        method: "GET",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags zen-controller
+     * @name GetMyCommunityChallenges
+     * @request GET:/my-community/challenges
+     */
+    getMyCommunityChallenges: (params: RequestParams = {}) =>
+      this.request<ChallengeDto[], any>({
+        path: `/my-community/challenges`,
         method: "GET",
         ...params,
       }),
