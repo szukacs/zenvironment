@@ -1,10 +1,10 @@
 # zenvironment backend
 
 ## Technology stack
- a|a |a |a
--------------------------|-------------------------|-------------------------|-------------------------:
-![](images/springboot.png)  |  ![](images/gradle.png) | ![](images/openapi.png) | [](images/springboot.png)
-![](images/docker.png)  |  ![](images/swagger.png) | ![](images/mapstruct.png) | 
+ |                            | | |                           |
+|----------------------------|------------------------|------------------------|--------------------------:|
+ | ![](images/springboot.png) |  ![](images/gradle.png) | ![](images/openapi.png) | [](images/springboot.png) |
+ | ![](images/docker.png)     |  ![](images/swagger.png) | ![](images/mapstruct.png) | 
 
 ## Prequisites for the backend
 
