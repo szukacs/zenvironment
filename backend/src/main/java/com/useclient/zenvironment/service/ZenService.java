@@ -2,7 +2,6 @@ package com.useclient.zenvironment.service;
 
 import com.useclient.zenvironment.mapper.MainMapper;
 import com.useclient.zenvironment.model.dao.*;
-import com.useclient.zenvironment.model.dao.challenge.Challenge;
 import com.useclient.zenvironment.model.dto.HarvestSummary;
 import com.useclient.zenvironment.model.dto.NewHarvestDto;
 import com.useclient.zenvironment.model.dto.NewPlantDto;
@@ -20,7 +19,6 @@ public class ZenService {
     private final GardenRepository gardenRepository;
     private final PlantTypeRepository plantTypeRepository;
     private final CommunityRepository communityRepository;
-    private final ChallengeRepository challengeRepository;
     private final PlantRepository plantRepository;
     private final HarvestRepository harvestRepository;
 
@@ -34,10 +32,6 @@ public class ZenService {
 
     public Community getCommunityByName(String communityName) {
         return communityRepository.getByName(communityName);
-    }
-
-    public List<Challenge> getChallengesByCommunity(Community community) {
-        return challengeRepository.getAllByCommunity(community);
     }
 
     public Plant addPlant(Garden garden, NewPlantDto newPlantDto) {

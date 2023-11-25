@@ -12,6 +12,8 @@ export const Page: FC<PageProps> = ({ children, title }) => {
     <Stack>
       <Box
         sx={(theme) => ({
+          textAlign: "center",
+          color: "#052419",
           padding: theme.spacing(1, 2),
         })}
       >

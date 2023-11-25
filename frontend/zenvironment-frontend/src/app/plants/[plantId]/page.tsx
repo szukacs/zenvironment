@@ -38,6 +38,12 @@ const plant = getPlantQuery.data!.data
         fact="Medium consumption for a human for a day is 0.85 kg"
       />
       <StatDisplay
+        sx={{color: '#cfa448'}}
+        title='All Yield'
+        amount={`${plant.allHarvestedAmount ?? 0}`}
+        unit="kg"
+      />
+      <StatDisplay
         sx={{color: '#52c454'}}
         title='All fixated carbon-dioxid'
         amount={`${plant.allFixatedCO2InKilograms ?? 0}`}

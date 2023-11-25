@@ -11,6 +11,7 @@ import { PropsWithChildren, useState } from "react";
 const theme = createTheme({
   palette: {
     primary,
+    background: { default: "#bddbbd" },
   },
 });
 
