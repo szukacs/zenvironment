@@ -32,11 +32,11 @@ public interface MainMapper {
 
     CommunityDto toDto(Community community);
 
-    @Mapping(target = "exchangeId", source = "id")
-    @Mapping(target = "vendorId", source = "buyer.id")
-    @Mapping(target = "buyerId", source = "buyer.id")
-    @Mapping(target = "description", source = "description")
-    ExchangeDto exchangeDto(Garden vendor, Garden buyer);
+    @Mapping(target = "exchangeId", source = "exchange.id")
+    @Mapping(target = "vendorId", source = "exchange.garden.id")
+    @Mapping(target = "receiverId", source = "exchange.receiverId")
+    @Mapping(target = "description", source = "exchange.description")
+    ExchangeDto exchangeDto(Exchange exchange);
 
     @Mapping(target = "challengeName", source = "challengeType.name")
     @Mapping(target = "challengeDescription", source = "challengeType.description")

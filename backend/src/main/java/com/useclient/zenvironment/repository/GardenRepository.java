@@ -7,4 +7,5 @@ import java.util.UUID;
 
 public interface GardenRepository extends JpaRepository<Garden, UUID> {
     Garden getByName(String name);
+
 }
