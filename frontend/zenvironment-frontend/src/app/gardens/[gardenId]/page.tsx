@@ -1,3 +1,5 @@
+"use client";
+
 interface GardenPageParams {
   params: {
     gardenId: string;
