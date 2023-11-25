@@ -37,6 +37,14 @@ public class ZenController {
         return ResponseEntity.ok(responseBody);
     }
 
+    @Transactional(readOnly = true)
+    @GetMapping("/my-garden/harvests")
+    public ResponseEntity<List<HarvestSummary>> getMyHarvests() {
+        var myGarden = zenService.getGardenByName(MY_GARDEN_NAME);
+        var harvestSummary = zenService.getHarvestSummaryByGarden(myGarden);
+        return ResponseEntity.ok(harvestSummary);
+    }
+
     @Transactional
     @PostMapping("/my-garden/plants")
     public ResponseEntity<PlantDto> addPlant(@RequestBody NewPlantDto newPlantDto) {
@@ -48,16 +56,16 @@ public class ZenController {
 
     @Transactional(readOnly = true)
     @GetMapping("/my-garden/plants/{plantId}")
-    public ResponseEntity<PlantDto> getPlantById(@PathVariable UUID plantId) {
-        var plant = zenService.getPlantById(plantId);
+    public ResponseEntity<PlantDto> getPlantById(@PathVariable String plantId) {
+        var plant = zenService.getPlantById(UUID.fromString(plantId));
         var responseBody = mapper.toDto(plant);
         return ResponseEntity.ok(responseBody);
     }
 
     @Transactional
     @PostMapping("/my-garden/plants/{plantId}/harvest")
-    public ResponseEntity<HarvestDto> harvestPlant(@PathVariable UUID plantId, @RequestBody NewHarvestDto newHarvestDto) {
-        var harvestedPlant = zenService.getPlantById(plantId);
+    public ResponseEntity<HarvestDto> harvestPlant(@PathVariable String plantId, @RequestBody NewHarvestDto newHarvestDto) {
+        var harvestedPlant = zenService.getPlantById(UUID.fromString(plantId));
         var newHarvest = zenService.harvestPlant(harvestedPlant, newHarvestDto);
         var responseBody = mapper.toDto(newHarvest);
         return ResponseEntity.ok(responseBody);

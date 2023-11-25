@@ -10,6 +10,7 @@ import java.util.UUID;
 @Setter
 public class HarvestDto {
     private UUID id;
+    private UUID plantId;
     private double amount;
     private String harvestUnit;
     private LocalDate harvestDate;
