@@ -19,10 +19,17 @@ export default function Community() {
     );
   }
 
+  if (myCommunityQuery.status == "error") {
+    return (
+      <>
+        Error, this is definitely not our fault! Drop out your laptop and buy a new one! :)
+      </>)
+  }
+
   const tabs: DisplayTab[] = [
     {
       label: "Gardens",
-      content: <MyCommunityGardens />,
+      content: <MyCommunityGardens gardenList={myCommunityQuery.data!.data.gardens ?? []} />,
     },
     {
       label: "Challenges",
@@ -36,12 +43,6 @@ export default function Community() {
 
   return (
     <Page title="Community">
-      {myCommunityQuery.status == "error" && (
-        <>
-          Error, this is definitely not our fault! Drop out your laptop and buy
-          a new one! :)
-        </>
-      )}
       {myCommunityQuery.status == "success" && (
         <>{myCommunityQuery.data.data.name}</>
       )}

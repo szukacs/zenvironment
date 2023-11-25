@@ -78,9 +78,8 @@ export interface NewHarvestDto {
   harvestDate?: string;
 }
 
-export interface Message {
-  message?: string;
-  conversationId?: string;
+export interface NewGardenDto {
+  name?: string;
 }
 
 export interface GardenDto {
@@ -101,6 +100,11 @@ export interface MinimalCommunity {
   /** @format uuid */
   id?: string;
   name?: string;
+}
+
+export interface Message {
+  message?: string;
+  conversationId?: string;
 }
 
 export interface HarvestSummary {
@@ -399,6 +403,53 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     findAllExchangesBelongingToGarden: (gardenId: string, params: RequestParams = {}) =>
       this.request<ExchangeDto[], any>({
         path: `/my-garden/exchanges/${gardenId}`,
+        method: "GET",
+        ...params,
+      }),
+  };
+  gardens = {
+    /**
+     * No description
+     *
+     * @tags zen-controller
+     * @name CreateGarden
+     * @request POST:/gardens
+     */
+    createGarden: (data: NewGardenDto, params: RequestParams = {}) =>
+      this.request<GardenDto, any>({
+        path: `/gardens`,
+        method: "POST",
+        body: data,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags zen-controller
+     * @name AddPlant1
+     * @request POST:/gardens/{gardenId}/plants
+     */
+    addPlant1: (gardenId: string, data: NewPlantDto, params: RequestParams = {}) =>
+      this.request<PlantDto, any>({
+        path: `/gardens/${gardenId}/plants`,
+        method: "POST",
+        body: data,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags zen-controller
+     * @name GetGardenById
+     * @request GET:/gardens/{gardenId}
+     */
+    getGardenById: (gardenId: string, params: RequestParams = {}) =>
+      this.request<GardenDto, any>({
+        path: `/gardens/${gardenId}`,
         method: "GET",
         ...params,
       }),

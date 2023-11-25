@@ -4,10 +4,11 @@ import { Garden } from "@/components/Garden";
 import { Page } from "@/components/Page";
 import { Box, CircularProgress, Stack } from "@mui/material";
 import { StatDisplay } from "@/components/StatDisplay";
-import { useGetMyGardenQuery } from "@/components/queries";
+import { useGetGardenQuery, useGetMyGardenQuery } from "@/components/queries";
+import { getSessionIdOrThrow } from "@/lib/session";
 
 export default function MyGarden() {
-  const myGardenQuery = useGetMyGardenQuery();
+  const myGardenQuery = useGetGardenQuery(getSessionIdOrThrow());
   if (myGardenQuery.isLoading) {
     return (
       <Box display="flex" justifyContent="center">
@@ -25,8 +26,10 @@ export default function MyGarden() {
     );
   }
 
+  const name = myGardenQuery.data?.data.name ?? "";
+
   return (
-    <Page title="My Garden">
+    <Page title={`${name}${name[name.length - 1] === "s" ? "’" : "’s"} Garden`}>
       {myGardenQuery.status == "success" && (
         <Box mt={3}>
           <Garden plants={myGardenQuery.data?.data.plants!} />

@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 export const myGardenQueryKeys = {
   root: () => ["root"] as const,
   myGarden: () => [...myGardenQueryKeys.root(), "myGarden"] as const,
+  garden: (id: string) => [...myGardenQueryKeys.root(), "garden"] as const,
   myCommunity: () => [...myGardenQueryKeys.root(), "myCommunity"] as const,
   plant: (plantId: string) =>
     [...myGardenQueryKeys.root(), "plant", plantId] as const,
@@ -14,6 +15,13 @@ export function useGetMyGardenQuery() {
   return useQuery({
     queryKey: myGardenQueryKeys.myGarden(),
     queryFn: () => api.myGarden.getMyGarden(),
+  });
+}
+
+export function useGetGardenQuery(id: string) {
+  return useQuery({
+    queryKey: myGardenQueryKeys.myGarden(),
+    queryFn: () => api.gardens.getGardenById(id),
   });
 }
 
@@ -39,7 +47,7 @@ export function useGetPlantTypes() {
 }
 
 export const communityQueryKeys = {
-  root: () => ['root'] as const,
+  root: () => ['communityRoot'] as const,
   communityChallenges: () => [...communityQueryKeys.root(), 'communityChallenges'] as const,
   communityMarket: (id: string) => [...communityQueryKeys.root(), 'communityMarket', id] as const
 } as const;
