@@ -99,6 +99,13 @@ public class ZenController {
         return ResponseEntity.ok(responseBody);
     }
 
+    @Transactional
+    @PutMapping("/my-garden/exchanges/")
+    public ResponseEntity<?> acceptExchange(ExchangeDto exchangeDto){
+        exchangeService.updateStatusOfExchange(exchangeDto);
+        return ResponseEntity.ok("You successfully accepted the plants");
+    }
+
     @Transactional(readOnly = true)
     @GetMapping("/my-community/exchanges/{communityId}")
     public ResponseEntity<List<ExchangeDto>> findAllExchangesBelongingToCommuniy(@PathVariable("communityId") String communityId){

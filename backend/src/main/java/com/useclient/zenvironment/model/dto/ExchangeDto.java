@@ -13,4 +13,5 @@ public class ExchangeDto {
   private String vendorId;
   private String receiverId;
   private String description;
+  private String imageUrl;
 }

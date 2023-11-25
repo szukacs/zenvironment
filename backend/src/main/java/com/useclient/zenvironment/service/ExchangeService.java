@@ -59,7 +59,7 @@ public class ExchangeService {
   }
 
   public List<ExchangeDto> findAllExchangesBelongingToGarden(String gardenId){
-   List<Exchange> exchanges = exchangeRepository.findAllByIdNotAccepted(gardenId);
+   List<Exchange> exchanges = exchangeRepository.findAllByIdNotAccepted(UUID.fromString(gardenId), gardenId);
    List<ExchangeDto> exchangeDtos = new ArrayList<>();
    exchanges.forEach(exchange -> exchangeDtos.add(mapper.exchangeDto(exchange)));
    return exchangeDtos;
