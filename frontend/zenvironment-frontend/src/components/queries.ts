@@ -41,6 +41,7 @@ export function useGetMyCommunityQuery() {
   return useQuery({
     queryKey: myGardenQueryKeys.myCommunity(),
     queryFn: () => api.myCommunity.getMyCommunity(),
+    refetchInterval: 5000,
   });
 }
 
