@@ -21,11 +21,8 @@ public class ChallengeService {
     public static final String SUM_CO2_NAME = "summarizeCO2Fixation";
     public static final String COUNT_TOMATOES_NAME = "countTomatoes";
     public static final String COUNT_PAPRIKAS_NAME = "countPaprikas";
-    public static final String COUNT_SPINACH_NAME = "countSpinach";
-    public static final String COUNT_ONIONS_NAME = "countOnions";
     public static final String COUNT_LETTUCE_NAME = "countLettuce";
-    public static final String COUNT_WHEAT_NAME = "countWheat";
-    public static final String COUNT_CUCUMBER_NAME = "countCucumber";
+    public static final String COUNT_PEAS_NAME = "countPeas";
     public static final String COUNT_SUNFLOWER_NAME = "countSunflower";
     public static final String COUNT_COMMUNITY_SIZE_NAME = "countCommunitySize";
     public static final String COUNT_ALL_PLANTS_NAME = "countAllPlants";
@@ -88,29 +85,14 @@ public class ChallengeService {
         return countPlantsOfType(community, "paprika");
     }
 
-    @Named(COUNT_ONIONS_NAME)
-    public double countOnions(Community community) {
-        return countPlantsOfType(community, "onion");
-    }
-
     @Named(COUNT_LETTUCE_NAME)
     public double countLettuce(Community community) {
         return countPlantsOfType(community, "lettuce");
     }
 
-    @Named(COUNT_SPINACH_NAME)
-    public double countSpinach(Community community) {
-        return countPlantsOfType(community, "spinach");
-    }
-
-    @Named(COUNT_WHEAT_NAME)
-    public double countWheat(Community community) {
-        return countPlantsOfType(community, "wheat");
-    }
-
-    @Named(COUNT_CUCUMBER_NAME)
-    public double countCucumber(Community community) {
-        return countPlantsOfType(community, "cucumber");
+    @Named(COUNT_PEAS_NAME)
+    public double countPeas(Community community) {
+        return countPlantsOfType(community, "pea");
     }
 
     @Named(COUNT_SUNFLOWER_NAME)

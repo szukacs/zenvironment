@@ -25,13 +25,6 @@ public enum ChallengeType {
             "#56b5db",
             SUM_CO2_NAME,
             level -> (20.0 * level)),
-    PlantCount(
-            "Number of Plants",
-            "Increase the number of plants in your community",
-            "/challenge/numberPlants.jpg",
-            "#56b5db",
-            COUNT_ALL_PLANTS_NAME,
-            level -> (10.0 * level)),
     CommunitySize(
             "Community Members",
             "Invite more members into the community",
@@ -39,6 +32,13 @@ public enum ChallengeType {
             "#56b5db",
             COUNT_COMMUNITY_SIZE_NAME,
             level -> (3.0 * level)),
+    PlantCount(
+            "Number of Plants",
+            "Increase the number of plants in your community",
+            "/challenge/numberPlants.jpg",
+            "#56b5db",
+            COUNT_ALL_PLANTS_NAME,
+            level -> (10.0 * level)),
     TomatoCount(
             "Number of Tomatoes",
             "Increase the number of tomato plants in your community",
@@ -55,14 +55,6 @@ public enum ChallengeType {
             COUNT_PAPRIKAS_NAME,
             level -> (5.0 * level)),
 
-    OnionCount(
-            "Number of Onions",
-            "Increase the number of onion plants in your community",
-            "/challenge/onionPlant.jpg",
-            "#56b5db",
-            COUNT_ONIONS_NAME,
-            level -> (5.0 * level)),
-
     LettuceCount(
             "Number of Lettuce",
             "Increase the number of lettuce plants in your community",
@@ -71,33 +63,17 @@ public enum ChallengeType {
             COUNT_LETTUCE_NAME,
             level -> (5.0 * level)),
 
-    SpinachCount(
-            "Number of Spinach",
-            "Increase the number of spinach plants in your community",
-            "/challenge/spinachPlant.jpg",
+    PeaCount(
+            "Number of Peas",
+            "Increase the number of pea plants in your community",
+            "/challenge/peaPlant.jpg",
             "#56b5db",
-            COUNT_SPINACH_NAME,
-            level -> (5.0 * level)),
-
-    WheatCount(
-            "Number of Wheat",
-            "Increase the number of wheat plants in your community",
-            "/challenge/paprikaPlant.jpg",
-            "#56b5db",
-            COUNT_WHEAT_NAME,
-            level -> (5.0 * level)),
-
-    CucumberCount(
-            "Number of Cucumbers",
-            "Increase the number of cucumber plants in your community",
-            "/challenge/cucumberPlant.jpg",
-            "#56b5db",
-            COUNT_CUCUMBER_NAME,
+            COUNT_PEAS_NAME,
             level -> (5.0 * level)),
 
     SunFlowerCount(
             "Number of Sunflowers",
-            "Increase the number of sunFlower plants in your community",
+            "Increase the number of sunflower plants in your community",
             "/challenge/sunFlowerPlant.jpg",
             "#56b5db",
             COUNT_SUNFLOWER_NAME,
