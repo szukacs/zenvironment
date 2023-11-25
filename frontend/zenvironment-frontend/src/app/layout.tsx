@@ -14,6 +14,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Onboarding } from "@/components/Onboarding";
 import { getSessionId } from "@/lib/session";
 import { useState } from "react";
+import { Container } from "@/components/Container";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -46,11 +47,13 @@ export default function RootLayout({
                   {children} <Navigation />
                 </>
               ) : (
-                <Onboarding
-                  onSuccess={() => {
-                    setStatus("authenticated");
-                  }}
-                />
+                <Container>
+                  <Onboarding
+                    onSuccess={() => {
+                      setStatus("authenticated");
+                    }}
+                  />
+                </Container>
               )}
             </QueryClientProvider>
           </body>
