@@ -1,16 +1,10 @@
 # zenvironment backend
 
 ## Technology stack
-![](images/springboot.png?raw=true)
-Solarized dark             |  Solarized Ocea
+            | | |
 :-------------------------:|:-------------------------:
-![](images/springboot.png)  |  ![](images/gradle.png)
-* [Gradle](images/gradle.png "Gradle")
-* [Open API](images/springboot.png "Open API")
-* [MapStruct](images/springboot.png "MapStruct")
-* [ChatGPT](images/springboot.png "ChatGPT")
-* [Swagger](images/springboot.png "Swagger")
-* [Docker](images/springboot.png "Docker")
+![](images/springboot.png)  |  ![](images/gradle.png) | ![](images/openapi.png) | [](images/springboot.png)
+![](images/docker.png)  |  ![](images/swagger.png) | ![](images/mapstruct.png) | 
 
 ## Prequisites for the backend
 
