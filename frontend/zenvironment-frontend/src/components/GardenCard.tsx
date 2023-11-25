@@ -10,7 +10,7 @@ export interface GardenCardProps {
 
 export const GardenCard: React.FC<GardenCardProps> = ({ garden }) => {
   const roundNumber = (num: number) => {
-    return Math.round((num + Number.EPSILON) * 10) / 10;
+    return Math.round((num + Number.EPSILON) * 100) / 100;
   };
 
   return (
@@ -73,7 +73,7 @@ export const GardenCard: React.FC<GardenCardProps> = ({ garden }) => {
                     <Typography>×</Typography>
                     <Typography
                       sx={{ color: "#cfa448" }}
-                    >{`${summary.plantCount} pcs`}</Typography>
+                    >{`${summary.plantCount}`}</Typography>
                     <Typography
                       sx={{
                         color: "#52c454",
