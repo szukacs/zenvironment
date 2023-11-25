@@ -50,6 +50,7 @@ export const Garden: FC<GardenProps> = ({
 
             return (
               <Tile
+                key={`${x}-${y}`}
                 plant={plant}
                 x={x}
                 y={y}

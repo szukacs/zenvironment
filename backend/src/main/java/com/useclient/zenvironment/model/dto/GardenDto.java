@@ -16,4 +16,5 @@ public class GardenDto {
     private double allWaterConsumptionInLiters;
     private MinimalCommunity community;
     private List<PlantDto> plants;
+    private List<PlantSummary> plantSummaries;
 }
