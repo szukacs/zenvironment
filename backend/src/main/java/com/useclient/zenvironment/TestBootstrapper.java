@@ -46,20 +46,9 @@ public class TestBootstrapper {
             .harvestUnit("kg")
             .build();
 
-        var onion = PlantType.builder()
-            .name("onion")
-            .imageUrl( "/fruit/onion.jpg")
-            .averageOxygenProductionInKilogramsPerDay(0.006)
-            .averageCO2FixationInKilogramsPerDay(0.0075)
-            .waterInLiterPerWeek(2.5)
-            .averageCropPerCycle(0.75)
-            .averageMonthsUntilHarvest(3.5)
-            .harvestUnit("kg")
-            .build();
-
         var lettuce = PlantType.builder()
             .name("lettuce")
-            .imageUrl( "/fruit/lettuce.jpg")
+            .imageUrl( "/fruit/lettuce.png")
             .averageOxygenProductionInKilogramsPerDay(0.0065)
             .averageCO2FixationInKilogramsPerDay(0.0075)
             .waterInLiterPerWeek(3.5)
@@ -70,7 +59,7 @@ public class TestBootstrapper {
 
         var paprika = PlantType.builder()
             .name("paprika")
-            .imageUrl( "/fruit/paprika.jpg")
+            .imageUrl( "/fruit/paprika.png")
             .averageOxygenProductionInKilogramsPerDay(0.0075)
             .averageCO2FixationInKilogramsPerDay(0.125)
             .waterInLiterPerWeek(4.5)
@@ -79,31 +68,9 @@ public class TestBootstrapper {
             .harvestUnit("kg")
             .build();
 
-        var spinach = PlantType.builder()
-            .name("spinach")
-            .imageUrl( "/fruit/spinach.jpg")
-            .averageOxygenProductionInKilogramsPerDay(0.0085)
-            .averageCO2FixationInKilogramsPerDay(0.125)
-            .waterInLiterPerWeek(3.5)
-            .averageCropPerCycle(0.2)
-            .averageMonthsUntilHarvest(1)
-            .harvestUnit("kg")
-            .build();
-
-        var wheat = PlantType.builder()
-            .name("wheat")
-            .imageUrl( "/fruit/wheat.jpg")
-            .averageOxygenProductionInKilogramsPerDay(0.009)
-            .averageCO2FixationInKilogramsPerDay(0.175)
-            .waterInLiterPerWeek(7.5)
-            .averageCropPerCycle(0.75)
-            .averageMonthsUntilHarvest(3)
-            .harvestUnit("kg")
-            .build();
-
-        var cucumber = PlantType.builder()
-            .name("cucumber")
-            .imageUrl( "/fruit/cucumber.jpg")
+        var pea = PlantType.builder()
+            .name("Pea")
+            .imageUrl( "/fruit/pea.png")
             .averageOxygenProductionInKilogramsPerDay(0.009)
             .averageCO2FixationInKilogramsPerDay(0.175)
             .waterInLiterPerWeek(7)
@@ -114,7 +81,7 @@ public class TestBootstrapper {
 
         var sunFlower = PlantType.builder()
             .name("sunflower")
-            .imageUrl( "/fruit/sunFlower.jpg")
+            .imageUrl( "/fruit/sunflower.png")
             .averageOxygenProductionInKilogramsPerDay(0.009)
             .averageCO2FixationInKilogramsPerDay(0.25)
             .waterInLiterPerWeek(5)
@@ -126,11 +93,8 @@ public class TestBootstrapper {
 
         tomato = plantTypeRepository.save(tomato);
         sunFlower = plantTypeRepository.save(sunFlower);
-        cucumber = plantTypeRepository.save(cucumber);
+        pea = plantTypeRepository.save(pea);
         paprika = plantTypeRepository.save(paprika);
-        wheat = plantTypeRepository.save(wheat);
-        onion = plantTypeRepository.save(onion);
-        spinach = plantTypeRepository.save(spinach);
         lettuce = plantTypeRepository.save(lettuce);
 
         var community = new Community(MY_COMMUNITY_NAME);
@@ -171,22 +135,6 @@ public class TestBootstrapper {
             .plantedAt(LocalDate.now().minusDays(120))
             .build();
 
-        var onionPlant1 = Plant.builder()
-            .plantType(onion)
-            .garden(garden)
-            .x(3)
-            .y(4)
-            .plantedAt(LocalDate.now().minusDays(50))
-            .build();
-
-        var onionPlant2 = Plant.builder()
-            .plantType(onion)
-            .garden(garden2)
-            .x(4)
-            .y(0)
-            .plantedAt(LocalDate.now().minusDays(40))
-            .build();
-
         var lettucePlant = Plant.builder()
             .plantType(lettuce)
             .garden(garden)
@@ -219,22 +167,6 @@ public class TestBootstrapper {
             .plantedAt(LocalDate.now().minusDays(40))
             .build();
 
-        var spinachPlant = Plant.builder()
-            .plantType(spinach)
-            .garden(garden)
-            .x(1)
-            .y(1)
-            .plantedAt(LocalDate.now().minusDays(20))
-            .build();
-
-        var spinachPlant2 = Plant.builder()
-            .plantType(spinach)
-            .garden(garden2)
-            .x(1)
-            .y(1)
-            .plantedAt(LocalDate.now().minusDays(40))
-            .build();
-
         var sunFlowerPlant = Plant.builder()
             .plantType(sunFlower)
             .garden(garden)
@@ -251,32 +183,16 @@ public class TestBootstrapper {
             .plantedAt(LocalDate.now().minusDays(20))
             .build();
 
-        var wheatPlant = Plant.builder()
-            .plantType(wheat)
-            .garden(garden)
-            .x(1)
-            .y(3)
-            .plantedAt(LocalDate.now().minusDays(10))
-            .build();
-
-        var wheatPlant2 = Plant.builder()
-            .plantType(wheat)
-            .garden(garden2)
-            .x(2)
-            .y(2)
-            .plantedAt(LocalDate.now().minusDays(25))
-            .build();
-
-        var cucumberPlant = Plant.builder()
-            .plantType(cucumber)
+        var peaPlant = Plant.builder()
+            .plantType(pea)
             .garden(garden)
             .x(0)
             .y(3)
             .plantedAt(LocalDate.now().minusDays(35))
             .build();
 
-        var cucumberPlant2 = Plant.builder()
-            .plantType(cucumber)
+        var peaPlant2 = Plant.builder()
+            .plantType(pea)
             .garden(garden2)
             .x(0)
             .y(2)
@@ -286,41 +202,29 @@ public class TestBootstrapper {
         plantRepository.save(tomatoPlant1);
         plantRepository.save(tomatoPlant2);
         plantRepository.save(tomatoPlant3);
-        plantRepository.save(cucumberPlant);
-        plantRepository.save(cucumberPlant2);
+        plantRepository.save(peaPlant);
+        plantRepository.save(peaPlant2);
         plantRepository.save(sunFlowerPlant2);
         plantRepository.save(sunFlowerPlant);
-        plantRepository.save(wheatPlant);
-        plantRepository.save(wheatPlant2);
-        plantRepository.save(spinachPlant);
-        plantRepository.save(spinachPlant2);
         plantRepository.save(lettucePlant);
         plantRepository.save(lettucePlant2);
         plantRepository.save(paprikaPlant);
         plantRepository.save(paprikaPlant2);
-        plantRepository.save(onionPlant1);
-        plantRepository.save(onionPlant2);
 
         harvestRepository.save(new Harvest(null, tomatoPlant1, 1, LocalDate.now().minusDays(5)));
         harvestRepository.save(new Harvest(null, tomatoPlant2, 2, LocalDate.now().minusDays(15)));
         harvestRepository.save(new Harvest(null, tomatoPlant2, 2.5, LocalDate.now().minusDays(3)));
-        harvestRepository.save(new Harvest(null, cucumberPlant, 0.5, LocalDate.now().minusDays(3)));
-        harvestRepository.save(new Harvest(null, cucumberPlant2, 1.5, LocalDate.now().minusDays(16)));
-        harvestRepository.save(new Harvest(null, cucumberPlant2, 1.5, LocalDate.now().minusDays(3)));
-        harvestRepository.save(new Harvest(null, wheatPlant, 1.5, LocalDate.now().minusDays(2)));
-        harvestRepository.save(new Harvest(null, wheatPlant2, 2.5, LocalDate.now().minusDays(7)));
+        harvestRepository.save(new Harvest(null, peaPlant, 0.5, LocalDate.now().minusDays(3)));
+        harvestRepository.save(new Harvest(null, peaPlant2, 1.5, LocalDate.now().minusDays(16)));
+        harvestRepository.save(new Harvest(null, peaPlant2, 1.5, LocalDate.now().minusDays(3)));
         harvestRepository.save(new Harvest(null, paprikaPlant, 1.5, LocalDate.now().minusDays(16)));
         harvestRepository.save(new Harvest(null, paprikaPlant, 1.0, LocalDate.now().minusDays(1)));
         harvestRepository.save(new Harvest(null, paprikaPlant2, 1.75, LocalDate.now().minusDays(3)));
         harvestRepository.save(new Harvest(null, lettucePlant, 0.1, LocalDate.now().minusDays(5)));
         harvestRepository.save(new Harvest(null, lettucePlant2, 0.1, LocalDate.now().minusDays(6)));
         harvestRepository.save(new Harvest(null, lettucePlant2, 0.05, LocalDate.now().minusDays(1)));
-        harvestRepository.save(new Harvest(null, spinachPlant, 1.5, LocalDate.now().minusDays(15)));
-        harvestRepository.save(new Harvest(null, spinachPlant2, 2.5, LocalDate.now().minusDays(10)));
         harvestRepository.save(new Harvest(null, sunFlowerPlant, 0.5, LocalDate.now().minusDays(12)));
         harvestRepository.save(new Harvest(null, sunFlowerPlant2, 0.25, LocalDate.now().minusDays(7)));
-        harvestRepository.save(new Harvest(null, onionPlant1, 1.5, LocalDate.now().minusDays(15)));
-        harvestRepository.save(new Harvest(null, onionPlant2, 2.0, LocalDate.now().minusDays(10)));
 
         return "hello!";
     }

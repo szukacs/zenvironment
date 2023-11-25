@@ -13,7 +13,7 @@ export const Challenges = () => {
     );
   }
   return (
-    <Stack>
+    <Stack spacing={2}>
       {challengesQuery.status == "error" && (
         <>
           Error, this is definitely not our fault! Drop out your laptop and buy

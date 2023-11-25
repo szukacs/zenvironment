@@ -1,7 +1,7 @@
-import { Box, Dialog, DialogContent } from "@mui/material";
-import { FC, useEffect, useState } from "react";
+import { Box, keyframes } from "@mui/material";
+import { FC, useState } from "react";
 import { AddPlantDialog } from "./AddPlantDialog";
-import { PlantDto, PlantTypeDto } from "@/lib/api/generated/generated-api";
+import { PlantDto } from "@/lib/api/generated/generated-api";
 import { baseURL } from "@/lib/constans";
 import { api } from "@/lib/api/api";
 import { useQueryClient } from "@tanstack/react-query";
@@ -119,6 +119,8 @@ const Tile: FC<TileProps> = ({ x, y, plant, onClick }) => {
             src={`${baseURL}${plant.plantType?.imageUrl}`}
             sx={{
               width: TILE_WIDTH / 1.5,
+              animation: `${plantAnimation} 2s`,
+              transformOrigin: "bottom",
             }}
           />
           <Box
@@ -141,3 +143,12 @@ const Tile: FC<TileProps> = ({ x, y, plant, onClick }) => {
     </Box>
   );
 };
+
+const plantAnimation = keyframes`
+0% {
+  transform: scale(0)
+}
+100% {
+  transform: scale(1)
+}
+`;
