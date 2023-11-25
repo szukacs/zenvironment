@@ -6,13 +6,18 @@ import com.useclient.zenvironment.model.dao.Plant;
 import com.useclient.zenvironment.model.dao.PlantType;
 import com.useclient.zenvironment.model.dao.challenge.Challenge;
 import com.useclient.zenvironment.model.dto.*;
+import com.useclient.zenvironment.repository.PlantTypeRepository;
 import org.mapstruct.*;
 
 import java.util.List;
 
 @Mapper(
         componentModel = "spring",
-        unmappedTargetPolicy = ReportingPolicy.ERROR)
+        unmappedTargetPolicy = ReportingPolicy.ERROR,
+        uses = {
+                PlantTypeRepository.class
+        }
+)
 public interface MainMapper {
 
     PlantTypeDto toDto(PlantType plantType);
@@ -52,5 +57,10 @@ public interface MainMapper {
     default double summarizeWaterConsumption(List<Plant> plants) {
         return plants.stream().map(Plant::getAllWaterConsumptionInLiters).reduce(0.0, Double::sum);
     }
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "uprootedAt", ignore = true)
+    @Mapping(target = "plantType", source = "dto.plantTypeId", qualifiedByName = "getPlantTypeById")
+    Plant toEntity(NewPlantDto dto, Garden garden);
 }
 

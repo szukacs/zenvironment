@@ -1,15 +1,14 @@
 package com.useclient.zenvironment.controller;
 
 import com.useclient.zenvironment.mapper.MainMapper;
-import com.useclient.zenvironment.model.dto.ChallengeDto;
-import com.useclient.zenvironment.model.dto.CommunityDto;
-import com.useclient.zenvironment.model.dto.GardenDto;
-import com.useclient.zenvironment.model.dto.PlantTypeDto;
+import com.useclient.zenvironment.model.dto.*;
 import com.useclient.zenvironment.service.ZenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -37,6 +36,15 @@ public class ZenController {
     public ResponseEntity<GardenDto> getMyGarden() {
         var myGarden = zenService.getGardenByName(MY_GARDEN_NAME);
         var responseBody = mapper.toDto(myGarden);
+        return ResponseEntity.ok(responseBody);
+    }
+
+    @Transactional
+    @PostMapping("/my-garden/plants")
+    public ResponseEntity<PlantDto> addPlant(@RequestBody NewPlantDto newPlantDto) {
+        var myGarden = zenService.getGardenByName(MY_GARDEN_NAME);
+        var newPlant = zenService.addPlant(myGarden, newPlantDto);
+        var responseBody = mapper.toDto(newPlant);
         return ResponseEntity.ok(responseBody);
     }
 
