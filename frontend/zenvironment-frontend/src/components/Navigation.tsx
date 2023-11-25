@@ -4,7 +4,7 @@ import { BottomNavigation, BottomNavigationAction, Paper } from "@mui/material";
 import { FC } from "react";
 import GardenIcon from "@mui/icons-material/LocalFlorist";
 import CommunityIcon from "@mui/icons-material/People";
-import AgricultureIcon from '@mui/icons-material/Agriculture';
+import AgricultureIcon from "@mui/icons-material/Agriculture";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -24,8 +24,8 @@ const items = [
   {
     label: "Gardener AI",
     Icon: AgricultureIcon,
-    path: "/garden-advisor"
-  }
+    path: "/garden-advisor",
+  },
 ];
 
 export const Navigation: FC<NavigationProps> = ({}) => {
@@ -52,7 +52,7 @@ export const Navigation: FC<NavigationProps> = ({}) => {
             label={item.label}
             href={item.path}
             icon={<item.Icon />}
-            sx={{ color: "#052419", "&.Mui-selected": { color: "#7cc17c" } }}
+            sx={{ color: "#bde7bd", "&.Mui-selected": { color: "#11c786" } }}
           />
         ))}
       </BottomNavigation>
