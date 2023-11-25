@@ -33,22 +33,16 @@ export default function GardenAdvisor() {
   const [currentMessage, setCurrentMessage] = useState("");
 
   const sendMessage = async () => {
-    let messagesWithYour = [
-      ...messages,
-      { sender: "You", message: currentMessage },
-    ];
+
+    setMessages(prevState => ([...prevState, { sender: "You", message: currentMessage }]))
+    setCurrentMessage('');
+
     await api.assistant
       .askForAssistance({ message: currentMessage })
       .then((resp) => {
         if (resp.data != null && resp.data.message != null) {
-          messagesWithYour = [
-            ...messagesWithYour,
-            { sender: oldSam, message: resp.data.message },
-          ];
+          setMessages(prevState => ([...prevState, { sender: oldSam, message: resp.data.message! }]))
         }
-      })
-      .finally(() => {
-        setMessages(messagesWithYour);
       });
   };
 
