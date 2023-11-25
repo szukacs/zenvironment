@@ -22,6 +22,9 @@ public class Challenge {
     @Enumerated(EnumType.STRING)
     private ChallengeType challengeType;
 
+    @Transient
+    private double currentProgress;
+
     public Challenge(Community community, ChallengeType challengeType) {
         this.community = community;
         this.challengeType = challengeType;
@@ -42,7 +45,4 @@ public class Challenge {
         return challengeType.getLevelTargetFunction().apply(level);
     }
 
-    public double getCurrentProgress() {
-        return challengeType.getProgressFunction().apply(community);
-    }
 }
