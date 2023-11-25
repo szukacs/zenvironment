@@ -97,7 +97,7 @@ const Stat: FC<{
 }> = ({ name, unit, amount, color }) => {
   return (
     <Typography sx={{ color, textAlign: "left" }}>
-      {name}: {`${amount} ${unit}`}
+      {name}: {`${amount} ${unit} / day`}
     </Typography>
   );
 };
