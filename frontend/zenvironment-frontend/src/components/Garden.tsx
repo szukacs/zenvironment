@@ -7,6 +7,7 @@ import { api } from "@/lib/api/api";
 import { useQueryClient } from "@tanstack/react-query";
 import { myGardenQueryKeys } from "./queries";
 import { PlantDetailsDialog } from "./PlantDetailsDialog";
+import { getSessionIdOrThrow } from "@/lib/session";
 
 interface GardenProps {
   plants: PlantDto[];
@@ -64,7 +65,7 @@ export const Garden: FC<GardenProps> = ({ plants }) => {
       <AddPlantDialog
         isOpen={addDialog !== undefined}
         onSelect={async (plantType) => {
-          await api.myGarden.addPlant({
+          await api.gardens.addPlant1(getSessionIdOrThrow(), {
             plantTypeId: plantType.id,
             plantedAt: new Date().toISOString(),
             x: addDialog?.x,
