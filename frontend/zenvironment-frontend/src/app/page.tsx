@@ -23,7 +23,11 @@ export default function MyGarden() {
           a new one! :)
         </>
       )}
-      {myGardenQuery.status == "success" && <Garden />}
+      {myGardenQuery.status == "success" && (
+        <Box mt={3}>
+          <Garden />
+        </Box>
+      )}
     </Page>
   );
 }

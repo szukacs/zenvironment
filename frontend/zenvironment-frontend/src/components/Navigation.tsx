@@ -32,10 +32,14 @@ export const Navigation: FC<NavigationProps> = ({}) => {
 
   return (
     <Paper
-      sx={{ position: "fixed", bottom: 0, left: 0, right: 0 }}
+      sx={{ position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 1000 }}
       elevation={3}
     >
-      <BottomNavigation showLabels value={value}>
+      <BottomNavigation
+        showLabels
+        value={value}
+        sx={{ backgroundColor: "#0d5e41" }}
+      >
         {items.map((item) => (
           <BottomNavigationAction
             key={item.path}
@@ -43,6 +47,7 @@ export const Navigation: FC<NavigationProps> = ({}) => {
             label={item.label}
             href={item.path}
             icon={<item.Icon />}
+            sx={{ color: "#052419", "&.Mui-selected": { color: "#7cc17c" } }}
           />
         ))}
       </BottomNavigation>
