@@ -21,7 +21,14 @@ const ItemCard = ({
 }) => {
   return (
     <Card sx={{ flex: 1 }}>
-      <CardContent sx={{ display: "flex", gap: 2, alignItems: "center" }}>
+      <CardContent
+        sx={{
+          display: "flex",
+          gap: 2,
+          alignItems: "center",
+          pb: "16px !important",
+        }}
+      >
         <Box component="img" src={image} maxWidth={50} />
         <Box>
           <Typography variant="h6" color={color}>
