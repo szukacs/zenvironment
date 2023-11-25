@@ -18,6 +18,7 @@ public class Challenge {
     private UUID id;
     @ManyToOne
     private Community community;
+    @Transient
     private int level = 1;
     @Enumerated(EnumType.STRING)
     private ChallengeType challengeType;
@@ -30,19 +31,24 @@ public class Challenge {
         this.challengeType = challengeType;
     }
 
-    public void calibrateChallengeLevel() {
+    public int getLevel() {
         var currentProgress = getCurrentProgress();
-        while (getNextLevelTarget() <= currentProgress) {
+        while (getLevelTarget(level) <= currentProgress) {
             level++;
         }
+        return level;
+    }
+
+    private double getLevelTarget(int targetLevel) {
+        return challengeType.getLevelTargetFunction().apply(targetLevel);
     }
 
     public double getPreviousLevelTarget() {
-        return challengeType.getLevelTargetFunction().apply(level - 1);
+        return getLevelTarget(getLevel() - 1);
     }
 
     public double getNextLevelTarget() {
-        return challengeType.getLevelTargetFunction().apply(level);
+        return getLevelTarget(getLevel());
     }
 
 }
