@@ -5,6 +5,7 @@ import com.useclient.zenvironment.model.dao.challenge.Challenge;
 import com.useclient.zenvironment.model.dto.*;
 import com.useclient.zenvironment.repository.PlantTypeRepository;
 import org.mapstruct.*;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
@@ -53,17 +54,20 @@ public interface MainMapper {
 
     @Named("summarizeOxygenProduction")
     default double summarizeOxygenProduction(List<Plant> plants) {
+        if (CollectionUtils.isEmpty(plants)) return 0.0;
         return plants.stream().map(Plant::getAllProducedOxygenInKilograms).reduce(0.0, Double::sum);
     }
 
     @Named("summarizeCO2Fixation")
     default double summarizeCO2Fixation(List<Plant> plants) {
+        if (CollectionUtils.isEmpty(plants)) return 0.0;
         return plants.stream().map(Plant::getAllFixatedCO2InKilograms).reduce(0.0, Double::sum);
     }
 
 
     @Named("summarizeWaterConsumption")
     default double summarizeWaterConsumption(List<Plant> plants) {
+        if (CollectionUtils.isEmpty(plants)) return 0.0;
         return plants.stream().map(Plant::getAllWaterConsumptionInLiters).reduce(0.0, Double::sum);
     }
 
