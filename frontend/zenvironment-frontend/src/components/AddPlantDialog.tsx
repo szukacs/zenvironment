@@ -36,7 +36,7 @@ export const AddPlantDialog: FC<AddPlantDialogProps> = ({
       <DialogTitle sx={{ textAlign: "center" }}>Choose Plant</DialogTitle>
       <DialogContent sx={{ padding: 0 }}>
         {query.data?.data.map((plant) => (
-          <div>
+          <div key={plant.id}>
             <Box
               key={plant.name}
               sx={(theme) => ({

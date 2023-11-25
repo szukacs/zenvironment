@@ -1,11 +1,11 @@
 "use client";
 
-import { Challenges } from "@/components/Challenges";
-import { MarketPlace } from "@/components/MarketPlace";
-import { Page } from "@/components/Page";
-import { DisplayTab, SimpleTab } from "@/components/SimpleTab";
-import { useGetMyCommunityQuery } from "@/components/queries";
-import { Box, CircularProgress } from "@mui/material";
+import {Challenges} from "@/components/Challenges";
+import {MarketPlace} from "@/components/MarketPlace";
+import {Page} from "@/components/Page";
+import {DisplayTab, SimpleTab} from "@/components/SimpleTab";
+import {useGetMyCommunityQuery} from "@/components/queries";
+import {Box, CircularProgress} from "@mui/material";
 import {MyCommunityGardens} from "@/components/MyCommunityGardens";
 
 export default function Community() {
@@ -14,7 +14,7 @@ export default function Community() {
   if (myCommunityQuery.isLoading) {
     return (
       <Box display="flex" justifyContent="center">
-        <CircularProgress color="success" />
+        <CircularProgress color="success"/>
       </Box>
     );
   }
@@ -29,24 +29,25 @@ export default function Community() {
   const tabs: DisplayTab[] = [
     {
       label: "Gardens",
-      content: <MyCommunityGardens gardenList={myCommunityQuery.data!.data.gardens ?? []} />,
+      content: <MyCommunityGardens gardenList={myCommunityQuery.data!.data.gardens ?? []}/>,
     },
     {
       label: "Challenges",
-      content: <Challenges />,
+      content: <Challenges/>,
     },
     {
       label: "Market",
-      content: <MarketPlace />,
+      content: <MarketPlace/>,
     },
   ];
 
   return (
-    <Page title="Community">
+    <>
       {myCommunityQuery.status == "success" && (
-        <>{myCommunityQuery.data.data.name}</>
+        <Page title={myCommunityQuery.data.data.name}>
+          <SimpleTab tabs={tabs}/>
+        </Page>
       )}
-      <SimpleTab tabs={tabs} />
-    </Page>
+    </>
   );
 }

@@ -13,11 +13,32 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class GardenService {
+    private static final List<String> GARDEN_SUFFIXES = List.of(
+            "'s Garden",
+            "'s Balcony",
+            "'s Little Pasture",
+            "'s Jungle",
+            "'s Green Hell",
+            "'s Plant Station",
+            "'s Green Maze",
+            "'s Meadow",
+            "'s Startup Forest",
+            "'s Up & Coming Rainforest",
+            "'s Eco Hub",
+            "'s Neighborhood Amazonas",
+            "'s Cute Cottage",
+            "'s Window Rainforest",
+            "'s Balcony Garden",
+            "'s Garden",
+            "'s Eco Station"
+    );
+
     private final ZenService zenService;
     private final GardenRepository gardenRepository;
     private final PlantTypeRepository plantTypeRepository;
@@ -25,7 +46,9 @@ public class GardenService {
 
     public Garden createGarden(NewGardenDto newGardenDto) {
         var community = zenService.getCommunityByName(TestBootstrapper.MY_COMMUNITY_NAME);
-        var newGarden = new Garden(newGardenDto.getName(), community);
+        var gardenOwnerName = newGardenDto.getName();
+        var randomSuffix = GARDEN_SUFFIXES.get(getRandomInt(GARDEN_SUFFIXES.size()));
+        var newGarden = new Garden(gardenOwnerName + randomSuffix, community);
         newGarden = gardenRepository.save(newGarden);
         var firstPlant = createFirstPlant(newGarden);
         newGarden.getPlants().add(firstPlant);
@@ -45,8 +68,13 @@ public class GardenService {
         return plantTypes.get((int) (Math.random() * plantTypes.size()));
     }
 
+
+    private int getRandomInt(int excludedMaximum) {
+        return (int) (Math.random() * excludedMaximum);
+    }
+
     private int getRandomCoordinate() {
-        return (int) (Math.random() * 5);
+        return getRandomInt(5);
     }
 
     public Garden getGardenById(String gardenId) {

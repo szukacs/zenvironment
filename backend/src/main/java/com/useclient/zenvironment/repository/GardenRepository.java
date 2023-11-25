@@ -14,4 +14,12 @@ public interface GardenRepository extends JpaRepository<Garden, UUID> {
   @Query(name = "SELECT garden from Garden garden where garden.community.id = :communityId")
   List<Garden> findAllGardensByCommunityId(@Param("communityId") UUID communityId);
 
+  @Query("""
+          select g from Garden g
+            where g.name not in (
+              com.useclient.zenvironment.TestBootstrapper.MY_GARDEN_NAME,
+              com.useclient.zenvironment.TestBootstrapper.MY_GARDEN_NAME_2)
+          """)
+  List<Garden> findGeneratedGardens();
+
 }

@@ -75,7 +75,7 @@ export const Challenge = ({
           </Box>
           <Box>
             <Typography variant="subtitle1">
-              {Math.floor(currentProgress) - prevLevelTarget}/{nextLevelTarget}
+              {Math.floor(currentProgress - prevLevelTarget)}/{nextLevelTarget}
             </Typography>
           </Box>
         </Box>

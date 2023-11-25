@@ -7,6 +7,7 @@ import com.useclient.zenvironment.repository.PlantTypeRepository;
 import org.mapstruct.*;
 import org.springframework.util.CollectionUtils;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Mapper(
@@ -54,6 +55,7 @@ public interface MainMapper {
     @Mapping(target = "allProducedOxygenInKilograms", source = "plants", qualifiedByName = "summarizeOxygenProduction")
     @Mapping(target = "allFixatedCO2InKilograms", source = "plants", qualifiedByName = "summarizeCO2Fixation")
     @Mapping(target = "allWaterConsumptionInLiters", source = "plants", qualifiedByName = "summarizeWaterConsumption")
+    @Mapping(target = "plantSummaries", source = "plants", qualifiedByName = "createPlantSummaries")
     GardenDto toDto(Garden garden);
 
     @Named("summarizeOxygenProduction")
@@ -73,6 +75,27 @@ public interface MainMapper {
     default double summarizeWaterConsumption(List<Plant> plants) {
         if (CollectionUtils.isEmpty(plants)) return 0.0;
         return plants.stream().map(Plant::getAllWaterConsumptionInLiters).reduce(0.0, Double::sum);
+    }
+
+    @Named("createPlantSummaries")
+    default List<PlantSummary> createPlantSummaries(List<Plant> plants) {
+        if (CollectionUtils.isEmpty(plants)) return List.of();
+        var summaryMap = new HashMap<String, PlantSummary>();
+        plants.forEach(plant -> {
+            var plantType = plant.getPlantType();
+            var oxygen = plant.getAllProducedOxygenInKilograms();
+            var co2 = plant.getAllFixatedCO2InKilograms();
+            summaryMap.compute(plantType.getName(), (plantName, summary) -> {
+                if (summary == null) {
+                    return new PlantSummary(toDto(plantType), 1, oxygen, co2);
+                }
+                summary.setAllProducedOxygenInKilograms(summary.getAllProducedOxygenInKilograms() + oxygen);
+                summary.setAllFixatedCO2InKilograms(summary.getAllFixatedCO2InKilograms() + co2);
+                summary.setPlantCount(summary.getPlantCount() + 1);
+                return summary;
+            });
+        });
+        return summaryMap.values().stream().toList();
     }
 
     @Mapping(target = "id", ignore = true)

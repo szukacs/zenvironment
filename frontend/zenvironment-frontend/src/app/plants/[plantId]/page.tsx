@@ -39,7 +39,7 @@ export default function PlantPage({ params }: PlantPageParams) {
         title="All Oxygen production"
         amount={`${plant.allProducedOxygenInKilograms ?? 0}`}
         unit="kg"
-        fact="Medium consumption for a human for a day is 0.85 kg"
+        fact="Medium oxygen consumption for a human for a day is 0.85 kg"
       />
       <StatDisplay
         sx={{ color: "#cfa448" }}

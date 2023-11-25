@@ -1,44 +1,52 @@
-import React from 'react';
-import {Card, CardActionArea, CardContent, CardMedia, Stack, Typography} from "@mui/material";
-import {GardenDto} from "@/lib/api/generated/generated-api";
+import React from "react";
+import {
+  Box,
+  Card,
+  CardActionArea,
+  CardContent,
+  CardMedia,
+  Stack,
+  Typography,
+} from "@mui/material";
+import { GardenDto } from "@/lib/api/generated/generated-api";
 import Image from "next/image";
+import { Garden } from "./Garden";
 
 export interface GardenCardProps {
-  garden: GardenDto
+  garden: GardenDto;
 }
 
-export const GardenCard: React.FC<GardenCardProps> = ({garden}) => {
-
+export const GardenCard: React.FC<GardenCardProps> = ({ garden }) => {
   return (
-    <Card sx={{maxWidth: 345, marginBottom: '0.5rem', marginLeft: '0.5rem'}}>
-      <CardActionArea>
-        <CardMedia
-          component="img"
-          height="160"
-          image="/garden.png"
-          alt="garden picture"
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {garden.name}
-          </Typography>
-          <Stack spacing={1}>
-            <Stack direction='row' justifyContent="flex-start" alignItems="center" spacing={2}>
-              <Image
-                style={{}}
-                src="/tomato.png"
-                alt="tomato pic"
-                height={30}
-                width={30}
-              />
-              <Typography >x</Typography>
-              <Typography >4 pcs</Typography>
-              <Typography >2.5 kg</Typography>
-              <Typography >2.5 kg</Typography>
-            </Stack>
+    <Card>
+      <CardContent>
+        <Box pt={2}>
+          <Garden isAddDisabled tileWidth={60} plants={garden.plants ?? []} />
+        </Box>
+        <Typography gutterBottom variant="h5" component="div">
+          {garden.name}
+        </Typography>
+        <Stack spacing={1}>
+          <Stack
+            direction="row"
+            justifyContent="flex-start"
+            alignItems="center"
+            spacing={2}
+          >
+            <Image
+              style={{}}
+              src="/tomato.png"
+              alt="tomato pic"
+              height={30}
+              width={30}
+            />
+            <Typography>x</Typography>
+            <Typography>4 pcs</Typography>
+            <Typography>2.5 kg</Typography>
+            <Typography>2.5 kg</Typography>
           </Stack>
-        </CardContent>
-      </CardActionArea>
+        </Stack>
+      </CardContent>
     </Card>
   );
-}
+};
