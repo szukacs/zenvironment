@@ -81,7 +81,7 @@ export const GardenCard: React.FC<GardenCardProps> = ({ garden }) => {
                         textAlign: "right",
                       }}
                     >
-                      CO<sup>2</sup>
+                      CO<sub>2</sub>
                       <strong>{` ${co2Fixation} ${co2Unit}`}</strong>
                     </Typography>
                     <Typography
@@ -91,7 +91,7 @@ export const GardenCard: React.FC<GardenCardProps> = ({ garden }) => {
                         textAlign: "right",
                       }}
                     >
-                      O<sup>2</sup>
+                      O<sub>2</sub>
                       <strong>{` ${oxygenProduction} ${oxygenUnit}`}</strong>
                     </Typography>
                   </Stack>
