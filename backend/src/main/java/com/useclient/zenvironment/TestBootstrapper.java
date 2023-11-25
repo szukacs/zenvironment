@@ -245,13 +245,4 @@ public class TestBootstrapper {
 
         return "hello!";
     }
-
-    @Bean
-    @Transactional
-    public String postProcessTestData(String bootstrapTestData) {
-        challengeRepository.findAll()
-                .stream().peek(Challenge::calibrateChallengeLevel)
-                .forEach(challengeRepository::save);
-        return bootstrapTestData + " world!";
-    }
 }
