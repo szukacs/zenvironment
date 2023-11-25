@@ -1,6 +1,7 @@
 "use client";
 
 import { Challenges } from "@/components/Challenges";
+import { MarketPlace } from "@/components/MarketPlace";
 import { Page } from "@/components/Page";
 import { DisplayTab, SimpleTab } from "@/components/SimpleTab";
 import { useGetMyCommunityQuery } from "@/components/queries";
@@ -29,7 +30,7 @@ export default function Community() {
     },
     {
       label: "Market",
-      content: <>Example tab 4</>,
+      content: <MarketPlace />,
     },
   ];
 

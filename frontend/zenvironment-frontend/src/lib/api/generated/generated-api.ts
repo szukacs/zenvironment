@@ -3,7 +3,10 @@ export interface ExchangeDto {
   vendorId?: string;
   receiverId?: string;
   description?: string;
-  imageUrl?: string;
+  profileImageUrl?: string;
+  productImageUrl?: string;
+  gardenName?: string;
+  accepted?: boolean;
 }
 
 export interface NewPlantDto {
@@ -77,6 +80,7 @@ export interface NewHarvestDto {
 
 export interface Message {
   message?: string;
+  conversationId?: string;
 }
 
 export interface GardenDto {
@@ -413,20 +417,6 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         method: "POST",
         body: data,
         type: ContentType.Json,
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags assistant-controller
-     * @name GetQuickQuestions
-     * @request GET:/assistant/suggestions
-     */
-    getQuickQuestions: (params: RequestParams = {}) =>
-      this.request<string[], any>({
-        path: `/assistant/suggestions`,
-        method: "GET",
         ...params,
       }),
   };
