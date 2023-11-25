@@ -29,7 +29,7 @@ export default function MyGarden() {
     <Page title="My Garden">
       {myGardenQuery.status == "success" && (
         <Box mt={3}>
-          <Garden />
+          <Garden plants={myGardenQuery.data?.data.plants!} />
           <Stack spacing={2}>
             <StatDisplay
               sx={{ color: "#34c0eb" }}
