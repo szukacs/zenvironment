@@ -11,12 +11,19 @@ import { getSessionIdOrThrow } from "@/lib/session";
 
 interface GardenProps {
   plants: PlantDto[];
+  tileWidth?: number;
+  isAddDisabled?: boolean;
 }
 
 const COLS = 5;
 const ROWS = 5;
 
-export const Garden: FC<GardenProps> = ({ plants }) => {
+export const Garden: FC<GardenProps> = ({
+  plants,
+  isAddDisabled = false,
+  tileWidth = 75,
+}) => {
+  const tileHeight = tileWidth * 0.645;
   const queryClient = useQueryClient();
   const [addDialog, setAddDialog] = useState<
     { x: number; y: number } | undefined
@@ -31,8 +38,8 @@ export const Garden: FC<GardenProps> = ({ plants }) => {
         position="relative"
         sx={{
           margin: "0 auto",
-          width: (TILE_WIDTH + GAP) * COLS,
-          height: (TILE_HEIGHT + GAP) * ROWS + 60,
+          width: (tileWidth + GAP) * COLS,
+          height: (tileHeight + GAP) * ROWS + 60,
         }}
       >
         {new Array(COLS).fill(true).map((_, x) =>
@@ -46,6 +53,9 @@ export const Garden: FC<GardenProps> = ({ plants }) => {
                 plant={plant}
                 x={x}
                 y={y}
+                isAddDisabled={isAddDisabled}
+                tileWidth={tileWidth}
+                tileHeight={tileHeight}
                 onCloseDetails={() => {
                   setSelectedPlant(undefined);
                 }}
@@ -53,7 +63,7 @@ export const Garden: FC<GardenProps> = ({ plants }) => {
                 onClick={() => {
                   if (plant) {
                     setSelectedPlant(plant.id!);
-                  } else {
+                  } else if (!isAddDisabled) {
                     setAddDialog({ x, y });
                   }
                 }}
@@ -90,10 +100,11 @@ interface TileProps {
   onClick: VoidFunction;
   onCloseDetails: VoidFunction;
   selected?: boolean;
+  tileWidth: number;
+  tileHeight: number;
+  isAddDisabled: boolean;
 }
 
-const TILE_WIDTH = 75;
-const TILE_HEIGHT = TILE_WIDTH * 0.645;
 const GAP = 5;
 
 const Tile: FC<TileProps> = ({
@@ -103,30 +114,36 @@ const Tile: FC<TileProps> = ({
   onClick,
   selected,
   onCloseDetails,
+  tileWidth,
+  tileHeight,
+  isAddDisabled,
 }) => {
   return (
     <>
-      {" "}
       <Box
         onClick={onClick}
         sx={{
           position: "absolute",
-          width: TILE_WIDTH,
-          height: TILE_HEIGHT,
-          cursor: "pointer",
+          width: tileWidth,
+          height: tileHeight,
+          cursor: !plant ? (isAddDisabled ? undefined : "pointer") : "pointer",
           left:
-            155 +
-            (x * TILE_WIDTH) / 2 +
+            tileWidth * 2.25 +
+            (x * tileWidth) / 2 +
             x * GAP -
-            (y * TILE_WIDTH) / 2 -
+            (y * tileWidth) / 2 -
             y * GAP,
           top:
-            (x * TILE_HEIGHT) / 2 +
+            (x * tileHeight) / 2 +
             (x * GAP) / 2 +
-            (y * TILE_HEIGHT) / 2 +
+            (y * tileHeight) / 2 +
             y * GAP,
           "&:hover": {
-            filter: "brightness(1.2)",
+            filter: !plant
+              ? isAddDisabled
+                ? undefined
+                : "brightness(1.2)"
+              : "brightness(1.2)",
           },
         }}
       >
@@ -144,7 +161,7 @@ const Tile: FC<TileProps> = ({
               component="img"
               src={`${baseURL}${plant.plantType?.imageUrl}`}
               sx={{
-                width: TILE_WIDTH / 1.5,
+                width: tileWidth / 1.5,
                 animation: `${plantAnimation} 2s`,
                 transformOrigin: "bottom",
               }}
