@@ -27,7 +27,11 @@ export default function RootLayout({
 }) {
   const [status, setStatus] = useState<"unauthenticated" | "authenticated">(
     () => {
-      const sessionId = getSessionId();
+      let sessionId = null;
+      if (typeof window !== 'undefined') {
+        sessionId = getSessionId();
+      }
+
       if (!sessionId) {
         return "unauthenticated";
       }
