@@ -15,6 +15,8 @@ public class ChallengeDto {
     private int level;
     private String challengeName;
     private String challengeDescription;
+    private String imageUrl;
+    private String color;
     private double previousLevelTarget;
     private double nextLevelTarget;
     private double currentProgress;

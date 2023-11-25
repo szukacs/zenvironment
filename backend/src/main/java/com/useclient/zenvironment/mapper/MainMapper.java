@@ -33,6 +33,8 @@ public interface MainMapper {
 
     @Mapping(target = "challengeName", source = "challengeType.name")
     @Mapping(target = "challengeDescription", source = "challengeType.description")
+    @Mapping(target = "imageUrl", source = "challengeType.imageUrl")
+    @Mapping(target = "color", source = "challengeType.color")
     ChallengeDto toDto(Challenge challenge);
 
     List<ChallengeDto> toChallengeDtoList(List<Challenge> challenges);
