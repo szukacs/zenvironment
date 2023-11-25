@@ -1,7 +1,7 @@
 # zenvironment backend
 
 ## Technology stack
-* [Spring boot](images/springboot.png "Spring boot")
+![](images/springboot.png?raw=true)
 * [Gradle](images/springboot.png "Gradle")
 * [Open API](images/springboot.png "Open API")
 * [MapStruct](images/springboot.png "MapStruct")
