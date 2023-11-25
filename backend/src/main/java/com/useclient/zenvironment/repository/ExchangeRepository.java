@@ -19,7 +19,7 @@ public interface ExchangeRepository extends JpaRepository<Exchange, String> {
       "WHERE exchange.garden.id = :vendorId")
   void updateById(@Param("vendorId") String vendorId, @Param("receiverId") String receiverId);
 
-  @Query("SELECT exchange from Exchange  exchange where (exchange.garden.id = :gardenId or exchange.receiverId = :gardenIdString)" +
+  @Query("SELECT exchange from Exchange  exchange where exchange.garden.id = :gardenId or exchange.receiverId = :gardenIdString " +
       "order by exchange.accepted desc")
   List<Exchange> findAllByIdNotAccepted(@Param("gardenId") UUID gardenId, @Param("gardenIdString") String gardenIdString);
 }
