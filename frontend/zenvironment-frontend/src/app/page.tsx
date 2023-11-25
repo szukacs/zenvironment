@@ -8,6 +8,8 @@ import { useGetGardenQuery, useGetMyGardenQuery } from "@/components/queries";
 import { getSessionIdOrThrow } from "@/lib/session";
 
 export default function MyGarden() {
+  const isMobile = useMediaQuery("(max-width:600px)", { noSsr: true });
+
   const myGardenQuery = useGetGardenQuery(getSessionIdOrThrow(), true);
   if (myGardenQuery.isLoading) {
     return (
@@ -43,7 +45,6 @@ export default function MyGarden() {
     co2Unit = "g";
   }
   co2Fixation = Math.round(co2Fixation * 100) / 100;
-  const isMobile = useMediaQuery("(max-width:600px)", { noSsr: true });
 
   return (
     <Page title={name}>
