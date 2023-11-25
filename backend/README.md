@@ -2,6 +2,7 @@
 
 ## Technology stack
 ![](images/springboot.png?raw=true)
+Solarized dark             |  Solarized Ocea
 :-------------------------:|:-------------------------:
 ![](images/springboot.png)  |  ![](images/gradle.png)
 * [Gradle](images/gradle.png "Gradle")
