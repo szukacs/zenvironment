@@ -20,7 +20,12 @@ export const GardenCard: React.FC<GardenCardProps> = ({ garden }) => {
     return Math.round((num + Number.EPSILON) * 100) / 100
   }
   return (
-    <Card>
+    <Card
+      sx={{
+        background: "linear-gradient(#aaccc0, #96ccab 70%)",
+        color: "#0d5e41",
+      }}
+    >
       <CardContent>
         <Box pt={2}>
           <Garden isAddDisabled tileWidth={60} plants={garden.plants ?? []} />
