@@ -9,4 +9,5 @@ import java.util.UUID;
 
 public interface PlantRepository extends JpaRepository<Plant, UUID> {
     List<Plant> findAllByGarden(Garden garden);
+    Plant getPlantById(UUID plantId);
 }

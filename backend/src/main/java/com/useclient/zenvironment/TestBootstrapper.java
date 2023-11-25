@@ -1,12 +1,16 @@
 package com.useclient.zenvironment;
 
 import com.useclient.zenvironment.model.dao.*;
+import com.useclient.zenvironment.model.dao.challenge.Challenge;
+import com.useclient.zenvironment.model.dao.challenge.ChallengeType;
 import com.useclient.zenvironment.repository.*;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 
 @Configuration
 @RequiredArgsConstructor
@@ -20,12 +24,15 @@ public class TestBootstrapper {
     private final PlantRepository plantRepository;
     private final HarvestRepository harvestRepository;
     private final CommunityRepository communityRepository;
+    private final ChallengeRepository challengeRepository;
 
     @Bean
+    @Transactional
     public String bootstrapTestData() {
         harvestRepository.deleteAll();
         plantRepository.deleteAll();
         communityRepository.deleteAll();
+        challengeRepository.deleteAll();
         gardenRepository.deleteAll();
         plantTypeRepository.deleteAll();
 
@@ -129,6 +136,9 @@ public class TestBootstrapper {
 
         var community = new Community(MY_COMMUNITY_NAME);
         community = communityRepository.save(community);
+        for (ChallengeType challengeType : ChallengeType.values()) {
+            challengeRepository.save(new Challenge(community, challengeType));
+        }
 
         var garden = new Garden(MY_GARDEN_NAME, community);
         garden = gardenRepository.save(garden);
@@ -272,5 +282,14 @@ public class TestBootstrapper {
         harvestRepository.save(new Harvest(null, onionPlant2, 2.0, LocalDate.now().minusDays(10)));
 
         return "hello!";
+    }
+
+    @Bean
+    @Transactional
+    public String postProcessTestData(String bootstrapTestData) {
+        challengeRepository.findAll()
+                .stream().peek(Challenge::calibrateChallengeLevel)
+                .forEach(challengeRepository::save);
+        return bootstrapTestData + " world!";
     }
 }
