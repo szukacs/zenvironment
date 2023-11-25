@@ -46,6 +46,14 @@ public class ZenController {
         return ResponseEntity.ok(responseBody);
     }
 
+    @Transactional(readOnly = true)
+    @GetMapping("/my-garden/plants/{plantId}")
+    public ResponseEntity<PlantDto> getPlantById(@PathVariable UUID plantId) {
+        var plant = zenService.getPlantById(plantId);
+        var responseBody = mapper.toDto(plant);
+        return ResponseEntity.ok(responseBody);
+    }
+
     @Transactional
     @PostMapping("/my-garden/plants/{plantId}/harvest")
     public ResponseEntity<HarvestDto> harvestPlant(@PathVariable UUID plantId, @RequestBody NewHarvestDto newHarvestDto) {
