@@ -24,6 +24,7 @@ public class TestBootstrapper {
     private final HarvestRepository harvestRepository;
     private final CommunityRepository communityRepository;
     private final ChallengeRepository challengeRepository;
+    private final ExchangeRepository exchangeRepository;
 
     @Bean
     @Transactional
@@ -110,6 +111,12 @@ public class TestBootstrapper {
         var garden2 = new Garden(MY_GARDEN_NAME_2, community);
         garden2.setImageUrl("/profile/garden2Profile.jpg");
         garden2 = gardenRepository.save(garden2);
+
+        Exchange exchange = Exchange.builder()
+            .garden(garden2)
+            .description("I have 3 free 1 month old tomato plants. Feel free to reach out")
+            .build();
+        exchangeRepository.save(exchange);
 
         var tomatoPlant1 = Plant.builder()
             .plantType(tomato)
@@ -198,6 +205,7 @@ public class TestBootstrapper {
             .y(2)
             .plantedAt(LocalDate.now().minusDays(15))
             .build();
+
 
         plantRepository.save(tomatoPlant1);
         plantRepository.save(tomatoPlant2);

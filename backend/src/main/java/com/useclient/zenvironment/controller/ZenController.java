@@ -93,14 +93,21 @@ public class ZenController {
     }
 
     @Transactional
-    @PostMapping("/my-garden/exchanges")
+    @PostMapping("my-garden/exchanges")
     public ResponseEntity<List<ExchangeDto>> addExchange(ExchangeDto exchangeDto){
         var responseBody = exchangeService.createExchange(exchangeDto);
         return ResponseEntity.ok(responseBody);
     }
 
+    @Transactional(readOnly = true)
+    @GetMapping("/my-garden/exchanges/{gardenId}")
+    public ResponseEntity<List<ExchangeDto>> findAllExchangesBelongingToGarden(@PathVariable("gardenId") String gardenId){
+        var responseBody = exchangeService.findAllExchangesBelongingToGarden(gardenId);
+        return ResponseEntity.ok(responseBody);
+    }
+
     @Transactional
-    @PutMapping("/my-garden/exchanges/")
+    @PutMapping("my-garden/exchanges")
     public ResponseEntity<?> acceptExchange(ExchangeDto exchangeDto){
         exchangeService.updateStatusOfExchange(exchangeDto);
         return ResponseEntity.ok("You successfully accepted the plants");
@@ -110,13 +117,6 @@ public class ZenController {
     @GetMapping("/my-community/exchanges/{communityId}")
     public ResponseEntity<List<ExchangeDto>> findAllExchangesBelongingToCommuniy(@PathVariable("communityId") String communityId){
         var responseBody = exchangeService.findAllExchangesBelongingToCommunity(communityId);
-        return ResponseEntity.ok(responseBody);
-    }
-
-    @Transactional(readOnly = true)
-    @GetMapping("/my-garden/exchanges/{gardenId}")
-    public ResponseEntity<List<ExchangeDto>> findAllExchangesBelongingToGarden(@PathVariable("gardenId") String gardenId){
-        var responseBody = exchangeService.findAllExchangesBelongingToGarden(gardenId);
         return ResponseEntity.ok(responseBody);
     }
 }
