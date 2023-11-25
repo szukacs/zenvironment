@@ -1,4 +1,8 @@
 export interface NewPlantDto {
+  /** @format int32 */
+  x?: number;
+  /** @format int32 */
+  y?: number;
   /** @format uuid */
   plantTypeId?: string;
   /** @format date */
@@ -20,9 +24,13 @@ export interface HarvestDto {
 export interface PlantDto {
   /** @format uuid */
   id?: string;
-  plantType?: PlantTypeDto;
   /** @format uuid */
   gardenId?: string;
+  /** @format int32 */
+  x?: number;
+  /** @format int32 */
+  y?: number;
+  plantType?: PlantTypeDto;
   /** @format double */
   allProducedOxygenInKilograms?: number;
   /** @format double */
@@ -57,6 +65,10 @@ export interface NewHarvestDto {
   amount?: number;
   /** @format date */
   harvestDate?: string;
+}
+
+export interface Message {
+  message?: string;
 }
 
 export interface GardenDto {
@@ -322,6 +334,23 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       this.request<HarvestSummary[], any>({
         path: `/my-garden/harvests`,
         method: "GET",
+        ...params,
+      }),
+  };
+  assistant = {
+    /**
+     * No description
+     *
+     * @tags assistant-controller
+     * @name AskForAssistance
+     * @request POST:/assistant/chat
+     */
+    askForAssistance: (data: Message, params: RequestParams = {}) =>
+      this.request<Message, any>({
+        path: `/assistant/chat`,
+        method: "POST",
+        body: data,
+        type: ContentType.Json,
         ...params,
       }),
   };

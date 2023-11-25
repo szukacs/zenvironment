@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,7 +19,7 @@ public class Community {
     private UUID id;
     private String name;
     @OneToMany(mappedBy = "community")
-    private List<Garden> gardens;
+    private List<Garden> gardens = new ArrayList<>();
 
     public Community(String name) {
         this.name = name;

@@ -13,8 +13,10 @@ import java.util.UUID;
 @NoArgsConstructor
 public class PlantDto {
     private UUID id;
-    private PlantTypeDto plantType;
     private UUID gardenId;
+    private int x;
+    private int y;
+    private PlantTypeDto plantType;
     private double allProducedOxygenInKilograms;
     private double allFixatedCO2InKilograms;
     private double allWaterConsumptionInLiters;

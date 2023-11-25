@@ -1,19 +1,25 @@
 import { Box, Dialog, DialogContent } from "@mui/material";
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
+import { AddPlantDialog } from "./AddPlantDialog";
+import { PlantDto, PlantTypeDto } from "@/lib/api/generated/generated-api";
+import { baseURL } from "@/lib/constans";
+import { api } from "@/lib/api/api";
+import { useQueryClient } from "@tanstack/react-query";
+import { myGardenQueryKeys } from "./queries";
 
-interface GardenProps {}
+interface GardenProps {
+  plants: PlantDto[];
+}
 
 const COLS = 5;
 const ROWS = 5;
 
-const PLANTS = [
-  [3, 2],
-  [3, 4],
-  [2, 4],
-  [1, 2],
-];
+export const Garden: FC<GardenProps> = ({ plants }) => {
+  const queryClient = useQueryClient();
+  const [addDialog, setAddDialog] = useState<
+    { x: number; y: number } | undefined
+  >(undefined);
 
-export const Garden: FC<GardenProps> = ({}) => {
   return (
     <>
       <Box
@@ -26,21 +32,42 @@ export const Garden: FC<GardenProps> = ({}) => {
       >
         {new Array(COLS).fill(true).map((_, x) =>
           new Array(ROWS).fill(true).map((_, y) => {
+            const plant = plants.find(
+              (plant) => plant.x === x && plant.y === y
+            );
+
             return (
               <Tile
-                plant={Boolean(
-                  PLANTS.find((plant) => plant[0] === x && plant[1] === y)
-                )}
+                plant={plant}
                 x={x}
                 y={y}
+                onClick={() => {
+                  if (!plant) {
+                    setAddDialog({ x, y });
+                  }
+                }}
               />
             );
           })
         )}
       </Box>
-      {/* <Dialog open fullWidth>
-        <DialogContent>hello</DialogContent>
-      </Dialog> */}
+      <AddPlantDialog
+        isOpen={addDialog !== undefined}
+        onSelect={async (plantType) => {
+          await api.myGarden.addPlant({
+            plantTypeId: plantType.id,
+            plantedAt: new Date().toISOString(),
+            x: addDialog?.x,
+            y: addDialog?.y,
+          });
+          queryClient.invalidateQueries({
+            queryKey: myGardenQueryKeys.myGarden(),
+          });
+        }}
+        onClose={() => {
+          setAddDialog(undefined);
+        }}
+      />
     </>
   );
 };
@@ -48,20 +75,23 @@ export const Garden: FC<GardenProps> = ({}) => {
 interface TileProps {
   x: number;
   y: number;
-  plant: boolean;
+  plant?: PlantDto;
+  onClick: VoidFunction;
 }
 
 const TILE_WIDTH = 75;
 const TILE_HEIGHT = TILE_WIDTH * 0.645;
 const GAP = 5;
 
-const Tile: FC<TileProps> = ({ x, y, plant }) => {
+const Tile: FC<TileProps> = ({ x, y, plant, onClick }) => {
   return (
     <Box
+      onClick={onClick}
       sx={{
         position: "absolute",
         width: TILE_WIDTH,
         height: TILE_HEIGHT,
+        cursor: "pointer",
         left:
           155 + (x * TILE_WIDTH) / 2 + x * GAP - (y * TILE_WIDTH) / 2 - y * GAP,
         top:
@@ -69,6 +99,9 @@ const Tile: FC<TileProps> = ({ x, y, plant }) => {
           (x * GAP) / 2 +
           (y * TILE_HEIGHT) / 2 +
           y * GAP,
+        "&:hover": {
+          filter: "brightness(1.2)",
+        },
       }}
     >
       {plant && (
@@ -83,7 +116,7 @@ const Tile: FC<TileProps> = ({ x, y, plant }) => {
         >
           <Box
             component="img"
-            src="tomato.png"
+            src={`${baseURL}${plant.plantType?.imageUrl}`}
             sx={{
               width: TILE_WIDTH / 1.5,
             }}

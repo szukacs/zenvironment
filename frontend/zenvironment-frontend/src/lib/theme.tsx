@@ -10,7 +10,9 @@ import { PropsWithChildren, useState } from "react";
 
 const theme = createTheme({
   palette: {
-    primary,
+    primary: {
+      main: "#0d5e41",
+    },
     background: { default: "#bddbbd" },
   },
 });
