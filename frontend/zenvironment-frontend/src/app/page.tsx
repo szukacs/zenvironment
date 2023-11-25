@@ -2,7 +2,7 @@
 
 import { Garden } from "@/components/Garden";
 import { Page } from "@/components/Page";
-import { Box, CircularProgress, Stack } from "@mui/material";
+import { Box, CircularProgress, Stack, useMediaQuery } from "@mui/material";
 import { StatDisplay } from "@/components/StatDisplay";
 import { useGetGardenQuery, useGetMyGardenQuery } from "@/components/queries";
 import { getSessionIdOrThrow } from "@/lib/session";
@@ -43,13 +43,17 @@ export default function MyGarden() {
     co2Unit = "g";
   }
   co2Fixation = Math.round(co2Fixation * 100) / 100;
+  const isMobile = useMediaQuery("(max-width:600px)", { noSsr: true });
 
   return (
     <Page title={name}>
       {myGardenQuery.status == "success" && (
         <Box mt={3}>
           <Box pt={2}>
-            <Garden plants={myGardenQuery.data?.data.plants!} />
+            <Garden
+              tileWidth={isMobile ? 60 : undefined}
+              plants={myGardenQuery.data?.data.plants!}
+            />
           </Box>
           <Stack spacing={2}>
             <StatDisplay
