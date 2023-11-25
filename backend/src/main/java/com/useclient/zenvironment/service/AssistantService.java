@@ -4,18 +4,12 @@ import com.theokanning.openai.completion.chat.ChatCompletionRequest;
 import com.theokanning.openai.completion.chat.ChatMessage;
 import com.theokanning.openai.completion.chat.ChatMessageRole;
 import com.theokanning.openai.service.OpenAiService;
-import com.useclient.zenvironment.TestBootstrapper;
 import com.useclient.zenvironment.configuration.ChatAssistantProperties;
-import com.useclient.zenvironment.model.dao.Garden;
-import com.useclient.zenvironment.model.dao.Plant;
-import com.useclient.zenvironment.model.dao.PlantType;
+import com.useclient.zenvironment.model.dto.chat.Message;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
+import java.util.*;
 import java.util.stream.Stream;
 
 @Service
@@ -25,86 +19,52 @@ public class AssistantService {
     private static final Integer MAX_TOKENS = 256;
 
     private final OpenAiService assistant;
-    private final Map<String, Function<Garden, String>> gardenBasedSuggestions;
-    private final List<String> youHaveAllPlantsOptions;
-    private final List<String> newPlantSuggestionOptions;
-    private final ZenService zenService;
 
-    public AssistantService(ChatAssistantProperties props, ZenService zenService) {
+    private final Map<String, List<ChatMessage>> conversationHistory;
+
+    public AssistantService(ChatAssistantProperties props) {
         this.assistant = new OpenAiService(props.getApiKey());
-        this.zenService = zenService;
-        this.gardenBasedSuggestions = Map.of(
-                "what new plant could I add to my garden?", this::getNewPlantSuggestion);
-        this.newPlantSuggestionOptions = Arrays.asList(
-                "Well, son, if you're lookin' to spruce up that patch of yours, reckon you could plant yourself a fine crop of %s.",
-                "Well, youngin', if you aim to freshen up that plot of yours, consider sowin' a good batch of %s in your garden.",
-                "Well, if you're hankerin' to liven up that piece of land, think about puttin' in a crop of %s in your garden, partner.",
-                "If you're yearnin' to add some zest to that soil of yours, ponder on plantin' a hearty helping of %s in your garden, my friend."
-        );
-        this.youHaveAllPlantsOptions = Arrays.asList(
-                "Seems your patch is practically overflowing with the plants this contraption can handle. Reckon it's high time to dig in and plant yourself a new batch of %s, don't you think?",
-                "Looks like your piece of land is just about burstin' with all them plants this contraption can manage. Reckon it's about time to get some new %s in the ground.",
-                "Well, I reckon your patch is bursting at the seams with all them plants this contraption can handle. Might be time to plant a new %s.",
-                "Well, it seems like your plot is plum full with all them plants this gadget can manage. Perhaps it's high time to sow a fresh batch of %s."
-        );
+        this.conversationHistory = new HashMap<>();
     }
 
-    public String getAiAssistance(String message) {
+    public Message getAssistance(Message message) {
+        var conversationId = message.getConversationId();
+        List<ChatMessage> messageHistory;
+        if (conversationId != null && conversationHistory.containsKey(conversationId)) {
+            messageHistory = conversationHistory.get(conversationId);
+            messageHistory.add(new ChatMessage(ChatMessageRole.USER.value(), message.getMessage()));
+        } else {
+            conversationId = UUID.randomUUID().toString();
+            messageHistory = generateFirstAiChatMessage(message.getMessage());
+        }
+        var messages = new ArrayList<>(messageHistory);
         var chatCompletionRequest = ChatCompletionRequest.builder()
                 .model(MODEL)
-                .messages(generateAiChatMessage(message))
+                .messages(messages)
                 .maxTokens(MAX_TOKENS)
                 .build();
         var response = assistant.createChatCompletion(chatCompletionRequest);
         var choices = response.getChoices();
         if (CollectionUtils.isEmpty(choices)) {
-            throw new RuntimeException("no response");
+            var apology = "Apologies, but I can't give you an answer at the moment. Why don't you come back later when the weather's more favorable?";
+            messages.add(new ChatMessage(ChatMessageRole.ASSISTANT.value(), apology));
+            conversationHistory.put(conversationId, messages);
+            return new Message(apology, conversationId);
         }
-        return choices.get(0).getMessage().getContent();
+        var responseMessage = choices.get(0).getMessage();
+        messages.add(responseMessage);
+        conversationHistory.put(conversationId, messages);
+        return new Message(responseMessage.getContent(), conversationId);
     }
 
-    private List<ChatMessage> generateAiChatMessage(String message) {
-        return Stream.of("answer in one sentence",
+    private List<ChatMessage> generateFirstAiChatMessage(String message) {
+        return new ArrayList<>(Stream.of("answer in one sentence",
                         "answer like an old american farmer",
                         "use imperial and metric units",
                         message
                 )
                 .map(messageContent -> new ChatMessage(ChatMessageRole.USER.value(), messageContent))
-                .toList();
+                .toList());
     }
 
-    public String getAssistance(String message) {
-        if (!gardenBasedSuggestions.containsKey(message)) {
-            return getAiAssistance(message);
-        }
-        var suggestionFunction = gardenBasedSuggestions.get(message);
-        var myGarden = zenService.getGardenByName(TestBootstrapper.MY_GARDEN_NAME);
-        return suggestionFunction.apply(myGarden);
-    }
-
-    public List<String> getGardenBasedAssistanceQuestions() {
-        return gardenBasedSuggestions.keySet().stream().toList();
-    }
-
-    public String getNewPlantSuggestion(Garden myGarden) {
-        var myPlants = myGarden.getPlants().stream()
-                .map(Plant::getPlantType)
-                .map(PlantType::getName)
-                .toList();
-        var missingPlants = zenService.getAllPlantTypes().stream()
-                .map(PlantType::getName)
-                .filter(plantName -> !myPlants.contains(plantName))
-                .toList();
-        if (missingPlants.isEmpty()) {
-            var randomExistingPlant = getRandom(myPlants);
-            return String.format(getRandom(youHaveAllPlantsOptions), randomExistingPlant);
-        }
-
-        var randomMissingPlant = getRandom(missingPlants);
-        return String.format(getRandom(newPlantSuggestionOptions), randomMissingPlant);
-    }
-
-    private String getRandom(List<String> options) {
-        return options.get((int) (Math.random() * options.size()));
-    }
 }

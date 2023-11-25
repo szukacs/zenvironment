@@ -13,5 +13,8 @@ public class ExchangeDto {
   private String vendorId;
   private String receiverId;
   private String description;
-  private String imageUrl;
+  private String profileImageUrl;
+  private String productImageUrl;
+  private String gardenName;
+  private boolean accepted;
 }

@@ -115,8 +115,17 @@ public class TestBootstrapper {
         Exchange exchange = Exchange.builder()
             .garden(garden2)
             .description("I have 3 free 1 month old tomato plants. Feel free to reach out")
+            .productImageUrl("/fruit/tomato.png")
             .build();
+
+        Exchange exchange2 = Exchange.builder()
+            .garden(garden)
+            .description("I have 4 paprikas. Come and get them.")
+            .productImageUrl("/fruit/paprika.png")
+            .build();
+
         exchangeRepository.save(exchange);
+        exchangeRepository.save(exchange2);
 
         var tomatoPlant1 = Plant.builder()
             .plantType(tomato)
@@ -235,14 +244,5 @@ public class TestBootstrapper {
         harvestRepository.save(new Harvest(null, sunFlowerPlant2, 0.25, LocalDate.now().minusDays(7)));
 
         return "hello!";
-    }
-
-    @Bean
-    @Transactional
-    public String postProcessTestData(String bootstrapTestData) {
-        challengeRepository.findAll()
-                .stream().peek(Challenge::calibrateChallengeLevel)
-                .forEach(challengeRepository::save);
-        return bootstrapTestData + " world!";
     }
 }

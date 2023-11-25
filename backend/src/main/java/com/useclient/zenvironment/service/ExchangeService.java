@@ -47,15 +47,12 @@ public class ExchangeService {
     gardens.forEach(garden -> exchanges.addAll(garden.getExchanges()));
 
     List<ExchangeDto> exchangeDtos = new ArrayList<>();
-    exchanges
-        .stream()
-        .filter(exchange -> !exchange.isAccepted())
-        .forEach(exchange -> exchangeDtos.add(mapper.exchangeDto(exchange)));
+    exchanges.forEach(exchange -> exchangeDtos.add(mapper.exchangeDto(exchange)));
     return exchangeDtos;
   }
 
   public void updateStatusOfExchange(ExchangeDto exchangeDto) {
-    exchangeRepository.updateById(exchangeDto.getVendorId(), exchangeDto.getReceiverId());
+    exchangeRepository.updateById(UUID.fromString(exchangeDto.getExchangeId()), exchangeDto.getReceiverId());
   }
 
   public List<ExchangeDto> findAllExchangesBelongingToGarden(String gardenId){

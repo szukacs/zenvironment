@@ -11,4 +11,5 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Message {
     private String message;
+    private String conversationId;
 }

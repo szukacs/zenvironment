@@ -4,6 +4,7 @@ import com.useclient.zenvironment.mapper.MainMapper;
 import com.useclient.zenvironment.model.dto.*;
 import com.useclient.zenvironment.service.ChallengeService;
 import com.useclient.zenvironment.service.ExchangeService;
+import com.useclient.zenvironment.service.GardenService;
 import com.useclient.zenvironment.service.ZenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,7 @@ public class ZenController {
     private final ChallengeService challengeService;
     private final MainMapper mapper;
     private final ExchangeService exchangeService;
+    private final GardenService gardenService;
 
     @Transactional(readOnly = true)
     @GetMapping("/plant-types")
@@ -30,6 +32,31 @@ public class ZenController {
         var responseBody = zenService.getAllPlantTypes().stream()
                 .map(mapper::toDto)
                 .toList();
+        return ResponseEntity.ok(responseBody);
+    }
+
+    @Transactional
+    @PostMapping("/gardens")
+    public ResponseEntity<GardenDto> createGarden(@RequestBody NewGardenDto newGardenDto) {
+        var newGarden = gardenService.createGarden(newGardenDto);
+        return ResponseEntity.ok(mapper.toDto(newGarden));
+    }
+
+    @Transactional(readOnly = true)
+    @GetMapping("/gardens/{gardenId}")
+    public ResponseEntity<GardenDto> getGardenById(@PathVariable String gardenId) {
+        var myGarden = gardenService.getGardenById(gardenId);
+        var responseBody = mapper.toDto(myGarden);
+        return ResponseEntity.ok(responseBody);
+    }
+
+
+    @Transactional
+    @PostMapping("/gardens/{gardenId}/plants")
+    public ResponseEntity<PlantDto> addPlant(@PathVariable String gardenId, @RequestBody NewPlantDto newPlantDto) {
+        var myGarden = gardenService.getGardenById(gardenId);
+        var newPlant = zenService.addPlant(myGarden, newPlantDto);
+        var responseBody = mapper.toDto(newPlant);
         return ResponseEntity.ok(responseBody);
     }
 

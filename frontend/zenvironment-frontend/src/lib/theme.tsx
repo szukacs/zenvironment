@@ -9,6 +9,7 @@ import { green as primary } from "@mui/material/colors";
 import { PropsWithChildren, useState } from "react";
 
 const theme = createTheme({
+  shape: { borderRadius: 16 },
   palette: {
     primary: {
       main: "#0d5e41",

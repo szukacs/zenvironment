@@ -37,7 +37,10 @@ public interface MainMapper {
     @Mapping(target = "vendorId", source = "exchange.garden.id")
     @Mapping(target = "receiverId", source = "exchange.receiverId")
     @Mapping(target = "description", source = "exchange.description")
-    @Mapping(target = "imageUrl", source = "exchange.garden.imageUrl")
+    @Mapping(target = "profileImageUrl", source = "exchange.garden.imageUrl")
+    @Mapping(target = "productImageUrl", source = "exchange.productImageUrl")
+    @Mapping(target = "gardenName", source = "exchange.garden.name")
+    @Mapping(target = "accepted", source = "exchange.accepted")
     ExchangeDto exchangeDto(Exchange exchange);
 
     @Mapping(target = "challengeName", source = "challengeType.name")
