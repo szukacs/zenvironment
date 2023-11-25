@@ -4,7 +4,7 @@ import { Box, Stack, Typography } from "@mui/material";
 import { FC, PropsWithChildren, ReactNode } from "react";
 
 interface PageProps extends PropsWithChildren {
-  title: ReactNode;
+  title?: ReactNode;
 }
 
 export const Page: FC<PageProps> = ({ children, title }) => {
@@ -17,7 +17,7 @@ export const Page: FC<PageProps> = ({ children, title }) => {
           padding: theme.spacing(1, 2),
         })}
       >
-        <Typography variant="h6">{title}</Typography>
+        {title && <Typography variant="h6">{title}</Typography>}
       </Box>
       <Box
         sx={(theme) => ({
