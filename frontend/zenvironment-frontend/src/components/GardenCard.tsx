@@ -18,7 +18,12 @@ export interface GardenCardProps {
 
 export const GardenCard: React.FC<GardenCardProps> = ({ garden }) => {
   return (
-    <Card>
+    <Card
+      sx={{
+        background: "linear-gradient(#aaccc0, #96ccab 70%)",
+        color: "#0d5e41",
+      }}
+    >
       <CardContent>
         <Box pt={2}>
           <Garden isAddDisabled tileWidth={60} plants={garden.plants ?? []} />
