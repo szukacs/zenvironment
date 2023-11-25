@@ -4,6 +4,7 @@ import {FC, useEffect, useState} from "react";
 import {Card, CardContent, IconButton, InputAdornment, Stack, TextField, Typography} from "@mui/material";
 import SendIcon from '@mui/icons-material/Send';
 import Image from "next/image";
+import {api} from "@/lib/api/api";
 
 export interface Message {
   sender: string,
@@ -22,11 +23,15 @@ export default function GardenAdvisor() {
   const [currentMessage, setCurrentMessage] = useState('')
 
   const sendMessage =  async () => {
-    const messagesWithYour = [...messages, {sender: "You", message: currentMessage}]
-   // send req to backend
-    setMessages(messagesWithYour)
+    let messagesWithYour = [...messages, {sender: "You", message: currentMessage}]
+    await api.assistant.askForAssistance({message: currentMessage}).then(resp => {
+      if (resp.data != null &&resp.data.message != null) {
+        messagesWithYour = [...messagesWithYour, { sender: oldSam, message: resp.data.message}]
+      }
+    }).finally(() => {
+      setMessages(messagesWithYour)
+    })
   }
-
 
   useEffect(() => {
     messagesState = messages
