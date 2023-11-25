@@ -3,6 +3,7 @@ import {
   Card,
   CardContent,
   LinearProgress,
+  Stack,
   Typography,
 } from "@mui/material";
 
@@ -10,16 +11,18 @@ interface ChallengeParams {
   level: number;
   name: string;
   description: string;
+  image: string;
   prevLevelTarget: number;
   nextLevelTarget: number;
   currentProgress: number;
-  progressColor?: string;
+  progressColor: string;
 }
 
 export const Challenge = ({
   level,
   name,
   description,
+  image,
   prevLevelTarget,
   nextLevelTarget,
   currentProgress,
@@ -27,21 +30,38 @@ export const Challenge = ({
 }: ChallengeParams) => {
   return (
     <Card
-      sx={(theme) => ({ padding: theme.spacing(1), margin: theme.spacing(1) })}
+      sx={(theme) => ({
+        padding: theme.spacing(1),
+        margin: theme.spacing(1),
+      })}
     >
+      <Box sx={{ display: "flex" }}>
+        <Box
+          component="img"
+          sx={{
+            maxWidth: "100%",
+            width: 100,
+            objectFit: "contain",
+            marginRight: 1,
+          }}
+          src={image}
+        ></Box>
+        <Stack>
+          <Typography
+            variant="h5"
+            sx={(theme) => ({ padding: theme.spacing(1) })}
+          >
+            {name}
+          </Typography>
+          <Typography
+            variant="h6"
+            sx={(theme) => ({ padding: theme.spacing(1) })}
+          >
+            {description}
+          </Typography>
+        </Stack>
+      </Box>
       <CardContent>
-        <Typography
-          variant="h5"
-          sx={(theme) => ({ padding: theme.spacing(1) })}
-        >
-          {name}
-        </Typography>
-        <Typography
-          variant="h6"
-          sx={(theme) => ({ padding: theme.spacing(1) })}
-        >
-          {description}
-        </Typography>
         <Box
           sx={(theme) => ({
             display: "flex",
@@ -64,7 +84,7 @@ export const Challenge = ({
             value={
               ((currentProgress - prevLevelTarget) * 100) / nextLevelTarget
             }
-            sx={(theme) => ({
+            sx={{
               height: 30,
               borderRadius: 3,
               backgroundColor: "#e9e9e9",
@@ -72,7 +92,7 @@ export const Challenge = ({
                 backgroundColor: progressColor,
                 borderRadius: 3,
               },
-            })}
+            }}
           />
         </Box>
       </CardContent>

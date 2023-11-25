@@ -26,6 +26,8 @@ export const Challenges = () => {
             key={key}
             name={ch.challengeName!}
             description={ch.challengeDescription!}
+            image={ch.imageUrl!}
+            progressColor={ch.color!}
             level={ch.level!}
             prevLevelTarget={ch.previousLevelTarget!}
             nextLevelTarget={ch.nextLevelTarget!}
