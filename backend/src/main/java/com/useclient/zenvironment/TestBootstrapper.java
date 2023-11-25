@@ -37,7 +37,7 @@ public class TestBootstrapper {
 
         var tomato = PlantType.builder()
             .name("tomato")
-            .imageUrl( "/fruit/tomato.jpg")
+            .imageUrl( "/fruit/tomato.png")
             .averageOxygenProductionInKilogramsPerDay(0.0085)
             .averageCO2FixationInKilogramsPerDay(0.125)
             .waterInLiterPerWeek(6)
