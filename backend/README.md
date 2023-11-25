@@ -2,6 +2,7 @@
 
 ## Technology stack
 ![](images/springboot.png?raw=true)
+:-------------------------:|:-------------------------:
 ![](images/springboot.png)  |  ![](images/gradle.png)
 * [Gradle](images/gradle.png "Gradle")
 * [Open API](images/springboot.png "Open API")
