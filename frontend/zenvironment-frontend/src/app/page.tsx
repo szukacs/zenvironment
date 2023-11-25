@@ -11,7 +11,7 @@ export default function MyGarden() {
   const myGardenQuery = useGetGardenQuery(getSessionIdOrThrow());
   if (myGardenQuery.isLoading) {
     return (
-      <Box display="flex" justifyContent="center">
+      <Box display="flex" justifyContent="center" pt={3}>
         <CircularProgress color="success" />
       </Box>
     );
