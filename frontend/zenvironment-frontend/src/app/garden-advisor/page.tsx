@@ -9,6 +9,7 @@ import {
   Stack,
   TextField,
   Typography,
+  useMediaQuery,
 } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import Image from "next/image";
@@ -33,15 +34,20 @@ export default function GardenAdvisor() {
   const [currentMessage, setCurrentMessage] = useState("");
 
   const sendMessage = async () => {
-
-    setMessages(prevState => ([...prevState, { sender: "You", message: currentMessage }]))
-    setCurrentMessage('');
+    setMessages((prevState) => [
+      ...prevState,
+      { sender: "You", message: currentMessage },
+    ]);
+    setCurrentMessage("");
 
     await api.assistant
       .askForAssistance({ message: currentMessage })
       .then((resp) => {
         if (resp.data != null && resp.data.message != null) {
-          setMessages(prevState => ([...prevState, { sender: oldSam, message: resp.data.message! }]))
+          setMessages((prevState) => [
+            ...prevState,
+            { sender: oldSam, message: resp.data.message! },
+          ]);
         }
       });
   };
@@ -104,22 +110,23 @@ export default function GardenAdvisor() {
 
 const MessageDisplay: FC<Message> = ({ sender, message }) => {
   const isOldSamMessage = sender === oldSam;
+  const isMobile = useMediaQuery("(max-width:600px)", { noSsr: true });
 
   const image = isOldSamMessage ? (
     <Image
       style={{ borderRadius: "50%", marginLeft: "1.2rem" }}
       src="/farmer.png"
       alt="Farmer picture"
-      height={100}
-      width={100}
+      height={isMobile ? 60 : 100}
+      width={isMobile ? 60 : 100}
     />
   ) : (
     <Image
       style={{ borderRadius: "50%", marginRight: "1.2rem" }}
       src="/user.png"
       alt="User picture"
-      height={90}
-      width={90}
+      height={isMobile ? 54 : 90}
+      width={isMobile ? 54 : 90}
     />
   );
 
