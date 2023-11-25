@@ -29,6 +29,7 @@ export default function RootLayout({
         <html lang="en">
           <head>
             <meta name="theme-color" content="#0d5e41" />
+            <title>Zenvironment</title>
           </head>
           <body className={inter.className}>
             <QueryClientProvider client={queryClient}>
