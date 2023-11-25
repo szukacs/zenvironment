@@ -2,6 +2,7 @@
 
 import { Box, Stack, Typography } from "@mui/material";
 import { FC, PropsWithChildren, ReactNode } from "react";
+import { Container } from "./Container";
 
 interface PageProps extends PropsWithChildren {
   title?: ReactNode;
@@ -9,7 +10,7 @@ interface PageProps extends PropsWithChildren {
 
 export const Page: FC<PageProps> = ({ children, title }) => {
   return (
-    <Stack sx={{ paddingBottom: "100px" }}>
+    <Box sx={{ paddingBottom: "100px" }}>
       <Box
         sx={(theme) => ({
           textAlign: "center",
@@ -19,13 +20,7 @@ export const Page: FC<PageProps> = ({ children, title }) => {
       >
         {title && <Typography variant="h6">{title}</Typography>}
       </Box>
-      <Box
-        sx={(theme) => ({
-          padding: theme.spacing(1, 2),
-        })}
-      >
-        {children}
-      </Box>
-    </Stack>
+      <Container>{children}</Container>
+    </Box>
   );
 };

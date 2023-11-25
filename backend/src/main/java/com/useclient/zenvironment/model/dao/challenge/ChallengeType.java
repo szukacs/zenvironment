@@ -66,7 +66,7 @@ public enum ChallengeType {
     PeaCount(
             "Number of Peas",
             "Increase the number of pea plants in your community",
-            "/challenge/peaPlant.jpg",
+            "/challenge/peaPlant.png",
             "#56b5db",
             COUNT_PEAS_NAME,
             level -> (5.0 * level)),

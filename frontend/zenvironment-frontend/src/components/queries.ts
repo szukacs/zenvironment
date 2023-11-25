@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 export const myGardenQueryKeys = {
   root: () => ["root"] as const,
   myGarden: () => [...myGardenQueryKeys.root(), "myGarden"] as const,
+  garden: (id: string) => [...myGardenQueryKeys.root(), "garden"] as const,
   myCommunity: () => [...myGardenQueryKeys.root(), "myCommunity"] as const,
   plant: (plantId: string) =>
     [...myGardenQueryKeys.root(), "plant", plantId] as const,
@@ -17,6 +18,13 @@ export function useGetMyGardenQuery() {
   });
 }
 
+export function useGetGardenQuery(id: string) {
+  return useQuery({
+    queryKey: myGardenQueryKeys.myGarden(),
+    queryFn: () => api.gardens.getGardenById(id),
+  });
+}
+
 export function useGetMyCommunityQuery() {
   return useQuery({
     queryKey: myGardenQueryKeys.myCommunity(),
@@ -25,15 +33,16 @@ export function useGetMyCommunityQuery() {
 }
 
 export const communityChallengesQueryKeys = {
-  root: () => ['root'] as const,
-  communityChallenges: () => [...communityChallengesQueryKeys.root(), 'communityChallenges'] as const
+  root: () => ["root"] as const,
+  communityChallenges: () =>
+    [...communityChallengesQueryKeys.root(), "communityChallenges"] as const,
 } as const;
 
 export function useGetCommunityChallengesQuery() {
   return useQuery({
     queryKey: communityChallengesQueryKeys.communityChallenges(),
-    queryFn: () => api.myCommunity.getMyCommunityChallenges()
-  })
+    queryFn: () => api.myCommunity.getMyCommunityChallenges(),
+  });
 }
 
 export function useGetPlantById(plantId: string) {

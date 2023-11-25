@@ -10,28 +10,52 @@ import "@fontsource/roboto/700.css";
 import { Navigation } from "@/components/Navigation";
 import { CssBaseline } from "@mui/material";
 import { ThemeRegistry } from "@/lib/theme";
-import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Onboarding } from "@/components/Onboarding";
+import { getSessionId } from "@/lib/session";
+import { useState } from "react";
+import { Container } from "@/components/Container";
 
 const inter = Inter({ subsets: ["latin"] });
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient();
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const [status, setStatus] = useState<"unauthenticated" | "authenticated">(
+    () => {
+      const sessionId = getSessionId();
+      if (!sessionId) {
+        return "unauthenticated";
+      }
+      return "authenticated";
+    }
+  );
+
   return (
     <>
       <ThemeRegistry>
         <CssBaseline />
         <html lang="en">
           <body className={inter.className}>
-          <QueryClientProvider client={queryClient}>
-            {children}
-          </QueryClientProvider>
-
-            <Navigation />
+            <QueryClientProvider client={queryClient}>
+              {status === "authenticated" ? (
+                <>
+                  {children} <Navigation />
+                </>
+              ) : (
+                <Container>
+                  <Onboarding
+                    onSuccess={() => {
+                      setStatus("authenticated");
+                    }}
+                  />
+                </Container>
+              )}
+            </QueryClientProvider>
           </body>
         </html>
       </ThemeRegistry>

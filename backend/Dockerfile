@@ -1,7 +1,6 @@
 FROM openjdk:17
 WORKDIR .
-CMD ["./gradlew", "clean", "bootJar"]
-COPY build/libs/*.jar app.jar
-
-EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "/app.jar"]
+CMD ["./gradlew", "clean", "build", "bootJar"]
+ARG JAR_FILE=./build/lib/zenvironment-0.0.1-SNAPSHOT.jar
+COPY ${JAR_FILE} app.jar
+ENTRYPOINT ["java", "-jar", "app.jar"]
