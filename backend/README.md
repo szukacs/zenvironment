@@ -2,7 +2,8 @@
 
 ## Technology stack
 ![](images/springboot.png?raw=true)
-* [Gradle](images/springboot.png "Gradle")
+![](images/springboot.png)  |  ![](images/gradle.png)
+* [Gradle](images/gradle.png "Gradle")
 * [Open API](images/springboot.png "Open API")
 * [MapStruct](images/springboot.png "MapStruct")
 * [ChatGPT](images/springboot.png "ChatGPT")
