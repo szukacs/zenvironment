@@ -1,5 +1,6 @@
 import { baseURL } from "@/lib/constans";
 import {
+  Alert,
   Box,
   Button,
   Card,
@@ -22,6 +23,58 @@ interface MarketParams {
   productImage: string;
   myGardenId: string;
 }
+
+const SendOfferDialog = ({
+  open,
+  onClose,
+  gardenName,
+}: {
+  open: boolean;
+  onClose: () => void;
+  gardenName: string;
+}) => {
+  const [dialogContent, setDialogContent] = useState<"textField" | "alert">(
+    "textField"
+  );
+
+  const handleClose = () => {
+    onClose();
+  };
+
+  const handleSubmit = () => {
+    setDialogContent("alert");
+  };
+
+  return (
+    <Dialog open={open} onClose={handleClose} fullWidth>
+      <DialogTitle>Message to {gardenName}</DialogTitle>
+      <DialogContent>
+        {dialogContent === "textField" ? (
+          <TextField
+            autoFocus
+            multiline
+            rows={6}
+            label="Type your message..."
+            fullWidth
+          />
+        ) : (
+          <Alert severity="success">Message sent</Alert>
+        )}
+      </DialogContent>
+      <DialogActions>
+        {dialogContent === "textField" ? (
+          <Button fullWidth variant="outlined" onClick={handleSubmit}>
+            Make Offer
+          </Button>
+        ) : (
+          <Button fullWidth variant="outlined" onClick={handleClose}>
+            Close
+          </Button>
+        )}
+      </DialogActions>
+    </Dialog>
+  );
+};
 
 export const MarketPlaceItem = ({
   vendorId,
@@ -104,23 +157,13 @@ export const MarketPlaceItem = ({
           </CardActions>
         )}
       </Card>
-      <Dialog open={isDialogOpen} onClose={handleClose} fullWidth>
-        <DialogTitle>{gardenName}</DialogTitle>
-        <DialogContent>
-          <TextField
-            autoFocus
-            multiline
-            rows={6}
-            label="Type your message..."
-            fullWidth
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button fullWidth variant="outlined" onClick={handleClose}>
-            Make Offer
-          </Button>
-        </DialogActions>
-      </Dialog>
+      {isDialogOpen && (
+        <SendOfferDialog
+          open={isDialogOpen}
+          onClose={handleClose}
+          gardenName={gardenName}
+        />
+      )}
     </>
   );
 };
