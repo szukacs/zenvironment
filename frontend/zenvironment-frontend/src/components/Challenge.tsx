@@ -1,37 +1,68 @@
+import { baseURL } from "@/lib/constans";
 import {
   Box,
   Card,
   CardContent,
   LinearProgress,
+  Stack,
   Typography,
 } from "@mui/material";
 
-interface ChallenegParams {
+interface ChallengeParams {
   level: number;
-  title: string;
-  currentPoint: number;
-  maxPoint: number;
+  name: string;
+  description: string;
+  image: string;
+  prevLevelTarget: number;
+  nextLevelTarget: number;
+  currentProgress: number;
   progressColor: string;
 }
 
 export const Challenge = ({
   level,
-  title,
-  currentPoint,
-  maxPoint,
+  name,
+  description,
+  image,
+  prevLevelTarget,
+  nextLevelTarget,
+  currentProgress,
   progressColor,
-}: ChallenegParams) => {
+}: ChallengeParams) => {
   return (
     <Card
-      sx={(theme) => ({ padding: theme.spacing(1), margin: theme.spacing(1) })}
+      sx={(theme) => ({
+        padding: theme.spacing(1),
+        margin: theme.spacing(1),
+      })}
     >
+      <Box sx={{ display: "flex" }}>
+        <Box
+          component="img"
+          sx={{
+            maxWidth: "100%",
+            width: 100,
+            objectFit: "contain",
+            marginRight: 1,
+          }}
+          src={`${baseURL}${image}`}
+        ></Box>
+        <Stack>
+          <Typography
+            variant="h5"
+            sx={(theme) => ({ padding: theme.spacing(1) })}
+          >
+            {name}
+          </Typography>
+          <Typography
+            variant="h6"
+            sx={(theme) => ({ padding: theme.spacing(1) })}
+          >
+            {description}
+          </Typography>
+        </Stack>
+      </Box>
       <CardContent>
-        <Typography
-          variant="h5"
-          sx={(theme) => ({ padding: theme.spacing(1) })}
-        >
-          {title}
-        </Typography>
         <Box
           sx={(theme) => ({
             display: "flex",
@@ -44,15 +75,17 @@ export const Challenge = ({
           </Box>
           <Box>
             <Typography variant="subtitle1">
-              {currentPoint}/{maxPoint}
+              {currentProgress - prevLevelTarget}/{nextLevelTarget}
             </Typography>
           </Box>
         </Box>
         <Box>
           <LinearProgress
             variant="determinate"
-            value={(currentPoint * 100) / maxPoint}
-            sx={(theme) => ({
+            value={
+              ((currentProgress - prevLevelTarget) * 100) / nextLevelTarget
+            }
+            sx={{
               height: 30,
               borderRadius: 3,
               backgroundColor: "#e9e9e9",
@@ -60,7 +93,7 @@ export const Challenge = ({
                 backgroundColor: progressColor,
                 borderRadius: 3,
               },
-            })}
+            }}
           />
         </Box>
       </CardContent>

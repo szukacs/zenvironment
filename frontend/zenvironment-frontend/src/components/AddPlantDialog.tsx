@@ -10,8 +10,8 @@ import {
   Typography,
 } from "@mui/material";
 import { FC } from "react";
-import { useGetPlantTypes } from "./mygardenQueries";
 import { PlantTypeDto } from "@/lib/api/generated/generated-api";
+import { useGetPlantTypes } from "./queries";
 
 interface AddPlantDialogProps {
   isOpen: boolean;

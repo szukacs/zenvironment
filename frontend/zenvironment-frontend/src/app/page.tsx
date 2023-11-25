@@ -2,9 +2,9 @@
 
 import { Garden } from "@/components/Garden";
 import { Page } from "@/components/Page";
-import { useGetMyGardenQuery } from "@/components/mygardenQueries";
 import { Box, CircularProgress, Stack } from "@mui/material";
 import { StatDisplay } from "@/components/StatDisplay";
+import { useGetMyGardenQuery } from "@/components/queries";
 
 export default function MyGarden() {
   const myGardenQuery = useGetMyGardenQuery();
