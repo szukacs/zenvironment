@@ -61,7 +61,7 @@ export const AddPlantDialog: FC<AddPlantDialogProps> = ({
                 sx={{
                   maxWidth: "100%",
                   aspectRatio: "1/1",
-                  objectFit: "cover",
+                  objectFit: "contain",
                 }}
               />
               <div>

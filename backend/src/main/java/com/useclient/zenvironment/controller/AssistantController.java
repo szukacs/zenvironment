@@ -4,6 +4,7 @@ import com.useclient.zenvironment.model.dto.chat.Message;
 import com.useclient.zenvironment.service.AssistantService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.List;
 public class AssistantController {
     private final AssistantService assistantService;
 
+    @Transactional(readOnly = true)
     @PostMapping("/chat")
     public ResponseEntity<Message> askForAssistance(@RequestBody Message chatRequest) {
         try {
@@ -24,6 +26,7 @@ public class AssistantController {
         }
     }
 
+    @Transactional(readOnly = true)
     @GetMapping("/suggestions")
     public ResponseEntity<List<String>> getQuickQuestions() {
         return ResponseEntity.ok(assistantService.getGardenBasedAssistanceQuestions());
