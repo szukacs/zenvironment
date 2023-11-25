@@ -148,101 +148,142 @@ public class TestBootstrapper {
         var tomatoPlant1 = Plant.builder()
             .plantType(tomato)
             .garden(garden)
+            .x(3)
+            .y(2)
+            .plantedAt(LocalDate.now().minusDays(60))
+            .build();
+
+        var tomatoPlant3 = Plant.builder()
+            .plantType(tomato)
+            .garden(garden)
+            .x(4)
+            .y(2)
             .plantedAt(LocalDate.now().minusDays(60))
             .build();
 
         var tomatoPlant2 = Plant.builder()
             .plantType(tomato)
             .garden(garden2)
+            .x(4)
+            .y(1)
             .plantedAt(LocalDate.now().minusDays(120))
             .build();
 
         var onionPlant1 = Plant.builder()
             .plantType(onion)
             .garden(garden)
+            .x(3)
+            .y(4)
             .plantedAt(LocalDate.now().minusDays(50))
             .build();
 
         var onionPlant2 = Plant.builder()
             .plantType(onion)
             .garden(garden2)
+            .x(4)
+            .y(0)
             .plantedAt(LocalDate.now().minusDays(40))
             .build();
 
         var lettucePlant = Plant.builder()
             .plantType(lettuce)
             .garden(garden)
+            .x(2)
+            .y(4)
             .plantedAt(LocalDate.now().minusDays(30))
             .build();
 
         var lettucePlant2 = Plant.builder()
             .plantType(lettuce)
             .garden(garden2)
+            .x(1)
+            .y(2)
             .plantedAt(LocalDate.now().minusDays(50))
             .build();
 
         var paprikaPlant = Plant.builder()
             .plantType(paprika)
             .garden(garden)
+            .x(1)
+            .y(2)
             .plantedAt(LocalDate.now().minusDays(35))
             .build();
 
         var paprikaPlant2 = Plant.builder()
             .plantType(paprika)
             .garden(garden2)
+            .x(2)
+            .y(4)
             .plantedAt(LocalDate.now().minusDays(40))
             .build();
 
         var spinachPlant = Plant.builder()
             .plantType(spinach)
             .garden(garden)
+            .x(1)
+            .y(1)
             .plantedAt(LocalDate.now().minusDays(20))
             .build();
 
         var spinachPlant2 = Plant.builder()
             .plantType(spinach)
             .garden(garden2)
+            .x(1)
+            .y(1)
             .plantedAt(LocalDate.now().minusDays(40))
             .build();
 
         var sunFlowerPlant = Plant.builder()
             .plantType(sunFlower)
             .garden(garden)
+            .x(0)
+            .y(0)
             .plantedAt(LocalDate.now().minusDays(50))
             .build();
 
         var sunFlowerPlant2 = Plant.builder()
             .plantType(sunFlower)
             .garden(garden2)
+            .x(3)
+            .y(3)
             .plantedAt(LocalDate.now().minusDays(20))
             .build();
 
         var wheatPlant = Plant.builder()
             .plantType(wheat)
             .garden(garden)
+            .x(1)
+            .y(3)
             .plantedAt(LocalDate.now().minusDays(10))
             .build();
 
         var wheatPlant2 = Plant.builder()
             .plantType(wheat)
             .garden(garden2)
+            .x(2)
+            .y(2)
             .plantedAt(LocalDate.now().minusDays(25))
             .build();
 
         var cucumberPlant = Plant.builder()
             .plantType(cucumber)
             .garden(garden)
+            .x(0)
+            .y(3)
             .plantedAt(LocalDate.now().minusDays(35))
             .build();
 
         var cucumberPlant2 = Plant.builder()
             .plantType(cucumber)
             .garden(garden2)
+            .x(0)
+            .y(2)
             .plantedAt(LocalDate.now().minusDays(15))
             .build();
 
         plantRepository.save(tomatoPlant1);
         plantRepository.save(tomatoPlant2);
+        plantRepository.save(tomatoPlant3);
         plantRepository.save(cucumberPlant);
         plantRepository.save(cucumberPlant2);
         plantRepository.save(sunFlowerPlant2);

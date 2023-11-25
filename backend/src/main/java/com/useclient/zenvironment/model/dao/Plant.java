@@ -15,6 +15,12 @@ import static java.time.temporal.ChronoUnit.DAYS;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Table(
+        name = "plant",
+        indexes = {
+                @Index(name = "idx_unique_location_in_garden", columnList = "garden_id, x, y", unique = true)
+        }
+)
 public class Plant {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -23,6 +29,8 @@ public class Plant {
     private PlantType plantType;
     @ManyToOne
     private Garden garden;
+    private int x;
+    private int y;
     private LocalDate plantedAt;
     private LocalDate uprootedAt;
     @OneToMany(mappedBy = "plant")

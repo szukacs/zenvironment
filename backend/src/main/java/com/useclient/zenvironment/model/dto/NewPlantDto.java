@@ -9,6 +9,8 @@ import java.util.UUID;
 @Getter
 @Setter
 public class NewPlantDto {
+    private int x;
+    private int y;
     private UUID plantTypeId;
     private LocalDate plantedAt;
 }
