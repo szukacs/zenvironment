@@ -67,6 +67,13 @@ export interface NewHarvestDto {
   harvestDate?: string;
 }
 
+export interface ExchangeDto {
+  exchangeId?: string;
+  vendorId?: string;
+  receiverId?: string;
+  description?: string;
+}
+
 export interface Message {
   message?: string;
 }
@@ -299,6 +306,26 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags zen-controller
+     * @name AddExchange
+     * @request POST:/my-garden/exchanges
+     */
+    addExchange: (
+      query: {
+        exchangeDto: ExchangeDto;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<ExchangeDto[], any>({
+        path: `/my-garden/exchanges`,
+        method: "POST",
+        query: query,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags zen-controller
      * @name GetMyGarden
      * @request GET:/my-garden
      */
@@ -333,6 +360,20 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     getMyHarvests: (params: RequestParams = {}) =>
       this.request<HarvestSummary[], any>({
         path: `/my-garden/harvests`,
+        method: "GET",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags zen-controller
+     * @name FindAllExchangesBelongingToGarden
+     * @request GET:/my-garden/exchanges/{gardenId}
+     */
+    findAllExchangesBelongingToGarden: (gardenId: string, params: RequestParams = {}) =>
+      this.request<ExchangeDto[], any>({
+        path: `/my-garden/exchanges/${gardenId}`,
         method: "GET",
         ...params,
       }),
@@ -380,6 +421,20 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     getMyCommunity: (params: RequestParams = {}) =>
       this.request<CommunityDto, any>({
         path: `/my-community`,
+        method: "GET",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags zen-controller
+     * @name FindAllExchangesBelongingToCommuniy
+     * @request GET:/my-community/exchanges/{communityId}
+     */
+    findAllExchangesBelongingToCommuniy: (communityId: string, params: RequestParams = {}) =>
+      this.request<ExchangeDto[], any>({
+        path: `/my-community/exchanges/${communityId}`,
         method: "GET",
         ...params,
       }),
