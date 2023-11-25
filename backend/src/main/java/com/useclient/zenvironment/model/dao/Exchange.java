@@ -19,6 +19,7 @@ public class Exchange {
   private String receiverId;
   private String description;
   private boolean accepted;
+  private String productImageUrl;
 
   @ManyToOne
   private Garden garden;

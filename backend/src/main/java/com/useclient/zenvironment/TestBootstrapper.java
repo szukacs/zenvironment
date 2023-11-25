@@ -115,8 +115,17 @@ public class TestBootstrapper {
         Exchange exchange = Exchange.builder()
             .garden(garden2)
             .description("I have 3 free 1 month old tomato plants. Feel free to reach out")
+            .productImageUrl("/fruit/tomato.png")
             .build();
+
+        Exchange exchange2 = Exchange.builder()
+            .garden(garden)
+            .description("I have 4 paprikas. Come and get them.")
+            .productImageUrl("/fruit/paprika.png")
+            .build();
+
         exchangeRepository.save(exchange);
+        exchangeRepository.save(exchange2);
 
         var tomatoPlant1 = Plant.builder()
             .plantType(tomato)

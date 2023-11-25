@@ -16,8 +16,8 @@ public interface ExchangeRepository extends JpaRepository<Exchange, String> {
   @Modifying
   @Transactional
   @Query("UPDATE Exchange  exchange set exchange.accepted = true, exchange.receiverId = :receiverId " +
-      "WHERE exchange.garden.id = :vendorId")
-  void updateById(@Param("vendorId") String vendorId, @Param("receiverId") String receiverId);
+      "WHERE exchange.id = :exchangeId")
+  void updateById(@Param("exchangeId") UUID exchangeId, @Param("receiverId") UUID receiverId);
 
   @Query("SELECT exchange from Exchange  exchange where exchange.garden.id = :gardenId or exchange.receiverId = :gardenIdString " +
       "order by exchange.accepted desc")

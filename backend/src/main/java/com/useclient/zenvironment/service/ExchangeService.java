@@ -55,7 +55,7 @@ public class ExchangeService {
   }
 
   public void updateStatusOfExchange(ExchangeDto exchangeDto) {
-    exchangeRepository.updateById(exchangeDto.getVendorId(), exchangeDto.getReceiverId());
+    exchangeRepository.updateById(UUID.fromString(exchangeDto.getExchangeId()), UUID.fromString(exchangeDto.getReceiverId()));
   }
 
   public List<ExchangeDto> findAllExchangesBelongingToGarden(String gardenId){
