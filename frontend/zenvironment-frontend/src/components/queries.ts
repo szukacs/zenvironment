@@ -18,10 +18,11 @@ export function useGetMyGardenQuery() {
   });
 }
 
-export function useGetGardenQuery(id: string) {
+export function useGetGardenQuery(id: string, automaticRefreshData: boolean) {
   return useQuery({
     queryKey: myGardenQueryKeys.myGarden(),
     queryFn: () => api.gardens.getGardenById(id),
+    refetchInterval: automaticRefreshData ? 10000 : false
   });
 }
 
