@@ -22,7 +22,7 @@ const items = [
     path: "/community",
   },
   {
-    label: "Garden advisor",
+    label: "Garden advisor AI",
     Icon: AgricultureIcon,
     path: "/garden-advisor"
   }
