@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.UUID;
 
 @Repository
 public interface ExchangeRepository extends JpaRepository<Exchange, String> {
@@ -18,6 +19,7 @@ public interface ExchangeRepository extends JpaRepository<Exchange, String> {
       "WHERE exchange.garden.id = :vendorId")
   void updateById(@Param("vendorId") String vendorId, @Param("receiverId") String receiverId);
 
-  @Query("SELECT  exchange from Exchange  exchange where exchange.garden.id = :vendorId and exchange.accepted = false")
-  List<Exchange> findAllByIdNotAccepted(@Param("vendorId") String vendorId);
+  @Query("SELECT exchange from Exchange  exchange where exchange.garden.id = :gardenId or exchange.receiverId = :gardenIdString " +
+      "order by exchange.accepted desc")
+  List<Exchange> findAllByIdNotAccepted(@Param("gardenId") UUID gardenId, @Param("gardenIdString") String gardenIdString);
 }
