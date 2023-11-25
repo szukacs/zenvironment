@@ -10,10 +10,11 @@ import {
 
 export interface StatDisplayProps {
   title: string;
-  amount: string;
+  amount: string | number;
   unit: string;
   fact?: string;
   sx?: SxProps<Theme> | undefined;
+  unitSx?: SxProps<Theme> | undefined;
 }
 
 export const StatDisplay: React.FC<StatDisplayProps> = ({
@@ -22,6 +23,7 @@ export const StatDisplay: React.FC<StatDisplayProps> = ({
   unit,
   fact,
   sx,
+  unitSx,
 }) => {
   return (
     <Card>
@@ -30,7 +32,11 @@ export const StatDisplay: React.FC<StatDisplayProps> = ({
           <Typography variant="h6" component="div">
             {title}
           </Typography>
-          <Typography variant="h4" component="div" sx={{ textAlign: "right" }}>
+          <Typography
+            variant="h4"
+            component="div"
+            sx={{ textAlign: "right", ...unitSx }}
+          >
             {`${amount} ${unit}`}
           </Typography>
           {fact && <Typography color="textSecondary">{fact}</Typography>}

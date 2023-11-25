@@ -6,6 +6,7 @@ import { baseURL } from "@/lib/constans";
 import { api } from "@/lib/api/api";
 import { useQueryClient } from "@tanstack/react-query";
 import { myGardenQueryKeys } from "./queries";
+import { PlantDetailsDialog } from "./PlantDetailsDialog";
 
 interface GardenProps {
   plants: PlantDto[];
@@ -19,6 +20,9 @@ export const Garden: FC<GardenProps> = ({ plants }) => {
   const [addDialog, setAddDialog] = useState<
     { x: number; y: number } | undefined
   >(undefined);
+  const [selectedPlant, setSelectedPlant] = useState<string | undefined>(
+    undefined
+  );
 
   return (
     <>
@@ -41,8 +45,14 @@ export const Garden: FC<GardenProps> = ({ plants }) => {
                 plant={plant}
                 x={x}
                 y={y}
+                onCloseDetails={() => {
+                  setSelectedPlant(undefined);
+                }}
+                selected={plant ? plant.id === selectedPlant : false}
                 onClick={() => {
-                  if (!plant) {
+                  if (plant) {
+                    setSelectedPlant(plant.id!);
+                  } else {
                     setAddDialog({ x, y });
                   }
                 }}
@@ -77,70 +87,93 @@ interface TileProps {
   y: number;
   plant?: PlantDto;
   onClick: VoidFunction;
+  onCloseDetails: VoidFunction;
+  selected?: boolean;
 }
 
 const TILE_WIDTH = 75;
 const TILE_HEIGHT = TILE_WIDTH * 0.645;
 const GAP = 5;
 
-const Tile: FC<TileProps> = ({ x, y, plant, onClick }) => {
+const Tile: FC<TileProps> = ({
+  x,
+  y,
+  plant,
+  onClick,
+  selected,
+  onCloseDetails,
+}) => {
   return (
-    <Box
-      onClick={onClick}
-      sx={{
-        position: "absolute",
-        width: TILE_WIDTH,
-        height: TILE_HEIGHT,
-        cursor: "pointer",
-        left:
-          155 + (x * TILE_WIDTH) / 2 + x * GAP - (y * TILE_WIDTH) / 2 - y * GAP,
-        top:
-          (x * TILE_HEIGHT) / 2 +
-          (x * GAP) / 2 +
-          (y * TILE_HEIGHT) / 2 +
-          y * GAP,
-        "&:hover": {
-          filter: "brightness(1.2)",
-        },
-      }}
-    >
-      {plant && (
-        <Box
-          sx={{
-            position: "absolute",
-            zIndex: 1,
-            top: 0,
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-          }}
-        >
-          <Box
-            component="img"
-            src={`${baseURL}${plant.plantType?.imageUrl}`}
-            sx={{
-              width: TILE_WIDTH / 1.5,
-              animation: `${plantAnimation} 2s`,
-              transformOrigin: "bottom",
-            }}
-          />
+    <>
+      {" "}
+      <Box
+        onClick={onClick}
+        sx={{
+          position: "absolute",
+          width: TILE_WIDTH,
+          height: TILE_HEIGHT,
+          cursor: "pointer",
+          left:
+            155 +
+            (x * TILE_WIDTH) / 2 +
+            x * GAP -
+            (y * TILE_WIDTH) / 2 -
+            y * GAP,
+          top:
+            (x * TILE_HEIGHT) / 2 +
+            (x * GAP) / 2 +
+            (y * TILE_HEIGHT) / 2 +
+            y * GAP,
+          "&:hover": {
+            filter: "brightness(1.2)",
+          },
+        }}
+      >
+        {plant && (
           <Box
             sx={{
               position: "absolute",
-              width: 30,
-              height: 30,
-              background: "rgba(0,0,0, 0.2)",
-              borderRadius: "50%",
-              filter: "blur(3px)",
-              top: "50%",
+              zIndex: 1,
+              top: 0,
               left: "50%",
-              transform: "translate(-50%, 30%)",
-              zIndex: -1,
+              transform: "translate(-50%, -50%)",
             }}
-          />
-        </Box>
+          >
+            <Box
+              component="img"
+              src={`${baseURL}${plant.plantType?.imageUrl}`}
+              sx={{
+                width: TILE_WIDTH / 1.5,
+                animation: `${plantAnimation} 2s`,
+                transformOrigin: "bottom",
+              }}
+            />
+            <Box
+              sx={{
+                position: "absolute",
+                width: 30,
+                height: 30,
+                background: "rgba(0,0,0, 0.2)",
+                borderRadius: "50%",
+                filter: "blur(3px)",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, 30%)",
+                zIndex: -1,
+              }}
+            />
+          </Box>
+        )}
+        <Box component="img" src="grass-tile.svg" />
+      </Box>
+      {plant && (
+        <PlantDetailsDialog
+          plant={plant}
+          isOpen={!!selected}
+          onClose={onCloseDetails}
+        />
       )}
-      <Box component="img" src="grass-tile.svg" />
-    </Box>
+    </>
   );
 };
 
