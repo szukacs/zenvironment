@@ -32,7 +32,21 @@ public interface MainMapper {
 
     MinimalCommunity toMinDto(Community community);
 
+    @Mapping(target = "allProducedOxygenInKilograms", ignore = true)
+    @Mapping(target = "allFixatedCO2InKilograms", ignore = true)
     CommunityDto toDto(Community community);
+
+    @AfterMapping
+    default void summarizeGardens(@MappingTarget CommunityDto communityDto) {
+        var allProducedOxygenInKilograms = 0.0;
+        var allFixatedCO2InKilograms = 0.0;
+        for (GardenDto garden : communityDto.getGardens()) {
+            allProducedOxygenInKilograms += garden.getAllProducedOxygenInKilograms();
+            allFixatedCO2InKilograms += garden.getAllFixatedCO2InKilograms();
+        }
+        communityDto.setAllProducedOxygenInKilograms(allProducedOxygenInKilograms);
+        communityDto.setAllFixatedCO2InKilograms(allFixatedCO2InKilograms);
+    }
 
     @Mapping(target = "exchangeId", source = "exchange.id")
     @Mapping(target = "vendorId", source = "exchange.garden.id")
@@ -69,7 +83,6 @@ public interface MainMapper {
         if (CollectionUtils.isEmpty(plants)) return 0.0;
         return plants.stream().map(Plant::getAllFixatedCO2InKilograms).reduce(0.0, Double::sum);
     }
-
 
     @Named("summarizeWaterConsumption")
     default double summarizeWaterConsumption(List<Plant> plants) {

@@ -13,5 +13,7 @@ import java.util.UUID;
 public class CommunityDto {
     private UUID id;
     private String name;
+    private double allProducedOxygenInKilograms;
+    private double allFixatedCO2InKilograms;
     private List<GardenDto> gardens;
 }
