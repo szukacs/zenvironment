@@ -8,7 +8,7 @@ import { useGetGardenQuery, useGetMyGardenQuery } from "@/components/queries";
 import { getSessionIdOrThrow } from "@/lib/session";
 
 export default function MyGarden() {
-  const myGardenQuery = useGetGardenQuery(getSessionIdOrThrow());
+  const myGardenQuery = useGetGardenQuery(getSessionIdOrThrow(), true);
   if (myGardenQuery.isLoading) {
     return (
       <Box display="flex" justifyContent="center" pt={3}>
@@ -27,22 +27,22 @@ export default function MyGarden() {
   }
 
   const name = myGardenQuery.data?.data.name ?? "";
-  let oxygenUnit = "kg"
+  let oxygenUnit = "kg";
   let oxygenProduction: string | number =
     myGardenQuery.data?.data.allProducedOxygenInKilograms ?? 0;
   if (oxygenProduction < 1.0) {
     oxygenProduction = oxygenProduction * 1000.0;
-    oxygenUnit = "g"
+    oxygenUnit = "g";
   }
-  oxygenProduction = Math.round(oxygenProduction * 100) / 100
-  let co2Unit = "kg"
+  oxygenProduction = Math.round(oxygenProduction * 100) / 100;
+  let co2Unit = "kg";
   let co2Fixation: string | number =
     myGardenQuery.data?.data.allFixatedCO2InKilograms ?? 0;
   if (co2Fixation < 1) {
-    co2Fixation = co2Fixation * 1000.0
-    co2Unit = "g"
+    co2Fixation = co2Fixation * 1000.0;
+    co2Unit = "g";
   }
-  co2Fixation = Math.round(co2Fixation * 100) / 100
+  co2Fixation = Math.round(co2Fixation * 100) / 100;
 
   return (
     <Page title={name}>
