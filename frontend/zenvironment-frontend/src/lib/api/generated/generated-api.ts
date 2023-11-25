@@ -1,3 +1,11 @@
+export interface ExchangeDto {
+  exchangeId?: string;
+  vendorId?: string;
+  receiverId?: string;
+  description?: string;
+  imageUrl?: string;
+}
+
 export interface NewPlantDto {
   /** @format int32 */
   x?: number;
@@ -65,13 +73,6 @@ export interface NewHarvestDto {
   amount?: number;
   /** @format date */
   harvestDate?: string;
-}
-
-export interface ExchangeDto {
-  exchangeId?: string;
-  vendorId?: string;
-  receiverId?: string;
-  description?: string;
 }
 
 export interface Message {
@@ -274,6 +275,46 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags zen-controller
+     * @name AcceptExchange
+     * @request PUT:/my-garden/exchanges
+     */
+    acceptExchange: (
+      query: {
+        exchangeDto: ExchangeDto;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<object, any>({
+        path: `/my-garden/exchanges`,
+        method: "PUT",
+        query: query,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags zen-controller
+     * @name AddExchange
+     * @request POST:/my-garden/exchanges
+     */
+    addExchange: (
+      query: {
+        exchangeDto: ExchangeDto;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<ExchangeDto[], any>({
+        path: `/my-garden/exchanges`,
+        method: "POST",
+        query: query,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags zen-controller
      * @name AddPlant
      * @request POST:/my-garden/plants
      */
@@ -299,26 +340,6 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         method: "POST",
         body: data,
         type: ContentType.Json,
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags zen-controller
-     * @name AddExchange
-     * @request POST:/my-garden/exchanges
-     */
-    addExchange: (
-      query: {
-        exchangeDto: ExchangeDto;
-      },
-      params: RequestParams = {},
-    ) =>
-      this.request<ExchangeDto[], any>({
-        path: `/my-garden/exchanges`,
-        method: "POST",
-        query: query,
         ...params,
       }),
 
@@ -392,6 +413,20 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         method: "POST",
         body: data,
         type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags assistant-controller
+     * @name GetQuickQuestions
+     * @request GET:/assistant/suggestions
+     */
+    getQuickQuestions: (params: RequestParams = {}) =>
+      this.request<string[], any>({
+        path: `/assistant/suggestions`,
+        method: "GET",
         ...params,
       }),
   };
