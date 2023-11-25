@@ -37,7 +37,7 @@ public class TestBootstrapper {
         plantTypeRepository.deleteAll();
 
         var tomato = PlantType.builder()
-            .name("tomato")
+            .name("Tomato")
             .imageUrl( "/fruit/tomato.png")
             .averageOxygenProductionInKilogramsPerDay(0.0085)
             .averageCO2FixationInKilogramsPerDay(0.125)
@@ -48,7 +48,7 @@ public class TestBootstrapper {
             .build();
 
         var lettuce = PlantType.builder()
-            .name("lettuce")
+            .name("Lettuce")
             .imageUrl( "/fruit/lettuce.png")
             .averageOxygenProductionInKilogramsPerDay(0.0065)
             .averageCO2FixationInKilogramsPerDay(0.0075)
@@ -59,7 +59,7 @@ public class TestBootstrapper {
             .build();
 
         var paprika = PlantType.builder()
-            .name("paprika")
+            .name("Paprika")
             .imageUrl( "/fruit/paprika.png")
             .averageOxygenProductionInKilogramsPerDay(0.0075)
             .averageCO2FixationInKilogramsPerDay(0.125)
@@ -81,7 +81,7 @@ public class TestBootstrapper {
             .build();
 
         var sunFlower = PlantType.builder()
-            .name("sunflower")
+            .name("Sunflower")
             .imageUrl( "/fruit/sunflower.png")
             .averageOxygenProductionInKilogramsPerDay(0.009)
             .averageCO2FixationInKilogramsPerDay(0.25)
