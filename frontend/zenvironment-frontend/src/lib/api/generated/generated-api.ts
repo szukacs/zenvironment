@@ -5,6 +5,18 @@ export interface NewPlantDto {
   plantedAt?: string;
 }
 
+export interface HarvestDto {
+  /** @format uuid */
+  id?: string;
+  /** @format uuid */
+  plantId?: string;
+  /** @format double */
+  amount?: number;
+  harvestUnit?: string;
+  /** @format date */
+  harvestDate?: string;
+}
+
 export interface PlantDto {
   /** @format uuid */
   id?: string;
@@ -17,12 +29,15 @@ export interface PlantDto {
   allFixatedCO2InKilograms?: number;
   /** @format double */
   allWaterConsumptionInLiters?: number;
+  /** @format double */
+  allHarvestedAmount?: number;
   /** @format int32 */
   daysTillHarvest?: number;
   /** @format date */
   plantedAt?: string;
   /** @format date */
   uprootedAt?: string;
+  harvests?: HarvestDto[];
 }
 
 export interface PlantTypeDto {
@@ -40,16 +55,6 @@ export interface PlantTypeDto {
 export interface NewHarvestDto {
   /** @format double */
   amount?: number;
-  /** @format date */
-  harvestDate?: string;
-}
-
-export interface HarvestDto {
-  /** @format uuid */
-  id?: string;
-  /** @format double */
-  amount?: number;
-  harvestUnit?: string;
   /** @format date */
   harvestDate?: string;
 }
@@ -72,6 +77,15 @@ export interface MinimalCommunity {
   /** @format uuid */
   id?: string;
   name?: string;
+}
+
+export interface HarvestSummary {
+  plantName?: string;
+  /** @format double */
+  amount?: number;
+  unit?: string;
+  /** @format int64 */
+  harvestCount?: number;
 }
 
 export interface CommunityDto {
@@ -293,6 +307,20 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     getPlantById: (plantId: string, params: RequestParams = {}) =>
       this.request<PlantDto, any>({
         path: `/my-garden/plants/${plantId}`,
+        method: "GET",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags zen-controller
+     * @name GetMyHarvests
+     * @request GET:/my-garden/harvests
+     */
+    getMyHarvests: (params: RequestParams = {}) =>
+      this.request<HarvestSummary[], any>({
+        path: `/my-garden/harvests`,
         method: "GET",
         ...params,
       }),
