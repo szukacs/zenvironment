@@ -1,5 +1,7 @@
 import { api } from "@/lib/api/api";
+import { removeSession } from "@/lib/session";
 import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
 
 export const myGardenQueryKeys = {
   root: () => ["root"] as const,
@@ -19,11 +21,20 @@ export function useGetMyGardenQuery() {
 }
 
 export function useGetGardenQuery(id: string, automaticRefreshData: boolean) {
-  return useQuery({
+  const query = useQuery({
     queryKey: myGardenQueryKeys.myGarden(),
     queryFn: () => api.gardens.getGardenById(id),
-    refetchInterval: automaticRefreshData ? 10000 : false
+    refetchInterval: automaticRefreshData ? 10000 : false,
   });
+
+  useEffect(() => {
+    if (query.isError) {
+      removeSession();
+      document.location.reload();
+    }
+  }, [query.isError]);
+
+  return query;
 }
 
 export function useGetMyCommunityQuery() {
@@ -48,21 +59,23 @@ export function useGetPlantTypes() {
 }
 
 export const communityQueryKeys = {
-  root: () => ['communityRoot'] as const,
-  communityChallenges: () => [...communityQueryKeys.root(), 'communityChallenges'] as const,
-  communityMarket: (id: string) => [...communityQueryKeys.root(), 'communityMarket', id] as const
+  root: () => ["communityRoot"] as const,
+  communityChallenges: () =>
+    [...communityQueryKeys.root(), "communityChallenges"] as const,
+  communityMarket: (id: string) =>
+    [...communityQueryKeys.root(), "communityMarket", id] as const,
 } as const;
 
 export function useGetCommunityChallengesQuery() {
   return useQuery({
     queryKey: communityQueryKeys.communityChallenges(),
-    queryFn: () => api.myCommunity.getMyCommunityChallenges()
-  })
+    queryFn: () => api.myCommunity.getMyCommunityChallenges(),
+  });
 }
 
 export function useGetCommunityMarketQuery(id: string) {
   return useQuery({
     queryKey: communityQueryKeys.communityMarket(id),
-    queryFn: () => api.myCommunity.findAllExchangesBelongingToCommuniy(id)
-  })
+    queryFn: () => api.myCommunity.findAllExchangesBelongingToCommuniy(id),
+  });
 }

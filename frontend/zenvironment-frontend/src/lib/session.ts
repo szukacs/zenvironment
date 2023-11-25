@@ -8,6 +8,10 @@ export const setSessionId = (id: string) => {
   return window.localStorage.setItem(KEY, id);
 };
 
+export const removeSession = () => {
+  return window.localStorage.removeItem(KEY);
+};
+
 export const getSessionIdOrThrow = () => {
   const session = window.localStorage.getItem(KEY);
   if (!session) {
