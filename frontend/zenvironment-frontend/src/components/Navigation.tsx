@@ -3,10 +3,10 @@
 import { BottomNavigation, BottomNavigationAction, Paper } from "@mui/material";
 import { FC } from "react";
 import GardenIcon from "@mui/icons-material/LocalFlorist";
-import FavoriteIcon from "@mui/icons-material/Favorite";
 import CommunityIcon from "@mui/icons-material/People";
+import AgricultureIcon from '@mui/icons-material/Agriculture';
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 interface NavigationProps {}
 
@@ -21,6 +21,11 @@ const items = [
     Icon: CommunityIcon,
     path: "/community",
   },
+  {
+    label: "Garden advisor",
+    Icon: AgricultureIcon,
+    path: "/garden-advisor"
+  }
 ];
 
 export const Navigation: FC<NavigationProps> = ({}) => {
