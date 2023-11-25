@@ -169,8 +169,8 @@ const Tile: FC<TileProps> = ({
             <Box
               sx={{
                 position: "absolute",
-                width: 30,
-                height: 30,
+                width: tileWidth * 0.4,
+                height: tileWidth * 0.4,
                 background: "rgba(0,0,0, 0.2)",
                 borderRadius: "50%",
                 filter: "blur(3px)",
