@@ -2,7 +2,7 @@
 
 import { Garden } from "@/components/Garden";
 import { Page } from "@/components/Page";
-import { useGetMyGardenQuery } from "@/components/mygardenQueries";
+import { useGetMyGardenQuery } from "@/components/queries";
 import { Box, CircularProgress } from "@mui/material";
 import {StatDisplay} from "@/components/StatDisplay";
 

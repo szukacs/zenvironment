@@ -23,6 +23,18 @@ export function useGetMyCommunityQuery() {
   });
 }
 
+export const communityChallengesQueryKeys = {
+  root: () => ['root'] as const,
+  communityChallenges: () => [...communityChallengesQueryKeys.root(), 'communityChallenges'] as const
+} as const;
+
+export function useGetCommunityChallengesQuery() {
+  return useQuery({
+    queryKey: communityChallengesQueryKeys.communityChallenges(),
+    queryFn: () => api.myCommunity.getMyCommunityChallenges()
+  })
+}
+
 export function useGetPlantById(plantId: string) {
   return useQuery({
     queryKey: myGardenQueryKeys.plant(plantId),

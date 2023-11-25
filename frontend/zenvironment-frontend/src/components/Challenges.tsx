@@ -1,36 +1,39 @@
-import { Stack } from "@mui/material";
+import { Box, CircularProgress, Stack } from "@mui/material";
 import { Challenge } from "./Challenge";
-
-const challengeList = [
-  {
-    level: 1,
-    title: "Oxigen",
-    currentPoint: 25,
-    maxPoint: 50,
-    progressColor: "#557085",
-  },
-  {
-    level: 2,
-    title: "Tomato",
-    currentPoint: 3,
-    maxPoint: 10,
-    progressColor: "#ee607a",
-  },
-];
+import { useGetCommunityChallengesQuery } from "./queries";
 
 export const Challenges = () => {
+  const challengesQuery = useGetCommunityChallengesQuery();
+
+  if (challengesQuery.isLoading) {
+    return (
+      <Box display="flex" justifyContent="center">
+        <CircularProgress color="success" />
+      </Box>
+    );
+  }
   return (
     <Stack>
-      {challengeList.map((ch, key) => (
-        <Challenge
-          key={key}
-          level={ch.level}
-          currentPoint={ch.currentPoint}
-          maxPoint={ch.maxPoint}
-          progressColor={ch.progressColor}
-          title={ch.title}
-        />
-      ))}
+      {challengesQuery.status == "error" && (
+        <>
+          Error, this is definitely not our fault! Drop out your laptop and buy
+          a new one! :)
+        </>
+      )}
+      {challengesQuery.status == "success" &&
+        challengesQuery.data.data.map((ch, key) => (
+          <Challenge
+            key={key}
+            name={ch.challengeName!}
+            description={ch.challengeDescription!}
+            image={ch.imageUrl!}
+            progressColor={ch.color!}
+            level={ch.level!}
+            prevLevelTarget={ch.previousLevelTarget!}
+            nextLevelTarget={ch.nextLevelTarget!}
+            currentProgress={ch.currentProgress!}
+          />
+        ))}
     </Stack>
   );
 };
