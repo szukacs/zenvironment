@@ -2,6 +2,7 @@ package com.useclient.zenvironment.controller;
 
 import com.useclient.zenvironment.mapper.MainMapper;
 import com.useclient.zenvironment.model.dto.*;
+import com.useclient.zenvironment.service.ChallengeService;
 import com.useclient.zenvironment.service.ZenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import static com.useclient.zenvironment.TestBootstrapper.MY_GARDEN_NAME;
 @RequiredArgsConstructor
 public class ZenController {
     private final ZenService zenService;
+    private final ChallengeService challengeService;
     private final MainMapper mapper;
 
     @Transactional(readOnly = true)
@@ -83,7 +85,7 @@ public class ZenController {
     @GetMapping("/my-community/challenges")
     public ResponseEntity<List<ChallengeDto>> getMyCommunityChallenges() {
         var myCommunity = zenService.getCommunityByName(MY_COMMUNITY_NAME);
-        var challenges = zenService.getChallengesByCommunity(myCommunity);
+        var challenges = challengeService.getChallengesByCommunity(myCommunity);
         var responseBody = mapper.toChallengeDtoList(challenges);
         return ResponseEntity.ok(responseBody);
     }
