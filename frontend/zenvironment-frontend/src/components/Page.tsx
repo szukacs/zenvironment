@@ -9,7 +9,7 @@ interface PageProps extends PropsWithChildren {
 
 export const Page: FC<PageProps> = ({ children, title }) => {
   return (
-    <Stack>
+    <Stack sx={{ paddingBottom: "100px" }}>
       <Box
         sx={(theme) => ({
           textAlign: "center",

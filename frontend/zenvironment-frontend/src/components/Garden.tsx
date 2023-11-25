@@ -1,19 +1,21 @@
 import { Box, Dialog, DialogContent } from "@mui/material";
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
+import { AddPlantDialog } from "./AddPlantDialog";
 
 interface GardenProps {}
 
 const COLS = 5;
 const ROWS = 5;
 
-const PLANTS = [
-  [3, 2],
-  [3, 4],
-  [2, 4],
-  [1, 2],
-];
-
 export const Garden: FC<GardenProps> = ({}) => {
+  const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
+  const [PLANTS, SETPLANTS] = useState([
+    [3, 2],
+    [3, 4],
+    [2, 4],
+    [1, 2],
+  ]);
+
   return (
     <>
       <Box
@@ -26,21 +28,32 @@ export const Garden: FC<GardenProps> = ({}) => {
       >
         {new Array(COLS).fill(true).map((_, x) =>
           new Array(ROWS).fill(true).map((_, y) => {
+            const hasPlant = Boolean(
+              PLANTS.find((plant) => plant[0] === x && plant[1] === y)
+            );
+
             return (
               <Tile
-                plant={Boolean(
-                  PLANTS.find((plant) => plant[0] === x && plant[1] === y)
-                )}
+                plant={hasPlant}
                 x={x}
                 y={y}
+                onClick={() => {
+                  if (!hasPlant) {
+                    setIsAddDialogOpen(true);
+                  }
+                }}
               />
             );
           })
         )}
       </Box>
-      {/* <Dialog open fullWidth>
-        <DialogContent>hello</DialogContent>
-      </Dialog> */}
+      <AddPlantDialog
+        isOpen={isAddDialogOpen}
+        onSelect={(plantType) => {}}
+        onClose={() => {
+          setIsAddDialogOpen(false);
+        }}
+      />
     </>
   );
 };
@@ -49,19 +62,22 @@ interface TileProps {
   x: number;
   y: number;
   plant: boolean;
+  onClick: VoidFunction;
 }
 
 const TILE_WIDTH = 75;
 const TILE_HEIGHT = TILE_WIDTH * 0.645;
 const GAP = 5;
 
-const Tile: FC<TileProps> = ({ x, y, plant }) => {
+const Tile: FC<TileProps> = ({ x, y, plant, onClick }) => {
   return (
     <Box
+      onClick={onClick}
       sx={{
         position: "absolute",
         width: TILE_WIDTH,
         height: TILE_HEIGHT,
+        cursor: "pointer",
         left:
           155 + (x * TILE_WIDTH) / 2 + x * GAP - (y * TILE_WIDTH) / 2 - y * GAP,
         top:
@@ -69,6 +85,9 @@ const Tile: FC<TileProps> = ({ x, y, plant }) => {
           (x * GAP) / 2 +
           (y * TILE_HEIGHT) / 2 +
           y * GAP,
+        "&:hover": {
+          filter: "brightness(1.2)",
+        },
       }}
     >
       {plant && (
