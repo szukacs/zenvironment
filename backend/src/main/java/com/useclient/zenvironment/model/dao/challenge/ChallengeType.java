@@ -22,28 +22,28 @@ public enum ChallengeType {
             "CO2 Fixation",
             "Have your community gardens fixate the target amount of CO2",
             "/challenge/co2fixation.jpg",
-            "#56b5db",
+            "#6a8995",
             SUM_CO2_NAME,
             level -> (20.0 * level)),
     CommunitySize(
             "Community Members",
             "Invite more members into the community",
             "/challenge/communityMembers.jpg",
-            "#56b5db",
+            "#9256db",
             COUNT_COMMUNITY_SIZE_NAME,
             level -> (3.0 * level)),
     PlantCount(
             "Number of Plants",
             "Increase the number of plants in your community",
             "/challenge/numberPlants.jpg",
-            "#56b5db",
+            "#56db97",
             COUNT_ALL_PLANTS_NAME,
             level -> (10.0 * level)),
     TomatoCount(
             "Number of Tomatoes",
             "Increase the number of tomato plants in your community",
             "/challenge/tomatoPlant.jpg",
-            "#56b5db",
+            "#dd5555",
             COUNT_TOMATOES_NAME,
             level -> (5.0 * level)),
 
@@ -51,7 +51,7 @@ public enum ChallengeType {
             "Number of Paprikas",
             "Increase the number of paprika plants in your community",
             "/challenge/paprikaPlant.jpg",
-            "#56b5db",
+            "#bd0606",
             COUNT_PAPRIKAS_NAME,
             level -> (5.0 * level)),
 
@@ -59,7 +59,7 @@ public enum ChallengeType {
             "Number of Lettuce",
             "Increase the number of lettuce plants in your community",
             "/challenge/lettucePlant.jpg",
-            "#56b5db",
+            "#99db56",
             COUNT_LETTUCE_NAME,
             level -> (5.0 * level)),
 
@@ -67,7 +67,7 @@ public enum ChallengeType {
             "Number of Peas",
             "Increase the number of pea plants in your community",
             "/challenge/peaPlant.png",
-            "#56b5db",
+            "#2a9f22",
             COUNT_PEAS_NAME,
             level -> (5.0 * level)),
 
@@ -75,7 +75,7 @@ public enum ChallengeType {
             "Number of Sunflowers",
             "Increase the number of sunflower plants in your community",
             "/challenge/sunFlowerPlant.jpg",
-            "#56b5db",
+            "#dbd856",
             COUNT_SUNFLOWER_NAME,
             level -> (5.0 * level)),
     ;
