@@ -25,6 +25,9 @@ dependencies {
     val mapstructVersion = "1.5.5.Final"
     val lombokMapstructBindingVersion = "0.2.0"
 
+    // Chat
+    implementation("com.theokanning.openai-gpt3-java:service:0.18.2")
+
     // Web
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-web")
