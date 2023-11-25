@@ -1,53 +1,32 @@
 package com.useclient.zenvironment.controller;
 
-import com.theokanning.openai.completion.chat.ChatCompletionRequest;
-import com.theokanning.openai.completion.chat.ChatMessage;
-import com.theokanning.openai.completion.chat.ChatMessageRole;
-import com.theokanning.openai.service.OpenAiService;
-import com.useclient.zenvironment.configuration.ChatAssistantProperties;
 import com.useclient.zenvironment.model.dto.chat.Message;
+import com.useclient.zenvironment.service.AssistantService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/assistant")
+@RequiredArgsConstructor
 public class AssistantController {
-    private static final String MODEL = "gpt-3.5-turbo";
-    private static final Integer MAX_TOKENS = 256;
-
-    private final OpenAiService assistant;
-
-    public AssistantController(ChatAssistantProperties props) {
-        assistant = new OpenAiService(props.getApiKey());
-    }
+    private final AssistantService assistantService;
 
     @PostMapping("/chat")
     public ResponseEntity<Message> askForAssistance(@RequestBody Message chatRequest) {
-        var chatCompletionRequest = ChatCompletionRequest.builder()
-                .model(MODEL)
-                .messages(convertChatRequest(chatRequest))
-                .maxTokens(MAX_TOKENS)
-                .build();
-        var response = assistant.createChatCompletion(chatCompletionRequest);
-        var choices = response.getChoices();
-        if (CollectionUtils.isEmpty(choices)) {
+        try {
+            var response = assistantService.getAssistance(chatRequest.getMessage());
+            return ResponseEntity.ok(new Message(response));
+        } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
         }
-        var message = choices.get(0).getMessage();
-        return ResponseEntity.ok(new Message(message.getContent()));
     }
 
-    private List<ChatMessage> convertChatRequest(Message message) {
-        return Stream.of("answer in one sentence",
-                        "answer like an old american farmer",
-                        "use imperial and metric units",
-                        message.getMessage()
-                )
-                .map(messageContent -> new ChatMessage(ChatMessageRole.USER.value(), messageContent))
-                .toList();
+    @GetMapping("/suggestions")
+    public ResponseEntity<List<String>> getQuickQuestions() {
+        return ResponseEntity.ok(assistantService.getGardenBasedAssistanceQuestions());
     }
+
 }
