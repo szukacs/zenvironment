@@ -51,6 +51,7 @@ const SendOfferDialog = ({
       <DialogContent>
         {dialogContent === "textField" ? (
           <TextField
+            sx={{marginTop: '1rem'}}
             autoFocus
             multiline
             rows={6}

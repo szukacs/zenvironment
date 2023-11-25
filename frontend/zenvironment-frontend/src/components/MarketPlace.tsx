@@ -1,6 +1,7 @@
 import { Box, CircularProgress, Stack } from "@mui/material";
 import { MarketPlaceItem } from "./MarketPlaceItem";
-import { useGetCommunityMarketQuery, useGetMyGardenQuery } from "./queries";
+import {useGetCommunityMarketQuery, useGetGardenQuery, useGetMyGardenQuery} from "./queries";
+import {getSessionIdOrThrow} from "@/lib/session";
 
 const GetMarket = ({
   communityId,
@@ -47,7 +48,7 @@ const GetMarket = ({
 };
 
 export const MarketPlace = () => {
-  const myGardenQuery = useGetMyGardenQuery();
+  const myGardenQuery = useGetGardenQuery(getSessionIdOrThrow());
 
   if (myGardenQuery.isLoading) {
     return (
