@@ -1,8 +1,7 @@
 # zenvironment backend
 
 ## Technology stack
-            | | |
-:-------------------------:|:-------------------------:
+:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
 ![](images/springboot.png)  |  ![](images/gradle.png) | ![](images/openapi.png) | [](images/springboot.png)
 ![](images/docker.png)  |  ![](images/swagger.png) | ![](images/mapstruct.png) | 
 
@@ -14,7 +13,7 @@
 [How to generate ChatGPT API key](https://medium.com/@pawan329/how-to-generate-chat-gpt-api-key-daace2acc032)
 
 ## Where to reach swagger for backend?
-- if you are running on localhost then http://localhost:8080/swagger-ui/index.html#/ otherwise on /swagger-ui/index.htlm endpoint
+- if you are running the app on localhost then http://localhost:8080/swagger-ui/index.html#/ otherwise on /swagger-ui/index.htlm endpoint
 
 
 
