@@ -33,7 +33,7 @@ export default function MyGarden() {
   if (co2Fixation < 1) co2Fixation = '< 1'
 
   return (
-    <Page title={`${name}${name[name.length - 1] === "s" ? "’" : "’s"} Garden`}>
+    <Page title={name}>
       {myGardenQuery.status == "success" && (
         <Box mt={3}>
           <Garden plants={myGardenQuery.data?.data.plants!} />

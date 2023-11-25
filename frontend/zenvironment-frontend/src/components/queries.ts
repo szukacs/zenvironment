@@ -32,19 +32,6 @@ export function useGetMyCommunityQuery() {
   });
 }
 
-export const communityChallengesQueryKeys = {
-  root: () => ["root"] as const,
-  communityChallenges: () =>
-    [...communityChallengesQueryKeys.root(), "communityChallenges"] as const,
-} as const;
-
-export function useGetCommunityChallengesQuery() {
-  return useQuery({
-    queryKey: communityChallengesQueryKeys.communityChallenges(),
-    queryFn: () => api.myCommunity.getMyCommunityChallenges(),
-  });
-}
-
 export function useGetPlantById(plantId: string) {
   return useQuery({
     queryKey: myGardenQueryKeys.plant(plantId),
@@ -57,4 +44,24 @@ export function useGetPlantTypes() {
     queryKey: myGardenQueryKeys.plantTypes(),
     queryFn: () => api.plantTypes.getPlantTypes(),
   });
+}
+
+export const communityQueryKeys = {
+  root: () => ['communityRoot'] as const,
+  communityChallenges: () => [...communityQueryKeys.root(), 'communityChallenges'] as const,
+  communityMarket: (id: string) => [...communityQueryKeys.root(), 'communityMarket', id] as const
+} as const;
+
+export function useGetCommunityChallengesQuery() {
+  return useQuery({
+    queryKey: communityQueryKeys.communityChallenges(),
+    queryFn: () => api.myCommunity.getMyCommunityChallenges()
+  })
+}
+
+export function useGetCommunityMarketQuery(id: string) {
+  return useQuery({
+    queryKey: communityQueryKeys.communityMarket(id),
+    queryFn: () => api.myCommunity.findAllExchangesBelongingToCommuniy(id)
+  })
 }
