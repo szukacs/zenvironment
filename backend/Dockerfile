@@ -1,4 +1,4 @@
-FROM openjdk:8-jdk-alpine
+FROM openjdk:17
 WORKDIR .
 CMD ["./gradlew", "clean", "build", "bootJar"]
 ARG JAR_FILE=demo-0.0.1-SNAPSHOT.jar
