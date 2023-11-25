@@ -5,6 +5,7 @@ import { Page } from "@/components/Page";
 import { DisplayTab, SimpleTab } from "@/components/SimpleTab";
 import { useGetMyCommunityQuery } from "@/components/queries";
 import { Box, CircularProgress } from "@mui/material";
+import {MyCommunityGardens} from "@/components/MyCommunityGardens";
 
 export default function Community() {
   const myCommunityQuery = useGetMyCommunityQuery();
@@ -19,12 +20,8 @@ export default function Community() {
 
   const tabs: DisplayTab[] = [
     {
-      label: "Timeline",
-      content: <>Example tab 1</>,
-    },
-    {
       label: "Gardens",
-      content: <>Example tab 2</>,
+      content: <MyCommunityGardens />,
     },
     {
       label: "Challenges",
