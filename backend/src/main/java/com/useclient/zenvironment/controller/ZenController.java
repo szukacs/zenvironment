@@ -92,6 +92,7 @@ public class ZenController {
         return ResponseEntity.ok(responseBody);
     }
 
+    @Operation(summary = "Finding a plant", description = "Returns plant based on plantId")
     @Transactional(readOnly = true)
     @GetMapping("/my-garden/plants/{plantId}")
     public ResponseEntity<PlantDto> getPlantById(@PathVariable String plantId) {
