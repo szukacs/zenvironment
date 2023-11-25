@@ -1,9 +1,6 @@
 package com.useclient.zenvironment.mapper;
 
-import com.useclient.zenvironment.model.dao.Community;
-import com.useclient.zenvironment.model.dao.Garden;
-import com.useclient.zenvironment.model.dao.Plant;
-import com.useclient.zenvironment.model.dao.PlantType;
+import com.useclient.zenvironment.model.dao.*;
 import com.useclient.zenvironment.model.dao.challenge.Challenge;
 import com.useclient.zenvironment.model.dto.*;
 import com.useclient.zenvironment.repository.PlantTypeRepository;
@@ -21,6 +18,9 @@ import java.util.List;
 public interface MainMapper {
 
     PlantTypeDto toDto(PlantType plantType);
+
+    @Mapping(target = "harvestUnit", source = "plant.plantType.harvestUnit")
+    HarvestDto toDto(Harvest harvest);
 
     @Mapping(target = "gardenId", source = "garden.id")
     PlantDto toDto(Plant plant);

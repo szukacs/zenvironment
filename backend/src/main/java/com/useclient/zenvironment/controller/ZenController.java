@@ -6,12 +6,10 @@ import com.useclient.zenvironment.service.ZenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 import static com.useclient.zenvironment.TestBootstrapper.MY_COMMUNITY_NAME;
 import static com.useclient.zenvironment.TestBootstrapper.MY_GARDEN_NAME;
@@ -45,6 +43,15 @@ public class ZenController {
         var myGarden = zenService.getGardenByName(MY_GARDEN_NAME);
         var newPlant = zenService.addPlant(myGarden, newPlantDto);
         var responseBody = mapper.toDto(newPlant);
+        return ResponseEntity.ok(responseBody);
+    }
+
+    @Transactional
+    @PostMapping("/my-garden/plants/{plantId}/harvest")
+    public ResponseEntity<HarvestDto> harvestPlant(@PathVariable UUID plantId, @RequestBody NewHarvestDto newHarvestDto) {
+        var harvestedPlant = zenService.getPlantById(plantId);
+        var newHarvest = zenService.harvestPlant(harvestedPlant, newHarvestDto);
+        var responseBody = mapper.toDto(newHarvest);
         return ResponseEntity.ok(responseBody);
     }
 
