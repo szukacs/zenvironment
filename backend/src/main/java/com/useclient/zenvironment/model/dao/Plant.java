@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 import static java.time.temporal.ChronoUnit.DAYS;
@@ -24,6 +25,8 @@ public class Plant {
     private Garden garden;
     private LocalDate plantedAt;
     private LocalDate uprootedAt;
+    @OneToMany(mappedBy = "plant")
+    private List<Harvest> harvests;
 
     public double getAllProducedOxygenInKilograms(){
         return this.plantType.getAverageOxygenProductionInKilogramsPerDay() * DAYS.between(plantedAt, LocalDate.now());
@@ -39,5 +42,11 @@ public class Plant {
 
     public int getDaysTillHarvest(){
         return (int) ((int) Math.round(this.plantType.getAverageMonthsUntilHarvest() * 30) - DAYS.between(plantedAt, LocalDate.now()));
+    }
+
+    public double getAllHarvestedAmount() {
+        return harvests.stream()
+                .map(Harvest::getAmount)
+                .reduce(0.0, Double::sum);
     }
 }

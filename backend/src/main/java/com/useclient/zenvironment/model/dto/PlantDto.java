@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -17,8 +18,10 @@ public class PlantDto {
     private double allProducedOxygenInKilograms;
     private double allFixatedCO2InKilograms;
     private double allWaterConsumptionInLiters;
+    private double allHarvestedAmount;
     private int daysTillHarvest;
     private LocalDate plantedAt;
     private LocalDate uprootedAt;
+    private List<HarvestDto> harvests;
 
 }
