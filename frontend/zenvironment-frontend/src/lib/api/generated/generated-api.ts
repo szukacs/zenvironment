@@ -16,7 +16,7 @@ export interface NewPlantDto {
   y?: number;
   /** @format uuid */
   plantTypeId?: string;
-  /** @format date */
+  /** @format date-time */
   plantedAt?: string;
 }
 
@@ -54,8 +54,6 @@ export interface PlantDto {
   daysTillHarvest?: number;
   /** @format date */
   plantedAt?: string;
-  /** @format date */
-  uprootedAt?: string;
   harvests?: HarvestDto[];
 }
 
@@ -131,6 +129,10 @@ export interface CommunityDto {
   /** @format uuid */
   id?: string;
   name?: string;
+  /** @format double */
+  allProducedOxygenInKilograms?: number;
+  /** @format double */
+  allFixatedCO2InKilograms?: number;
   gardens?: GardenDto[];
 }
 
@@ -291,10 +293,11 @@ export class HttpClient<SecurityDataType = unknown> {
 export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDataType> {
   myGarden = {
     /**
-     * No description
+     * @description Return a success message tha request was accepted by user
      *
      * @tags zen-controller
      * @name AcceptExchange
+     * @summary User can accept another user's exchange request
      * @request PUT:/my-garden/exchanges
      */
     acceptExchange: (
@@ -311,10 +314,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       }),
 
     /**
-     * No description
+     * @description Returns back all exchange requests to which the user is affiliated to
      *
      * @tags zen-controller
      * @name AddExchange
+     * @summary User creates a new exchange request to give away plants
      * @request POST:/my-garden/exchanges
      */
     addExchange: (
@@ -331,10 +335,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       }),
 
     /**
-     * No description
+     * @description Returns newly created plant
      *
      * @tags zen-controller
      * @name AddPlant
+     * @summary Creates new plant in given garden
      * @request POST:/my-garden/plants
      */
     addPlant: (data: NewPlantDto, params: RequestParams = {}) =>
@@ -347,10 +352,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       }),
 
     /**
-     * No description
+     * @description Returns harvesting details
      *
      * @tags zen-controller
      * @name HarvestPlant
+     * @summary Harvesting plant based on user input
      * @request POST:/my-garden/plants/{plantId}/harvest
      */
     harvestPlant: (plantId: string, data: NewHarvestDto, params: RequestParams = {}) =>
@@ -363,10 +369,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       }),
 
     /**
-     * No description
+     * @description Returns user's garden
      *
      * @tags zen-controller
      * @name GetMyGarden
+     * @summary Find user's garden
      * @request GET:/my-garden
      */
     getMyGarden: (params: RequestParams = {}) =>
@@ -377,10 +384,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       }),
 
     /**
-     * No description
+     * @description Returns plant based on plantId
      *
      * @tags zen-controller
      * @name GetPlantById
+     * @summary Finding a plant
      * @request GET:/my-garden/plants/{plantId}
      */
     getPlantById: (plantId: string, params: RequestParams = {}) =>
@@ -391,10 +399,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       }),
 
     /**
-     * No description
+     * @description Return harvest details
      *
      * @tags zen-controller
      * @name GetMyHarvests
+     * @summary Initiating harvest for user's garden
      * @request GET:/my-garden/harvests
      */
     getMyHarvests: (params: RequestParams = {}) =>
@@ -405,10 +414,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       }),
 
     /**
-     * No description
+     * @description Returns all exchanges to which user is affiliated to
      *
      * @tags zen-controller
      * @name FindAllExchangesBelongingToGarden
+     * @summary Finding all exchanges belonging to given garden
      * @request GET:/my-garden/exchanges/{gardenId}
      */
     findAllExchangesBelongingToGarden: (gardenId: string, params: RequestParams = {}) =>
@@ -420,10 +430,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
   };
   gardens = {
     /**
-     * No description
+     * @description Returns newly created garden
      *
      * @tags zen-controller
      * @name CreateGarden
+     * @summary Creates a garden with required parameters
      * @request POST:/gardens
      */
     createGarden: (data: NewGardenDto, params: RequestParams = {}) =>
@@ -436,10 +447,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       }),
 
     /**
-     * No description
+     * @description Returns newly created plant
      *
      * @tags zen-controller
      * @name AddPlant1
+     * @summary Creates new plant in given garden
      * @request POST:/gardens/{gardenId}/plants
      */
     addPlant1: (gardenId: string, data: NewPlantDto, params: RequestParams = {}) =>
@@ -452,10 +464,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       }),
 
     /**
-     * No description
+     * @description Returns garden belonging to id
      *
      * @tags zen-controller
      * @name GetGardenById
+     * @summary Gets garden by unique gardenId
      * @request GET:/gardens/{gardenId}
      */
     getGardenById: (gardenId: string, params: RequestParams = {}) =>
@@ -467,10 +480,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
   };
   assistant = {
     /**
-     * No description
+     * @description Old Sam answers all of your questions
      *
      * @tags assistant-controller
      * @name AskForAssistance
+     * @summary Old Sam answers all of your questions
      * @request POST:/assistant/chat
      */
     askForAssistance: (data: Message, params: RequestParams = {}) =>
@@ -484,10 +498,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
   };
   plantTypes = {
     /**
-     * No description
+     * @description Returns all plant types with associated information
      *
      * @tags zen-controller
      * @name GetPlantTypes
+     * @summary Get all available plant types in the app
      * @request GET:/plant-types
      */
     getPlantTypes: (params: RequestParams = {}) =>
@@ -499,10 +514,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
   };
   myCommunity = {
     /**
-     * No description
+     * @description Returns community to which user belongs to
      *
      * @tags zen-controller
      * @name GetMyCommunity
+     * @summary Initiating finding the community belonging to the user
      * @request GET:/my-community
      */
     getMyCommunity: (params: RequestParams = {}) =>
@@ -513,10 +529,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       }),
 
     /**
-     * No description
+     * @description Returns all exchanges within the community
      *
      * @tags zen-controller
      * @name FindAllExchangesBelongingToCommuniy
+     * @summary Finding all exchanges belonging to given community
      * @request GET:/my-community/exchanges/{communityId}
      */
     findAllExchangesBelongingToCommuniy: (communityId: string, params: RequestParams = {}) =>
@@ -527,10 +544,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       }),
 
     /**
-     * No description
+     * @description Returns back actual state of the challenges of the user's commmunity
      *
      * @tags zen-controller
      * @name GetMyCommunityChallenges
+     * @summary Finding challenges for the community
      * @request GET:/my-community/challenges
      */
     getMyCommunityChallenges: (params: RequestParams = {}) =>
@@ -542,10 +560,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
   };
   cleanup = {
     /**
-     * No description
+     * @description Returns with a status code ok in case everything went right
      *
      * @tags cleanup-controller
      * @name DeleteGeneratedGardens
+     * @summary A technical endpoint to delete all gardens unnecessarily generated
      * @request DELETE:/cleanup
      */
     deleteGeneratedGardens: (params: RequestParams = {}) =>
