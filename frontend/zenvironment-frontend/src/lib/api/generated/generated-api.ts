@@ -15,9 +15,11 @@ export interface GardenDto {
   id?: string;
   name?: string;
   /** @format double */
-  estimatedProducedOxygenInKilograms?: number;
+  allProducedOxygenInKilograms?: number;
   /** @format double */
-  estimatedFixatedCO2InKilograms?: number;
+  allFixatedCO2InKilograms?: number;
+  /** @format double */
+  allWaterConsumptionInLiters?: number;
   community?: MinimalCommunity;
   plants?: PlantDto[];
 }
@@ -35,9 +37,13 @@ export interface PlantDto {
   /** @format uuid */
   gardenId?: string;
   /** @format double */
-  estimatedProducedOxygenInKilograms?: number;
+  allProducedOxygenInKilograms?: number;
   /** @format double */
-  estimatedFixatedCO2InKilograms?: number;
+  allFixatedCO2InKilograms?: number;
+  /** @format double */
+  allWaterConsumptionInLiters?: number;
+  /** @format int32 */
+  daysTillHarvest?: number;
   /** @format date */
   plantedAt?: string;
   /** @format date */
