@@ -1,20 +1,17 @@
 "use client";
 
-import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
-import { Navigation } from "@/components/Navigation";
 import { CssBaseline } from "@mui/material";
 import { ThemeRegistry } from "@/lib/theme";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Onboarding } from "@/components/Onboarding";
-import { getSessionId } from "@/lib/session";
-import { useState } from "react";
-import { Container } from "@/components/Container";
+import { Suspense, useState } from "react";
+import dynamic from "next/dynamic";
+const Layout = dynamic(() => import("@/components/Layout"), { ssr: false });
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,20 +22,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [status, setStatus] = useState<"unauthenticated" | "authenticated">(
-    () => {
-      let sessionId = null;
-      if (typeof window !== 'undefined') {
-        sessionId = getSessionId();
-      }
-
-      if (!sessionId) {
-        return "unauthenticated";
-      }
-      return "authenticated";
-    }
-  );
-
   return (
     <>
       <ThemeRegistry>
@@ -46,19 +29,7 @@ export default function RootLayout({
         <html lang="en">
           <body className={inter.className}>
             <QueryClientProvider client={queryClient}>
-              {status === "authenticated" ? (
-                <>
-                  {children} <Navigation />
-                </>
-              ) : (
-                <Container>
-                  <Onboarding
-                    onSuccess={() => {
-                      setStatus("authenticated");
-                    }}
-                  />
-                </Container>
-              )}
+              <Layout>{children}</Layout>
             </QueryClientProvider>
           </body>
         </html>
