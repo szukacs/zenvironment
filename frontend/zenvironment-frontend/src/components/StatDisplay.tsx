@@ -1,18 +1,33 @@
 import React from 'react';
-import {Stack, SxProps, Theme, Typography} from "@mui/material";
+import {Card, CardContent, Stack, SxProps, Theme, Typography} from "@mui/material";
 
 export interface StatDisplayProps {
   title: string
   amount: string
   unit: string
+  fact?: string
   sx?:  SxProps<Theme> | undefined
 }
 
-export const StatDisplay: React.FC<StatDisplayProps> = ({title, amount, unit, sx}) => {
+export const StatDisplay: React.FC<StatDisplayProps> = ({title, amount, unit, fact, sx}) => {
   return (
-    <Stack sx={sx} spacing={2} padding="0 2rem">
-      <Typography sx={{}}>{title}</Typography>
-      <Typography sx={{textAlign: 'right'}}>{`${amount} ${unit}`}</Typography>
-    </Stack>
+
+    <Card>
+      <CardContent>
+        <Stack sx={sx} spacing={2}>
+        <Typography variant="h6" component="div">
+          {title}
+        </Typography>
+        <Typography variant="h4" component="div" sx={{textAlign: 'right'}}>
+          {`${amount} ${unit}`}
+        </Typography>
+          {fact && (
+            <Typography color="textSecondary" >
+              {fact}
+            </Typography>
+          )}
+        </Stack>
+      </CardContent>
+    </Card>
   );
 }
