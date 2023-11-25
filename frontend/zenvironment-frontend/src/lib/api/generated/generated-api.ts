@@ -94,12 +94,23 @@ export interface GardenDto {
   allWaterConsumptionInLiters?: number;
   community?: MinimalCommunity;
   plants?: PlantDto[];
+  plantSummaries?: PlantSummary[];
 }
 
 export interface MinimalCommunity {
   /** @format uuid */
   id?: string;
   name?: string;
+}
+
+export interface PlantSummary {
+  plantType?: PlantTypeDto;
+  /** @format int32 */
+  plantCount?: number;
+  /** @format double */
+  allProducedOxygenInKilograms?: number;
+  /** @format double */
+  allFixatedCO2InKilograms?: number;
 }
 
 export interface Message {
@@ -526,6 +537,21 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       this.request<ChallengeDto[], any>({
         path: `/my-community/challenges`,
         method: "GET",
+        ...params,
+      }),
+  };
+  cleanup = {
+    /**
+     * No description
+     *
+     * @tags cleanup-controller
+     * @name DeleteGeneratedGardens
+     * @request DELETE:/cleanup
+     */
+    deleteGeneratedGardens: (params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/cleanup`,
+        method: "DELETE",
         ...params,
       }),
   };
