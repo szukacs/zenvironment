@@ -1,3 +1,4 @@
+import { baseURL } from "@/lib/constans";
 import {
   Box,
   Card,
@@ -44,7 +45,7 @@ export const Challenge = ({
             objectFit: "contain",
             marginRight: 1,
           }}
-          src={image}
+          src={`${baseURL}${image}`}
         ></Box>
         <Stack>
           <Typography
