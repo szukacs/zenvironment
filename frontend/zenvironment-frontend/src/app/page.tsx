@@ -27,16 +27,20 @@ export default function MyGarden() {
   }
 
   const name = myGardenQuery.data?.data.name ?? "";
-  let oxygenProduction = myGardenQuery.data.data.allProducedOxygenInKilograms ?? 0
-  if (oxygenProduction < 1) oxygenProduction = '< 1'
-  let co2Fixation = myGardenQuery.data.data.allFixatedCO2InKilograms ?? 0
-  if (co2Fixation < 1) co2Fixation = '< 1'
+  let oxygenProduction: string | number =
+    myGardenQuery.data?.data.allProducedOxygenInKilograms ?? 0;
+  if (oxygenProduction < 1) oxygenProduction = "< 1";
+  let co2Fixation: string | number =
+    myGardenQuery.data?.data.allFixatedCO2InKilograms ?? 0;
+  if (co2Fixation < 1) co2Fixation = "< 1";
 
   return (
     <Page title={name}>
       {myGardenQuery.status == "success" && (
         <Box mt={3}>
-          <Garden plants={myGardenQuery.data?.data.plants!} />
+          <Box pt={2}>
+            <Garden plants={myGardenQuery.data?.data.plants!} />
+          </Box>
           <Stack spacing={2}>
             <StatDisplay
               sx={{ color: "#34c0eb" }}
