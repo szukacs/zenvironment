@@ -43,7 +43,7 @@ export default function MyGarden() {
               title="All Oxygen production"
               amount={`${oxygenProduction}`}
               unit="kg"
-              fact="Medium consumption for a human for a day is 0.85 kg"
+              fact="Medium oxygen consumption for a human for a day is 0.85 kg"
             />
             <StatDisplay
               sx={{ color: "#52c454" }}
