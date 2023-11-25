@@ -1,7 +1,8 @@
 import React from "react";
 import { GardenDto } from "@/lib/api/generated/generated-api";
-import { Box, Card, CardContent, Stack, Typography } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import { GardenCard } from "@/components/GardenCard";
+import { AllO2andCO2 } from "./AllO2andCO2";
 
 export interface MyCommunityGardensProps {
   gardenList: GardenDto[];
@@ -14,33 +15,9 @@ export const MyCommunityGardens: React.FC<MyCommunityGardensProps> = ({
   allOxigen,
   allCO2,
 }) => {
-  let oxygenUnit = "kg";
-  let oxygenProduction: string | number = allOxigen;
-  if (oxygenProduction < 1.0) {
-    oxygenProduction = oxygenProduction * 1000.0;
-    oxygenUnit = "g";
-  }
-  oxygenProduction = Math.round(oxygenProduction * 100) / 100;
-
-  let co2Unit = "kg";
-  let co2Fixation: string | number = allCO2;
-  if (co2Fixation < 1) {
-    co2Fixation = co2Fixation * 1000.0;
-    co2Unit = "g";
-  }
-  co2Fixation = Math.round(co2Fixation * 100) / 100;
-
   return (
     <Stack spacing={3}>
-      <Card>
-        <CardContent>
-          <Typography>
-            <Box component="img" src="co2.png" maxWidth={50} />: {co2Fixation}{" "}
-            {co2Unit}, <Box component="img" src="o2.png" maxWidth={50} />:{" "}
-            {oxygenProduction} {oxygenUnit}
-          </Typography>
-        </CardContent>
-      </Card>
+      <AllO2andCO2 co2={allCO2} o2={allOxigen} />
       <Box
         sx={{
           display: "grid",
