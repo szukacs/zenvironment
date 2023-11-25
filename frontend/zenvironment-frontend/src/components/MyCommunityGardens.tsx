@@ -9,7 +9,7 @@ export interface MyCommunityGardensProps {
 
 export const MyCommunityGardens: React.FC<MyCommunityGardensProps> = ({gardenList}) => {
   return (
-    <Stack direction="row" justifyContent="space-evenly" alignItems="center" flexWrap="wrap">
+    <Stack direction="row" justifyContent="flex-start" alignItems="center" flexWrap="wrap">
       {gardenList.map(garden => (<GardenCard key={garden.id} garden={garden} />))}
     </Stack>
   );
