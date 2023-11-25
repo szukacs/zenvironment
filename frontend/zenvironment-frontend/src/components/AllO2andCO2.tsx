@@ -16,12 +16,19 @@ const ItemCard = ({
   image: string;
   unit: string;
   value: number;
-  description: string;
+  description: React.ReactNode;
   color: string;
 }) => {
   return (
     <Card sx={{ flex: 1 }}>
-      <CardContent sx={{ display: "flex", gap: 2, alignItems: "center" }}>
+      <CardContent
+        sx={{
+          display: "flex",
+          gap: 2,
+          alignItems: "center",
+          pb: "16px !important",
+        }}
+      >
         <Box component="img" src={image} maxWidth={50} />
         <Box>
           <Typography variant="h6" color={color}>
@@ -66,7 +73,11 @@ export const AllO2andCO2 = ({ co2, o2 }: { co2: number; o2: number }) => {
         image="co2.png"
         unit={co2Unit}
         value={co2Fixation}
-        description="Fixated CO2 by the community"
+        description={
+          <>
+            Fixated CO<sub>2</sub> by the community
+          </>
+        }
         color="#52c454"
       />
       <ItemCard
