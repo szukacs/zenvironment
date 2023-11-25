@@ -3,6 +3,7 @@ package com.useclient.zenvironment.controller;
 import com.useclient.zenvironment.mapper.MainMapper;
 import com.useclient.zenvironment.model.dto.*;
 import com.useclient.zenvironment.service.ChallengeService;
+import com.useclient.zenvironment.service.ExchangeService;
 import com.useclient.zenvironment.service.ZenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,7 @@ public class ZenController {
     private final ZenService zenService;
     private final ChallengeService challengeService;
     private final MainMapper mapper;
+    private final ExchangeService exchangeService;
 
     @Transactional(readOnly = true)
     @GetMapping("/plant-types")
@@ -87,6 +89,27 @@ public class ZenController {
         var myCommunity = zenService.getCommunityByName(MY_COMMUNITY_NAME);
         var challenges = challengeService.getChallengesByCommunity(myCommunity);
         var responseBody = mapper.toChallengeDtoList(challenges);
+        return ResponseEntity.ok(responseBody);
+    }
+
+    @Transactional
+    @PostMapping("/my-garden/exchanges")
+    public ResponseEntity<List<ExchangeDto>> addExchange(ExchangeDto exchangeDto){
+        var responseBody = exchangeService.createExchange(exchangeDto);
+        return ResponseEntity.ok(responseBody);
+    }
+
+    @Transactional(readOnly = true)
+    @GetMapping("/my-community/exchanges/{communityId}")
+    public ResponseEntity<List<ExchangeDto>> findAllExchangesBelongingToCommuniy(@PathVariable("communityId") String communityId){
+        var responseBody = exchangeService.findAllExchangesBelongingToCommunity(communityId);
+        return ResponseEntity.ok(responseBody);
+    }
+
+    @Transactional(readOnly = true)
+    @GetMapping("/my-garden/exchanges/{gardenId}")
+    public ResponseEntity<List<ExchangeDto>> findAllExchangesBelongingToGarden(@PathVariable("gardenId") String gardenId){
+        var responseBody = exchangeService.findAllExchangesBelongingToGarden(gardenId);
         return ResponseEntity.ok(responseBody);
     }
 }

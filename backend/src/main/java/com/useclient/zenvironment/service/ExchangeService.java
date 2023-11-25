@@ -1,5 +1,6 @@
 package com.useclient.zenvironment.service;
 
+import com.useclient.zenvironment.mapper.MainMapper;
 import com.useclient.zenvironment.model.dao.Exchange;
 import com.useclient.zenvironment.model.dao.Garden;
 import com.useclient.zenvironment.model.dto.ExchangeDto;
@@ -22,8 +23,13 @@ public class ExchangeService {
   @Autowired
   private GardenRepository gardenRepository;
 
-  public void createExchange(ExchangeDto exchangeDto){
-    Garden garden = gardenRepository.findById(UUID.fromString(exchangeDto.getVendorId())).get();
+  private static final String EXCEPTION_MESSAGE_NOT_FOUND = "Couldn't find garden wih given id";
+  @Autowired
+  private MainMapper mapper;
+
+  public List<ExchangeDto> createExchange(ExchangeDto exchangeDto) {
+    Garden garden = gardenRepository.findById(UUID.fromString(exchangeDto.getVendorId()))
+        .orElseThrow(() -> new IllegalArgumentException(EXCEPTION_MESSAGE_NOT_FOUND + exchangeDto.getVendorId()));
 
     Exchange exchange = Exchange.builder()
         .garden(garden)
@@ -31,11 +37,31 @@ public class ExchangeService {
         .build();
 
     exchangeRepository.save(exchange);
+    return findAllExchangesBelongingToGarden(exchangeDto.getVendorId());
   }
 
-  public List<Exchange> getAllExchangesBelongingToCommunity(String communityId){
-    //List<Garden> gardens = gardenRepository.findAllByCommunityId(communityId);
+  public List<ExchangeDto> findAllExchangesBelongingToCommunity(String communityId) {
+    List<Garden> gardens = gardenRepository.findAllGardensByCommunityId(UUID.fromString(communityId));
 
-    return new ArrayList<>();
+    List<Exchange> exchanges = new ArrayList<>();
+    gardens.forEach(garden -> exchanges.addAll(garden.getExchanges()));
+
+    List<ExchangeDto> exchangeDtos = new ArrayList<>();
+    exchanges
+        .stream()
+        .filter(exchange -> !exchange.isAccepted())
+        .forEach(exchange -> exchangeDtos.add(mapper.exchangeDto(exchange)));
+    return exchangeDtos;
+  }
+
+  public void updateStatusOfExchange(ExchangeDto exchangeDto) {
+    exchangeRepository.updateById(exchangeDto.getVendorId(), exchangeDto.getReceiverId());
+  }
+
+  public List<ExchangeDto> findAllExchangesBelongingToGarden(String gardenId){
+   List<Exchange> exchanges = exchangeRepository.findAllByIdNotAccepted(gardenId);
+   List<ExchangeDto> exchangeDtos = new ArrayList<>();
+   exchanges.forEach(exchange -> exchangeDtos.add(mapper.exchangeDto(exchange)));
+   return exchangeDtos;
   }
 }

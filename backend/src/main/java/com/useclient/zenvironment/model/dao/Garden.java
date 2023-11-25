@@ -22,6 +22,9 @@ public class Garden {
     private Community community;
     @OneToMany(mappedBy = "garden")
     private List<Plant> plants = new ArrayList<>();
+    @OneToMany(mappedBy = "garden")
+    private List<Exchange> exchanges = new ArrayList<>();
+    private String imageUrl;
 
     public Garden(String name, Community community) {
         this.name = name;

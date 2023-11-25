@@ -140,9 +140,11 @@ public class TestBootstrapper {
         }
 
         var garden = new Garden(MY_GARDEN_NAME, community);
+        garden.setImageUrl("/profile/gardenProfile.jpg");
         garden = gardenRepository.save(garden);
 
         var garden2 = new Garden(MY_GARDEN_NAME_2, community);
+        garden2.setImageUrl("/profile/garden2Profile.jpg");
         garden2 = gardenRepository.save(garden2);
 
         var tomatoPlant1 = Plant.builder()
