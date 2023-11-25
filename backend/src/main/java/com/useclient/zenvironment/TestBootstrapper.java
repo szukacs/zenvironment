@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Configuration
 @RequiredArgsConstructor
@@ -132,7 +133,7 @@ public class TestBootstrapper {
             .garden(garden)
             .x(3)
             .y(2)
-            .plantedAt(LocalDate.now().minusDays(60))
+            .plantedAt(LocalDateTime.now().minusDays(60))
             .build();
 
         var tomatoPlant3 = Plant.builder()
@@ -140,7 +141,7 @@ public class TestBootstrapper {
             .garden(garden)
             .x(4)
             .y(2)
-            .plantedAt(LocalDate.now().minusDays(60))
+            .plantedAt(LocalDateTime.now().minusDays(60))
             .build();
 
         var tomatoPlant2 = Plant.builder()
@@ -148,7 +149,7 @@ public class TestBootstrapper {
             .garden(garden2)
             .x(4)
             .y(1)
-            .plantedAt(LocalDate.now().minusDays(120))
+            .plantedAt(LocalDateTime.now().minusDays(120))
             .build();
 
         var lettucePlant = Plant.builder()
@@ -156,7 +157,7 @@ public class TestBootstrapper {
             .garden(garden)
             .x(2)
             .y(4)
-            .plantedAt(LocalDate.now().minusDays(30))
+            .plantedAt(LocalDateTime.now().minusDays(30))
             .build();
 
         var lettucePlant2 = Plant.builder()
@@ -164,7 +165,7 @@ public class TestBootstrapper {
             .garden(garden2)
             .x(1)
             .y(2)
-            .plantedAt(LocalDate.now().minusDays(50))
+            .plantedAt(LocalDateTime.now().minusDays(50))
             .build();
 
         var paprikaPlant = Plant.builder()
@@ -172,7 +173,7 @@ public class TestBootstrapper {
             .garden(garden)
             .x(1)
             .y(2)
-            .plantedAt(LocalDate.now().minusDays(35))
+            .plantedAt(LocalDateTime.now().minusDays(35))
             .build();
 
         var paprikaPlant2 = Plant.builder()
@@ -180,7 +181,7 @@ public class TestBootstrapper {
             .garden(garden2)
             .x(2)
             .y(4)
-            .plantedAt(LocalDate.now().minusDays(40))
+            .plantedAt(LocalDateTime.now().minusDays(40))
             .build();
 
         var sunFlowerPlant = Plant.builder()
@@ -188,7 +189,7 @@ public class TestBootstrapper {
             .garden(garden)
             .x(0)
             .y(0)
-            .plantedAt(LocalDate.now().minusDays(50))
+            .plantedAt(LocalDateTime.now().minusDays(50))
             .build();
 
         var sunFlowerPlant2 = Plant.builder()
@@ -196,7 +197,7 @@ public class TestBootstrapper {
             .garden(garden2)
             .x(3)
             .y(3)
-            .plantedAt(LocalDate.now().minusDays(20))
+            .plantedAt(LocalDateTime.now().minusDays(20))
             .build();
 
         var peaPlant = Plant.builder()
@@ -204,7 +205,7 @@ public class TestBootstrapper {
             .garden(garden)
             .x(0)
             .y(3)
-            .plantedAt(LocalDate.now().minusDays(35))
+            .plantedAt(LocalDateTime.now().minusDays(35))
             .build();
 
         var peaPlant2 = Plant.builder()
@@ -212,7 +213,7 @@ public class TestBootstrapper {
             .garden(garden2)
             .x(0)
             .y(2)
-            .plantedAt(LocalDate.now().minusDays(15))
+            .plantedAt(LocalDateTime.now().minusDays(15))
             .build();
 
 

@@ -99,7 +99,6 @@ public interface MainMapper {
     }
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "uprootedAt", ignore = true)
     @Mapping(target = "harvests", ignore = true)
     @Mapping(target = "plantType", source = "dto.plantTypeId", qualifiedByName = "getPlantTypeById")
     Plant toEntity(NewPlantDto dto, Garden garden);

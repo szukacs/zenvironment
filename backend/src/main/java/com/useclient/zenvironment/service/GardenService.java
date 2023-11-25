@@ -11,7 +11,7 @@ import com.useclient.zenvironment.repository.PlantTypeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -59,7 +59,7 @@ public class GardenService {
         var plantType = getRandomPlantType();
         int randomX = getRandomCoordinate();
         int randomY = getRandomCoordinate();
-        var newPlant = new Plant(null, plantType, newGarden, randomX, randomY, LocalDate.now(), null, new ArrayList<>());
+        var newPlant = new Plant(null, plantType, newGarden, randomX, randomY, LocalDateTime.now(), new ArrayList<>());
         return plantRepository.save(newPlant);
     }
 

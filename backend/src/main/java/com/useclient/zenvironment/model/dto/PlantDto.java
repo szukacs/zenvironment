@@ -23,7 +23,6 @@ public class PlantDto {
     private double allHarvestedAmount;
     private int daysTillHarvest;
     private LocalDate plantedAt;
-    private LocalDate uprootedAt;
     private List<HarvestDto> harvests;
 
 }

@@ -29,6 +29,21 @@ export const PlantDetailsDialog: FC<PlantDetailsDialogProps> = ({
     new Date(plant.plantedAt!)
   );
 
+  let oxygenUnit = "kg"
+  let oxygenProduction: string | number = plant.allProducedOxygenInKilograms ?? 0;
+  if (oxygenProduction < 1.0) {
+    oxygenProduction = oxygenProduction * 1000.0;
+    oxygenUnit = "g"
+  }
+  oxygenProduction = Math.round(oxygenProduction * 100) / 100
+  let co2Unit = "kg"
+  let co2Fixation: string | number = plant.allFixatedCO2InKilograms ?? 0;
+  if (co2Fixation < 1) {
+    co2Fixation = co2Fixation * 1000.0
+    co2Unit = "g"
+  }
+  co2Fixation = Math.round(co2Fixation * 100) / 100
+
   return (
     <Dialog
       maxWidth="sm"
@@ -65,16 +80,14 @@ export const PlantDetailsDialog: FC<PlantDetailsDialogProps> = ({
             <StatDisplay
               sx={{ color: "#34c0eb", textAlign: "center" }}
               title={`Oxygen produced since ${plantedAtDate}`}
-              amount={
-                Math.round(plant.allProducedOxygenInKilograms! * 100) / 100
-              }
-              unit="kg"
+              amount={oxygenProduction}
+              unit={oxygenUnit}
             />
             <StatDisplay
               sx={{ color: "#52c454", textAlign: "center" }}
-              title={`Fixated carbon-dioxid ${plantedAtDate}`}
-              amount={Math.round(plant.allFixatedCO2InKilograms! * 100) / 100}
-              unit="kg"
+              title={`Fixated carbon-dioxide ${plantedAtDate}`}
+              amount={co2Fixation}
+              unit={co2Unit}
             />
           </Stack>
         </Stack>

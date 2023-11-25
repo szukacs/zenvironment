@@ -4,13 +4,13 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.util.CollectionUtils;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Stream;
 
 import static java.time.temporal.ChronoUnit.DAYS;
+import static java.time.temporal.ChronoUnit.SECONDS;
 
 @Entity
 @Getter
@@ -34,25 +34,24 @@ public class Plant {
     private Garden garden;
     private int x;
     private int y;
-    private LocalDate plantedAt;
-    private LocalDate uprootedAt;
+    private LocalDateTime plantedAt = LocalDateTime.now();
     @OneToMany(mappedBy = "plant")
     private List<Harvest> harvests = new ArrayList<>();
 
     public double getAllProducedOxygenInKilograms(){
-        return this.plantType.getAverageOxygenProductionInKilogramsPerDay() * DAYS.between(plantedAt, LocalDate.now());
+        return (this.plantType.getAverageOxygenProductionInKilogramsPerDay() / 24.0 / 60.0 / 60.0) * SECONDS.between(plantedAt, LocalDateTime.now());
     }
 
     public double getAllFixatedCO2InKilograms(){
-        return this.plantType.getAverageCO2FixationInKilogramsPerDay() * DAYS.between(plantedAt, LocalDate.now());
+        return (this.plantType.getAverageCO2FixationInKilogramsPerDay() / 24.0 / 60.0 / 60.0) * SECONDS.between(plantedAt, LocalDateTime.now());
     }
 
     public double getAllWaterConsumptionInLiters(){
-        return this.plantType.getWaterInLiterPerWeek() / 7 * DAYS.between(plantedAt, LocalDate.now());
+        return this.plantType.getWaterInLiterPerWeek() / 7 * DAYS.between(plantedAt, LocalDateTime.now());
     }
 
     public int getDaysTillHarvest(){
-        return (int) ((int) Math.round(this.plantType.getAverageMonthsUntilHarvest() * 30) - DAYS.between(plantedAt, LocalDate.now()));
+        return (int) ((int) Math.round(this.plantType.getAverageMonthsUntilHarvest() * 30) - DAYS.between(plantedAt, LocalDateTime.now()));
     }
 
     public double getAllHarvestedAmount() {

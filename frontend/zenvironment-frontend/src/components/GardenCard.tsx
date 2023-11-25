@@ -19,6 +19,7 @@ export const GardenCard: React.FC<GardenCardProps> = ({ garden }) => {
   const roundNumber = (num: number) =>{
     return Math.round((num + Number.EPSILON) * 100) / 100
   }
+
   return (
     <Card
       sx={{
@@ -36,30 +37,54 @@ export const GardenCard: React.FC<GardenCardProps> = ({ garden }) => {
               {garden.name}
             </Typography>
             <Stack spacing={1}>
-              {(garden.plantSummaries?? []).map(summary => (
-                <Stack
-                  key={summary.plantType?.id}
-                  direction="row"
-                  justifyContent="flex-start"
-                  alignItems="center"
-                  spacing={1}
-                >
-                  <Box
-                    component="img"
-                    sx={{
-                      maxWidth: "100%",
-                      width: 30,
-                      objectFit: "contain",
-                      marginRight: 1,
-                    }}
-                    src={`${baseURL}${summary.plantType?.imageUrl}`}
-                  ></Box>
-                  <Typography>x</Typography>
-                  <Typography sx={{color: "#cfa448"}}>{`${summary.plantCount} pcs`}</Typography>
-                  <Typography sx={{width: '95px', color: "#52c454"}}>{`CO2 ${roundNumber(summary.allFixatedCO2InKilograms ?? 0)} kg`}</Typography>
-                  <Typography sx={{width: '95px', color: "#34c0eb"}}>{`O2 ${roundNumber(summary.allProducedOxygenInKilograms ?? 0)} kg`}</Typography>
-                </Stack>
-              ))}
+              {(garden.plantSummaries?? []).map(summary => {
+                let oxygenUnit = "kg"
+                let oxygenProduction: string | number =
+                    summary.allProducedOxygenInKilograms ?? 0;
+                if (oxygenProduction < 1.0) {
+                  oxygenProduction = oxygenProduction * 1000.0;
+                  oxygenUnit = "g"
+                }
+                oxygenProduction = roundNumber(oxygenProduction)
+                let co2Unit = "kg"
+                let co2Fixation: string | number =
+                    summary.allFixatedCO2InKilograms ?? 0;
+                if (co2Fixation < 1) {
+                  co2Fixation = co2Fixation * 1000.0
+                  co2Unit = "g"
+                }
+                co2Fixation = roundNumber(co2Fixation)
+                return (
+                    <Stack
+                        key={summary.plantType?.id}
+                        direction="row"
+                        justifyContent="flex-start"
+                        alignItems="center"
+                        spacing={1}
+                    >
+                      <Box
+                          component="img"
+                          sx={{
+                            maxWidth: "100%",
+                            width: 30,
+                            objectFit: "contain",
+                            marginRight: 1,
+                          }}
+                          src={`${baseURL}${summary.plantType?.imageUrl}`}
+                      ></Box>
+                      <Typography>x</Typography>
+                      <Typography sx={{color: "#cfa448"}}>{`${summary.plantCount} pcs`}</Typography>
+                      <Typography sx={{
+                        width: '95px',
+                        color: "#52c454"
+                      }}>{`CO2 ${co2Fixation} ${co2Unit}`}</Typography>
+                      <Typography sx={{
+                        width: '95px',
+                        color: "#34c0eb"
+                      }}>{`O2 ${oxygenProduction} ${oxygenUnit}`}</Typography>
+                    </Stack>
+                )
+              })}
 
             </Stack>
           </CardContent>
