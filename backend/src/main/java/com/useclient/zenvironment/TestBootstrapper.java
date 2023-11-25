@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.time.LocalDate;
-import java.util.Arrays;
 
 @Configuration
 @RequiredArgsConstructor
@@ -38,7 +37,7 @@ public class TestBootstrapper {
 
         var tomato = PlantType.builder()
             .name("tomato")
-            .imageUrl( "https://images.unsplash.com/photo-1592841200221-a6898f307baa")
+            .imageUrl( "/fruit/tomato.jpg")
             .averageOxygenProductionInKilogramsPerDay(0.0085)
             .averageCO2FixationInKilogramsPerDay(0.125)
             .waterInLiterPerWeek(6)
@@ -49,7 +48,7 @@ public class TestBootstrapper {
 
         var onion = PlantType.builder()
             .name("onion")
-            .imageUrl( "https://images.unsplash.com/photo-1587049633312-d628ae50a8ae")
+            .imageUrl( "/fruit/onion.jpg")
             .averageOxygenProductionInKilogramsPerDay(0.006)
             .averageCO2FixationInKilogramsPerDay(0.0075)
             .waterInLiterPerWeek(2.5)
@@ -60,7 +59,7 @@ public class TestBootstrapper {
 
         var lettuce = PlantType.builder()
             .name("lettuce")
-            .imageUrl( "https://images.unsplash.com/photo-1622206151226-18ca2c9ab4a1")
+            .imageUrl( "/fruit/lettuce.jpg")
             .averageOxygenProductionInKilogramsPerDay(0.0065)
             .averageCO2FixationInKilogramsPerDay(0.0075)
             .waterInLiterPerWeek(3.5)
@@ -71,7 +70,7 @@ public class TestBootstrapper {
 
         var paprika = PlantType.builder()
             .name("paprika")
-            .imageUrl( "https://images.unsplash.com/photo-1614260025937-b4ecb6eb9165")
+            .imageUrl( "/fruit/paprika.jpg")
             .averageOxygenProductionInKilogramsPerDay(0.0075)
             .averageCO2FixationInKilogramsPerDay(0.125)
             .waterInLiterPerWeek(4.5)
@@ -82,7 +81,7 @@ public class TestBootstrapper {
 
         var spinach = PlantType.builder()
             .name("spinach")
-            .imageUrl( "https://images.unsplash.com/photo-1576045057995-568f588f82fb")
+            .imageUrl( "/fruit/spinach.jpg")
             .averageOxygenProductionInKilogramsPerDay(0.0085)
             .averageCO2FixationInKilogramsPerDay(0.125)
             .waterInLiterPerWeek(3.5)
@@ -93,7 +92,7 @@ public class TestBootstrapper {
 
         var wheat = PlantType.builder()
             .name("wheat")
-            .imageUrl( "https://images.unsplash.com/photo-1564493031643-4be2c4347a17")
+            .imageUrl( "/fruit/wheat.jpg")
             .averageOxygenProductionInKilogramsPerDay(0.009)
             .averageCO2FixationInKilogramsPerDay(0.175)
             .waterInLiterPerWeek(7.5)
@@ -104,7 +103,7 @@ public class TestBootstrapper {
 
         var cucumber = PlantType.builder()
             .name("cucumber")
-            .imageUrl( "https://images.unsplash.com/photo-1449300079323-02e209d9d3a6")
+            .imageUrl( "/fruit/cucumber.jpg")
             .averageOxygenProductionInKilogramsPerDay(0.009)
             .averageCO2FixationInKilogramsPerDay(0.175)
             .waterInLiterPerWeek(7)
@@ -115,7 +114,7 @@ public class TestBootstrapper {
 
         var sunFlower = PlantType.builder()
             .name("sunflower")
-            .imageUrl( "https://images.unsplash.com/photo-1597848212624-a19eb35e2651")
+            .imageUrl( "/fruit/sunFlower.jpg")
             .averageOxygenProductionInKilogramsPerDay(0.009)
             .averageCO2FixationInKilogramsPerDay(0.25)
             .waterInLiterPerWeek(5)
@@ -163,7 +162,6 @@ public class TestBootstrapper {
             .garden(garden)
             .plantedAt(LocalDate.now().minusDays(50))
             .build();
-
 
         var onionPlant2 = Plant.builder()
             .plantType(onion)
