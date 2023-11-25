@@ -34,20 +34,20 @@ const plant = getPlantQuery.data!.data
         sx={{color: '#34c0eb'}}
         title='All Oxygen production'
         amount={`${plant.allProducedOxygenInKilograms ?? 0}`}
-        unit="kg / plant"
+        unit="kg"
         fact="Medium consumption for a human for a day is 0.85 kg"
       />
       <StatDisplay
         sx={{color: '#cfa448'}}
         title='All Yield'
         amount={`${plant.allHarvestedAmount ?? 0}`}
-        unit="kg / plant"
+        unit="kg"
       />
       <StatDisplay
         sx={{color: '#52c454'}}
         title='All fixated carbon-dioxid'
         amount={`${plant.allFixatedCO2InKilograms ?? 0}`}
-        unit="kg / plant"
+        unit="kg"
         fact='Petrol produces 2.3 kg of CO2 per litre burnt. '
       />
     </>
