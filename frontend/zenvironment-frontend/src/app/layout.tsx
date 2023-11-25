@@ -27,6 +27,9 @@ export default function RootLayout({
       <ThemeRegistry>
         <CssBaseline />
         <html lang="en">
+          <head>
+            <meta name="theme-color" content="#0d5e41" />
+          </head>
           <body className={inter.className}>
             <QueryClientProvider client={queryClient}>
               <Layout>{children}</Layout>
