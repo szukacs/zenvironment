@@ -10,7 +10,7 @@ export interface GardenCardProps {
 export const GardenCard: React.FC<GardenCardProps> = ({garden}) => {
 
   return (
-    <Card sx={{maxWidth: 345, marginBottom: '0.5rem', marginLeft: '0.5rem'}}>
+    <Card >
       <CardActionArea>
         <CardMedia
           component="img"
